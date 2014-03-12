@@ -1,0 +1,23 @@
+---
+# This playbook deploys a full Matterhorn cluster
+
+- hosts: admin
+  user: matterhorn
+
+  roles:
+    - matterhorn-base
+    - admin-build
+
+#- hosts: engage
+#  user: matterhorn
+#
+#  roles:
+#    - matterhorn-base
+#    - engage-build
+#
+#- hosts: worker
+#  user: matterhorn
+#
+#  roles:
+#    - matterhorn-base
+#    - worker-build

@@ -1,0 +1,13 @@
+---
+mh_base_dir: /opt/matterhorn/matterhorn
+mh_work_dir: /opt/matterhorn/shared
+
+admin_url: http://testadmin.usask.ca:8080
+engage_url: http://testengage.usask.ca:8080
+
+db_url: jdbc:mysql://testadmin.usask.ca/matterhorn
+db_user: root
+db_pass: 
+db_ddl: false
+
+is_ca: false

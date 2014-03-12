@@ -1,0 +1,80 @@
+---
+
+- name: Install Java
+  apt: pkg=openjdk-7-jdk state=present
+  sudo: yes
+
+- name: Install Git
+  apt: pkg=git-core state=present
+  sudo: yes
+
+- name: Install NFS client
+  apt: pkg=nfs-common state=present
+  sudo: yes
+
+- name: Create MH parent dir
+  shell: mkdir -p /opt/matterhorn
+  sudo: yes
+
+- name: Fix MH parent dir permissions
+  file: path=/opt/matterhorn/ owner=matterhorn group=matterhorn state=directory recurse=true
+  sudo: true
+
+- name: Create MH shared dir
+  shell: mkdir -p /opt/matterhorn/shared
+
+- name: Download Maven
+  get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-3.1.1-bin.tar.gz
+           dest=/opt/matterhorn
+           mode=0644
+
+- name: Install Maven
+  shell: tar xvzf apache-maven-3.1.1-bin.tar.gz 
+         chdir=/opt/matterhorn
+
+#From https://coderwall.com/p/ynvi0q
+- name: add /opt/matterhorn/ to path
+  lineinfile: dest=/etc/environment
+              state=present
+              backrefs=yes
+              regexp='PATH=(["]*)((?!.*?\/opt\/matterhorn\/apache-maven-3.1.1\/bin).*?)(["]*)$'
+              line="PATH=\1\2:/opt/matterhorn/apache-maven-3.1.1/bin\3"
+  sudo: yes
+
+- name: Checkout Matterhorn
+  git: repo=https://bitbucket.org/opencast-community/matterhorn.git
+       dest=/opt/matterhorn/matterhorn
+       update=yes
+#  This is busted, go figure
+#       version=origin/develop
+
+- name: Checkout correct version of Matterhorn
+  shell: git checkout develop
+         chdir=/opt/matterhorn/matterhorn
+
+- name: Install 3rd party tools
+  shell: ./do-all
+         chdir=/opt/matterhorn/matterhorn/docs/scripts/3rd_party
+  sudo: yes
+
+- name: Configure init scripts
+  template: src=etc-matterhorn-service.conf dest=/opt/matterhorn/matterhorn/docs/scripts/init/new/
+
+- name: Install the init scripts
+  shell: ./install.sh
+         chdir=/opt/matterhorn/matterhorn/docs/scripts/init/new/
+  sudo: yes
+
+- name: Configure config.properties
+  template: src=config.properties dest=/opt/matterhorn/matterhorn/etc/
+
+- name: Configure organization profile
+  template: src=org.opencastproject.organization-mh_default_org.cfg dest=/opt/matterhorn/matterhorn/etc/load/
+
+#This should not need the full path to mvn...
+#- name: Build
+#  shell: /opt/matterhorn/apache-maven-3.1.1/bin/mvn clean install -DdeployTo=/opt/matterhorn/matterhorn
+#         chdir=/opt/matterhorn/matterhorn
+
+#- name: Start Matterhorn
+#  service: name=matterhorn state=restarted enabled=yes
