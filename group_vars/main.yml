@@ -1,4 +1,10 @@
 ---
+
+git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
+
+mvn_version: 3.1.1
+
+mh_parent_dir: /opt/matterhorn
 mh_base_dir: /opt/matterhorn/matterhorn
 mh_work_dir: /opt/matterhorn/shared
 

@@ -13,68 +13,60 @@
   sudo: yes
 
 - name: Create MH parent dir
-  shell: mkdir -p /opt/matterhorn
+  shell: mkdir -p {{mh_parent_dir}}
   sudo: yes
 
 - name: Fix MH parent dir permissions
-  file: path=/opt/matterhorn/ owner=matterhorn group=matterhorn state=directory recurse=true
+  file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
   sudo: true
 
 - name: Create MH shared dir
-  shell: mkdir -p /opt/matterhorn/shared
+  shell: mkdir -p {{mh_parent_dir}}/shared
 
 - name: Download Maven
-  get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-3.1.1-bin.tar.gz
-           dest=/opt/matterhorn
+  get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
+           dest={{mh_parent_dir}}
            mode=0644
 
 - name: Install Maven
-  shell: tar xvzf apache-maven-3.1.1-bin.tar.gz 
-         chdir=/opt/matterhorn
+  shell: tar xvzf apache-maven-{{mvn_version}}-bin.tar.gz 
+         chdir={{mh_parent_dir}}
 
 #From https://coderwall.com/p/ynvi0q
-- name: add /opt/matterhorn/ to path
+- name: add {{mh_parent_dir}}/ to path
   lineinfile: dest=/etc/environment
               state=present
               backrefs=yes
-              regexp='PATH=(["]*)((?!.*?\/opt\/matterhorn\/apache-maven-3.1.1\/bin).*?)(["]*)$'
-              line="PATH=\1\2:/opt/matterhorn/apache-maven-3.1.1/bin\3"
+              regexp='PATH=(["]*)((?!.*?{{mh_parent_dir}}\/apache-maven-{{mvn_version}}\/bin).*?)(["]*)$'
+              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
   sudo: yes
 
 - name: Checkout Matterhorn
-  git: repo=https://bitbucket.org/opencast-community/matterhorn.git
-       dest=/opt/matterhorn/matterhorn
+  git: repo={{git_repo_location}}
+       dest={{mh_base_dir}}
        update=yes
 #  This is busted, go figure
 #       version=origin/develop
 
 - name: Checkout correct version of Matterhorn
   shell: git checkout develop
-         chdir=/opt/matterhorn/matterhorn
-
-- name: Install 3rd party tools
-  shell: ./do-all
-         chdir=/opt/matterhorn/matterhorn/docs/scripts/3rd_party
-  sudo: yes
+         chdir={{mh_base_dir}}
 
 - name: Configure init scripts
-  template: src=etc-matterhorn-service.conf dest=/opt/matterhorn/matterhorn/docs/scripts/init/new/
+  template: src=etc-matterhorn-service.conf dest={{mh_base_dir}}/docs/scripts/init/new/
 
 - name: Install the init scripts
   shell: ./install.sh
-         chdir=/opt/matterhorn/matterhorn/docs/scripts/init/new/
+         chdir={{mh_base_dir}}/docs/scripts/init/new/
   sudo: yes
 
 - name: Configure config.properties
-  template: src=config.properties dest=/opt/matterhorn/matterhorn/etc/
+  template: src=config.properties dest={{mh_base_dir}}/etc/
 
 - name: Configure organization profile
-  template: src=org.opencastproject.organization-mh_default_org.cfg dest=/opt/matterhorn/matterhorn/etc/load/
-
-#This should not need the full path to mvn...
-#- name: Build
-#  shell: /opt/matterhorn/apache-maven-3.1.1/bin/mvn clean install -DdeployTo=/opt/matterhorn/matterhorn
-#         chdir=/opt/matterhorn/matterhorn
-
-#- name: Start Matterhorn
-#  service: name=matterhorn state=restarted enabled=yes
+  template: src=org.opencastproject.organization-mh_default_org.cfg dest={{mh_base_dir}}/etc/load/
+  
+- name: Install 3rd party tools
+  shell: ./do-all
+         chdir={{mh_base_dir}}/docs/scripts/3rd_party
+  sudo: yes

@@ -8,38 +8,12 @@
   apt: pkg=mysql-server state=present
   sudo: yes
 
-- name: Clean existing build
-  shell: rm -rf /opt/matterhorn/felix /opt/matterhorn/felix/ext /opt/matterhorn/shared/* /var/log/matterhorn/*
-
 - name: Attempting to create DB - may fail is provided user does not have CREATE DATABASE permissions
   shell: mysql -u root -e "CREATE DATABASE matterhorn CHARACTER SET utf8 COLLATE utf8_general_ci"
   ignore_errors: yes
 
-#Note that we're assuming the DB already exists...
-- name: Clean DB
-  shell: mysqldump -u {{db_user}} -p {{db_pass}} --add-drop-table --no-data matterhorn | grep -e '^DROP \| FOREIGN_KEY_CHECKS' | mysql -u {{db_user}} -p {{db_pass}} matterhorn
-
-- name: Apply DDL
-  shell: mysql matterhorn -u {{db_user}} -p {{db_pass}} < docs/scripts/ddl/mysql5.sql
-         chdir=/opt/matterhorn/matterhorn
-
-- name: Checkout Matterhorn
-  git: repo=https://bitbucket.org/opencast-community/matterhorn.git
-       dest=/opt/matterhorn/matterhorn
-       update=yes
-#  This is busted, go figure
-#       version=origin/develop
-
-- name: Checkout correct version of Matterhorn
-  shell: git checkout develop
-         chdir=/opt/matterhorn/matterhorn
-
-- name: Clean existing build
-  shell: rm -rf /opt/matterhorn/felix /opt/matterhorn/felix/ext /opt/matterhorn/shared/* /var/log/matterhorn/*
-
-- name: Build
-  shell: mvn clean install -DdeployTo=/opt/matterhorn/matterhorn -P {{mh_admin_build}}
-         chdir=/opt/matterhorn/matterhorn
+  #Build the system
+- include: tasks/build_mh.yml
 
 - name: Start Matterhorn
   service: name=matterhorn state=restarted enabled=yes

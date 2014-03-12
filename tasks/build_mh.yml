@@ -1,0 +1,17 @@
+---
+- name: Checkout Matterhorn
+  git: repo={{git_repo_location}}
+       dest={{mh_base_dir}}
+       update=yes
+#  This is busted, go figure
+#       version=origin/develop
+
+- name: Checkout correct version of Matterhorn
+  shell: git checkout develop
+         chdir={{mh_base_dir}}
+
+- include: clean_mh.yml
+
+- name: Build
+  shell: mvn clean install -DdeployTo={{mh_base_dir}} -P {{mh_admin_build}}
+         chdir={{mh_base_dir}}
