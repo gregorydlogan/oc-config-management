@@ -12,8 +12,10 @@ admin_url: http://testadmin.usask.ca:8080
 engage_url: http://testengage.usask.ca:8080
 
 db_url: jdbc:mysql://testadmin.usask.ca/matterhorn
-db_user: root
-db_pass: 
+db_user: matterhorn
+db_pass: matterhorn_db_passwd
 db_ddl: false
 
 is_ca: false
+
+nfs_exports: testengage.usask.ca, testworker1.usask.ca, testworker2.usask.ca

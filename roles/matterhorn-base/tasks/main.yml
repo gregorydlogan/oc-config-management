@@ -1,7 +1,7 @@
 ---
 
 - name: Install Java
-  apt: pkg=openjdk-7-jdk state=present
+  apt: pkg=openjdk-7-jdk update_cache=yes state=present
   sudo: yes
 
 - name: Install Git
@@ -13,7 +13,7 @@
   sudo: yes
 
 - name: Create MH parent dir
-  shell: mkdir -p {{mh_parent_dir}}
+  shell: mkdir -p {{ mh_parent_dir }}
   sudo: yes
 
 - name: Fix MH parent dir permissions
@@ -33,7 +33,7 @@
          chdir={{mh_parent_dir}}
 
 #From https://coderwall.com/p/ynvi0q
-- name: add {{mh_parent_dir}}/ to path
+- name: add Maven to path
   lineinfile: dest=/etc/environment
               state=present
               backrefs=yes
@@ -52,21 +52,4 @@
   shell: git checkout develop
          chdir={{mh_base_dir}}
 
-- name: Configure init scripts
-  template: src=etc-matterhorn-service.conf dest={{mh_base_dir}}/docs/scripts/init/new/
-
-- name: Install the init scripts
-  shell: ./install.sh
-         chdir={{mh_base_dir}}/docs/scripts/init/new/
-  sudo: yes
-
-- name: Configure config.properties
-  template: src=config.properties dest={{mh_base_dir}}/etc/
-
-- name: Configure organization profile
-  template: src=org.opencastproject.organization-mh_default_org.cfg dest={{mh_base_dir}}/etc/load/
-  
-- name: Install 3rd party tools
-  shell: ./do-all
-         chdir={{mh_base_dir}}/docs/scripts/3rd_party
-  sudo: yes
+#- include: ../../common/tasks/build_3rd_party.yml

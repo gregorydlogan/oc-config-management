@@ -1,0 +1,26 @@
+---
+
+- name: Checkout Matterhorn
+  git: repo={{git_repo_location}}
+       dest={{mh_base_dir}}
+       update=yes
+#  This is busted, go figure
+#       version=origin/develop
+
+- name: Checkout correct version of Matterhorn
+  shell: git checkout develop
+         chdir={{mh_base_dir}}
+
+- name: Configure init scripts
+  template: src=etc-matterhorn-service.conf dest={{mh_base_dir}}/docs/scripts/init/new/
+
+- name: Install the init scripts
+  shell: ./install.sh
+         chdir={{mh_base_dir}}/docs/scripts/init/new/
+  sudo: yes
+
+- name: Configure config.properties
+  template: src=config.properties dest={{mh_base_dir}}/etc/
+
+- name: Configure organization profile
+  template: src=org.opencastproject.organization-mh_default_org.cfg dest={{mh_base_dir}}/etc/load/

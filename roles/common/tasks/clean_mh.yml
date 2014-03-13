@@ -1,0 +1,12 @@
+---
+#Note that we're assuming the DB already exists...
+- name: Clean DB
+  shell: mysqldump -u {{db_user}} --password={{db_pass}} --add-drop-table --no-data matterhorn | grep -e '^DROP \| FOREIGN_KEY_CHECKS' | mysql -u {{db_user}} --password={{db_pass}} matterhorn
+
+- name: Apply DDL
+  #mysql_db: name=matterhorn state=import login_user={{db_user}} login_password={{db_pass}} target={{mh_base_dir}}/docs/scripts/ddl/mysql5.sql
+  shell: mysql matterhorn -u {{db_user}} --password={{db_pass}} < docs/scripts/ddl/mysql5.sql
+         chdir={{mh_base_dir}}
+
+- name: Clean existing build
+  shell: rm -rf {{mh_base_dir}}/felix/lib {{mh_base_dir}}/felix/ext {{mh_parent_dir}}/shared/* /var/log/matterhorn/*

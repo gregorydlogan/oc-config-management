@@ -1,0 +1,6 @@
+---
+
+- name: Install 3rd party tools
+  shell: ./do-all
+       chdir={{mh_base_dir}}/docs/scripts/3rd_party
+  sudo: yes

@@ -4,8 +4,12 @@
 - hosts: admin
   user: matterhorn
 
+  vars_files:
+    - roles/admin-build/vars/admin.yml
+
   roles:
     - matterhorn-base
+    - matterhorn-core
     - admin-build
 
 #- hosts: engage
