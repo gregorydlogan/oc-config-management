@@ -5,23 +5,55 @@
   user: matterhorn
 
   vars_files:
+    - group_vars/common.yml
     - roles/admin-build/vars/admin.yml
 
   roles:
     - matterhorn-base
     - matterhorn-core
+    - mysql-build
     - admin-build
+    - solr-build
+    - matterhorn-start
 
-#- hosts: engage
-#  user: matterhorn
-#
-#  roles:
-#    - matterhorn-base
-#    - engage-build
-#
-#- hosts: worker
-#  user: matterhorn
-#
-#  roles:
-#    - matterhorn-base
-#    - worker-build
+
+- hosts: engage
+  user: matterhorn
+
+  roles:
+    - matterhorn-base
+    - matterhorn-core
+    - engage-build
+    - matterhorn-start
+
+  vars_files:
+    - group_vars/common.yml
+    - roles/engage-build/vars/engage.yml
+
+
+- hosts: ingest
+  user: matterhorn
+
+  roles:
+    - matterhorn-base
+    - matterhorn-core
+    - worker-build
+    - matterhorn-start
+    
+  vars_files:
+    - group_vars/common.yml
+    - roles/admin-build/vars/ingest.yml
+
+
+- hosts: worker
+  user: matterhorn
+
+  roles:
+    - matterhorn-base
+    - matterhorn-core
+    - worker-build
+    - matterhorn-start
+    
+  vars_files:
+    - group_vars/common.yml
+    - roles/admin-build/vars/worker.yml

@@ -1,15 +1,6 @@
 ---
 
-- name: Checkout Matterhorn
-  git: repo={{git_repo_location}}
-       dest={{mh_base_dir}}
-       update=yes
-#  This is busted, go figure
-#       version=origin/develop
-
-- name: Checkout correct version of Matterhorn
-  shell: git checkout develop
-         chdir={{mh_base_dir}}
+- include: ../../common/tasks/checkout_mh.yml
 
 - name: Configure init scripts
   template: src=etc-matterhorn-service.conf dest={{mh_base_dir}}/docs/scripts/init/new/

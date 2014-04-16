@@ -1,0 +1,38 @@
+---
+
+- name: Downloading Tomcat
+  get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.5-beta/bin/apache-tomcat-7.0.5.zip
+           dest={{mh_parent_dir}}
+           mode=0644
+
+- name: Unzipping Tomcat
+  shell: unzip apache-tomcat-7.0.5.zip
+         chdir={{mh_parent_dir}}
+
+- name: Downloading Solr
+  get_url: url=http://archive.apache.org/dist/lucene/solr/1.4.1/apache-solr-1.4.1.zip
+           dest={{mh_parent_dir}}
+           mode=0644
+
+- name: Unzipping Solr
+  shell: unzip apache-solr-1.4.1.zip
+         chdir={{mh_parent_dir}}
+
+- name: Applying Solr to Tomcat
+  shell: unzip apache-solr-1.4.1/example/webapps/solr.war -d {{solr_data_dir}}
+         chdir={{mh_parent_dir}}
+
+- name: Copying Engage search index
+  shell: cp -rv {{mh_base_dir}}/modules/matterhorn-search-service-impl/src/main/resources/solr {{solr_data_dir}}
+         chdir={{mh_parent_dir}}
+
+- name: Creating lib directory
+  shell: mkdir -p {{solr_data_dir}}/lib
+
+- name: Copying required Solr jar
+  shell: cp -rv {{mh_base_dir}}/modules/matterhorn-solr/target/matterhorn-solr-*.jar {{solr_data_dir}}/lib
+         chdir={{mh_parent_dir}}
+
+- name: Starting Tomcat
+  shell: ./bin/startup.sh
+         chdir={{mh_parent_dir}}/apache-tomcat-7.0.5

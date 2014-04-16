@@ -41,15 +41,4 @@
               line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
   sudo: yes
 
-- name: Checkout Matterhorn
-  git: repo={{git_repo_location}}
-       dest={{mh_base_dir}}
-       update=yes
-#  This is busted, go figure
-#       version=origin/develop
-
-- name: Checkout correct version of Matterhorn
-  shell: git checkout develop
-         chdir={{mh_base_dir}}
-
-#- include: ../../common/tasks/build_3rd_party.yml
+- include: ../../common/tasks/checkout_mh.yml

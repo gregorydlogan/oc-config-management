@@ -2,6 +2,8 @@
 
 git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 
+mh_version: r/1.5.0
+
 mvn_version: 3.1.1
 
 mh_parent_dir: /opt/matterhorn
@@ -18,4 +20,7 @@ db_ddl: false
 
 is_ca: false
 
-nfs_exports: testengage.usask.ca, testworker1.usask.ca, testworker2.usask.ca
+engage_solr_index: http://testadmin.usask.ca:8983
+
+solr_port: 8983
+solr_data_dir: /opt/matterhorn/apache-tomcat-7.0.5/solr

@@ -1,0 +1,4 @@
+---
+
+- name: Start Matterhorn
+  service: name=matterhorn state=restarted enabled=yes

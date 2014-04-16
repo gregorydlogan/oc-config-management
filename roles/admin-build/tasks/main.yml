@@ -20,23 +20,5 @@
   service: name=nfs-kernel-server state=restarted enabled=yes
   sudo: yes
 
-- name: Install Python MySQL bindings
-  apt: pkg=python-mysqldb state=present
-  sudo: yes
-
-- name: MySQL ROOT Dumping DB
-  mysql_db: name=matterhorn login_user=root login_password= state=absent
-  ignore_errors: yes
-
-- name: MySQL ROOT Creating DB
-  mysql_db: name=matterhorn login_user=root login_password= state=present encoding="utf8" collation="utf8_general_ci"
-
-- name: MySQL ROOT Granting user permissions on DB
-  mysql_user: login_user=root login_password= name={{db_user}} password={{db_pass}} host="localhost" priv="matterhorn.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX"
-  #shell: mysql -u root -e "CREATE USER '{{db_user}}'@% IDENTIFIED BY '{{db_pass}}’; GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX ON matterhorn.* TO '{{db_user}}'@%;"
-
   #Build the system
 - include: ../../common/tasks/build_mh.yml
-
-- name: Start Matterhorn
-  service: name=matterhorn state=restarted enabled=yes

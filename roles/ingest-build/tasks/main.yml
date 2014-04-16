@@ -1,0 +1,4 @@
+---
+
+  #Build the system
+- include: ../../common/tasks/build_mh.yml
