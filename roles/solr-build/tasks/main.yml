@@ -33,6 +33,12 @@
   shell: cp -rv {{mh_base_dir}}/modules/matterhorn-solr/target/matterhorn-solr-*.jar {{solr_data_dir}}/lib
          chdir={{mh_parent_dir}}
 
+- name: Configure Tomcat
+  template: src=server.xml dest=apache-tomcat-7.0.5/conf/
+
+- name: Configure Solr
+  template: src=solrconfig.xml dest={{solr_data_dir}}/conf/
+
 - name: Starting Tomcat
   shell: ./bin/startup.sh
          chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
