@@ -1,5 +1,9 @@
 ---
 
+- name: Install MySQL server
+  apt: pkg=mysql-server state=present
+  sudo: yes
+
 - name: Install Python MySQL bindings
   apt: pkg=python-mysqldb state=present
   sudo: yes

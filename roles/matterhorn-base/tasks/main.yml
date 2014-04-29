@@ -23,22 +23,26 @@
 - name: Create MH shared dir
   shell: mkdir -p {{mh_parent_dir}}/shared
 
-- name: Download Maven
-  get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
-           dest={{mh_parent_dir}}
-           mode=0644
+#- name: Download Maven
+#  get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
+#           dest={{mh_parent_dir}}
+#           mode=0644
+
+#- name: Install Maven
+#  shell: tar xvzf apache-maven-{{mvn_version}}-bin.tar.gz 
+#         chdir={{mh_parent_dir}}
 
 - name: Install Maven
-  shell: tar xvzf apache-maven-{{mvn_version}}-bin.tar.gz 
-         chdir={{mh_parent_dir}}
+  apt: pkg=maven state=present
+  sudo: yes
 
 #From https://coderwall.com/p/ynvi0q
-- name: add Maven to path
-  lineinfile: dest=/etc/environment
-              state=present
-              backrefs=yes
-              regexp='PATH=(["]*)((?!.*?{{mh_parent_dir}}\/apache-maven-{{mvn_version}}\/bin).*?)(["]*)$'
-              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
-  sudo: yes
+#- name: add Maven to path
+#  lineinfile: dest=/etc/environment
+#              state=present
+#              backrefs=yes
+#              regexp='PATH=(["]*)((?!.*?{{mh_parent_dir}}\/apache-maven-{{mvn_version}}\/bin).*?)(["]*)$'
+#              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
+#  sudo: yes
 
 - include: ../../common/tasks/checkout_mh.yml

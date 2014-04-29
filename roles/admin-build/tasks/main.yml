@@ -4,10 +4,6 @@
   apt: pkg=nfs-kernel-server state=present
   sudo: yes
 
-- name: Install MySQL server
-  apt: pkg=mysql-server state=present
-  sudo: yes
-
 - name: Setup NFS Exports
   nfsexport: path={{mh_work_dir}} clients="{{nfs_exports}}"
   sudo: yes

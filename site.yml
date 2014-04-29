@@ -4,10 +4,6 @@
 - hosts: admin
   user: matterhorn
 
-  vars_files:
-    - group_vars/common.yml
-    - roles/admin-build/vars/admin.yml
-
   roles:
     - matterhorn-base
     - matterhorn-core
@@ -15,6 +11,10 @@
     - admin-build
     - solr-build
     - matterhorn-start
+
+  vars_files:
+    - group_vars/common.yml
+    - roles/admin-build/vars/admin.yml
 
 
 - hosts: engage
@@ -42,7 +42,7 @@
     
   vars_files:
     - group_vars/common.yml
-    - roles/admin-build/vars/ingest.yml
+    - roles/ingest-build/vars/ingest.yml
 
 
 - hosts: worker
@@ -56,4 +56,4 @@
     
   vars_files:
     - group_vars/common.yml
-    - roles/admin-build/vars/worker.yml
+    - roles/worker-build/vars/worker.yml

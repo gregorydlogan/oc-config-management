@@ -1,12 +1,5 @@
 ---
 
-- name: Checkout Matterhorn
-  git: repo={{git_repo_location}}
-       dest={{mh_base_dir}}
-       update=yes
-#  This is busted, go figure
-#       version=origin/develop
-
 - name: Checkout correct version of Matterhorn
   shell: git checkout {{mh_version}}
          chdir={{mh_base_dir}}

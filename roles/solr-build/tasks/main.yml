@@ -2,24 +2,28 @@
 
 - name: Downloading Tomcat
   get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.5-beta/bin/apache-tomcat-7.0.5.zip
-           dest={{mh_parent_dir}}
+           dest={{mh_parent_dir}}/apache-tomcat-7.0.5.zip
+           force=no
            mode=0644
 
 - name: Unzipping Tomcat
   shell: unzip apache-tomcat-7.0.5.zip
          chdir={{mh_parent_dir}}
+         creates=apache-tomcat-7.0.5
 
 - name: Downloading Solr
   get_url: url=http://archive.apache.org/dist/lucene/solr/1.4.1/apache-solr-1.4.1.zip
-           dest={{mh_parent_dir}}
+           dest={{mh_parent_dir}}/apache-solr-1.4.1.zip
+           force=no
            mode=0644
 
 - name: Unzipping Solr
   shell: unzip apache-solr-1.4.1.zip
          chdir={{mh_parent_dir}}
+         creates=apache-solr-1.4.1
 
 - name: Applying Solr to Tomcat
-  shell: unzip apache-solr-1.4.1/example/webapps/solr.war -d {{solr_data_dir}}
+  shell: unzip apache-solr-1.4.1/example/webapps/solr.war -d apache-tomcat-7.0.5/webapps/solr
          chdir={{mh_parent_dir}}
 
 - name: Copying Engage search index
@@ -34,11 +38,15 @@
          chdir={{mh_parent_dir}}
 
 - name: Configure Tomcat
-  template: src=server.xml dest=apache-tomcat-7.0.5/conf/
+  template: src=server.xml dest={{mh_parent_dir}}/apache-tomcat-7.0.5/conf/
 
 - name: Configure Solr
   template: src=solrconfig.xml dest={{solr_data_dir}}/conf/
 
-- name: Starting Tomcat
-  shell: ./bin/startup.sh
+- name: Fix file permissions
+  shell: chmod 755 bin/*.sh
          chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
+
+- name: Starting Tomcat
+  command: ./bin/startup.sh
+           chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
