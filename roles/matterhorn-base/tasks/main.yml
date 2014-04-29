@@ -45,4 +45,6 @@
 #              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
 #  sudo: yes
 
+- include: ../../common/tasks/clone_mh.yml
+
 - include: ../../common/tasks/checkout_mh.yml
