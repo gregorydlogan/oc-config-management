@@ -9,12 +9,11 @@
   sudo: yes
 
 - name: MySQL ROOT Dumping DB
-  mysql_db: name=matterhorn login_user=root login_password= state=absent
+  mysql_db: name={{db_schema}} login_user=root login_password= state=absent
   ignore_errors: yes
 
 - name: MySQL ROOT Creating DB
-  mysql_db: name=matterhorn login_user=root login_password= state=present encoding="utf8" collation="utf8_general_ci"
+  mysql_db: name={{db_schema}} login_user=root login_password= state=present encoding="utf8" collation="utf8_general_ci"
 
 - name: MySQL ROOT Granting user permissions on DB
-  mysql_user: login_user=root login_password= name={{db_user}} password={{db_pass}} host="localhost" priv="matterhorn.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX"
-  #shell: mysql -u root -e "CREATE USER '{{db_user}}'@% IDENTIFIED BY '{{db_pass}}’; GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX ON matterhorn.* TO '{{db_user}}'@%;"
+  mysql_user: login_user=root login_password= name={{db_user}} password={{db_pass}} host="localhost" priv="{{db_schema}}.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX"

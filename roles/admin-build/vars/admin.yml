@@ -1,4 +1,2 @@
 ---
 mh_build_profile: admin,dist-stub,engage-stub,worker-stub,workspace,serviceregistry
-
-nfs_exports: testengage.usask.ca, testworker1.usask.ca, testworker2.usask.ca

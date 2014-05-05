@@ -25,6 +25,7 @@
 - name: Applying Solr to Tomcat
   shell: unzip apache-solr-1.4.1/example/webapps/solr.war -d apache-tomcat-7.0.5/webapps/solr
          chdir={{mh_parent_dir}}
+         creates=apache-tomcat-7.0.5/webapps/solr
 
 - name: Copying Engage search index
   shell: cp -rv {{mh_base_dir}}/modules/matterhorn-search-service-impl/src/main/resources/solr {{solr_data_dir}}

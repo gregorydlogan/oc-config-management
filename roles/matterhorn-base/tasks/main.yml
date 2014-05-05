@@ -47,4 +47,6 @@
 
 - include: ../../common/tasks/clone_mh.yml
 
-- include: ../../common/tasks/checkout_mh.yml
+- name: Symlinking Matterhorn
+  shell: ln -s matterhorn felix
+         chdir: {{mh_parent_dir}}

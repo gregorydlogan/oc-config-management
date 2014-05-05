@@ -1,21 +1,5 @@
 ---
 
-- name: Install NFS server
-  apt: pkg=nfs-kernel-server state=present
-  sudo: yes
-
-- name: Setup NFS Exports
-  nfsexport: path={{mh_work_dir}} clients="{{nfs_exports}}"
-  sudo: yes
-
-- name: Restart portmap
-  service: name=portmap state=restarted enabled=yes
-  sudo: yes
-
-- name: Restart NFS
-  service: name=nfs-kernel-server state=restarted enabled=yes
-  sudo: yes
-
   #Build the system
 - include: ../../common/tasks/build_mh.yml
 

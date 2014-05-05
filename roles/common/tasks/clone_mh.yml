@@ -4,5 +4,4 @@
   git: repo={{git_repo_location}}
        dest={{mh_base_dir}}
        update=yes
-#  This is busted, go figure
-#       version=origin/develop
+       version={{mh_version}}

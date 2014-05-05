@@ -8,6 +8,7 @@
     - matterhorn-base
     - matterhorn-core
     - mysql-build
+    - nfs-build
     - admin-build
     - solr-build
     - matterhorn-start
@@ -23,6 +24,7 @@
   roles:
     - matterhorn-base
     - matterhorn-core
+    - red5-build
     - engage-build
     - matterhorn-start
 
@@ -57,3 +59,19 @@
   vars_files:
     - group_vars/common.yml
     - roles/worker-build/vars/worker.yml
+
+
+- hosts: support
+  user: matterhorn
+
+  roles:
+    - matterhorn-base #Needed for Solr, for now
+    - solr-build
+    - mysql-build
+
+
+- hosts: fileserver
+  user: matterhorn
+
+  roles:
+    - nfs-build

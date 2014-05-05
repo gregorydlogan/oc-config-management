@@ -1,0 +1,6 @@
+todos:
+
+matterhorn user name (could be other than matterhorn)
+cleanup APT lines
+proper variables (different build profiles, etc)
+permissions bits

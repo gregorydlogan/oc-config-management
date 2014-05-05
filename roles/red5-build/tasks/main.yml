@@ -1,0 +1,38 @@
+---
+
+- name: Create streaming parent dir
+  shell: mkdir -p {{streaming_home}}
+  sudo: yes
+
+- name: Downloading Red5
+  get_url: url=http://red5.org/downloads/red5/1_0/red5-1.0.0.tar.gz
+           dest={{streaming_home}}/red5-1.0.0.tar.gz
+           force=no
+           mode=0644
+
+- name: Unzipping Red5
+  shell: tar xzf red5-1.0.0.tar.gz
+         chdir={{streaming_home}}
+         creates=red5-1.0.0-build-jenkins-red5-226
+
+- name: Symlinking Red5
+- name: Symlinking Matterhorn
+  shell: ln -s red5-1.0.0-build-jenkins-red5-226 red5
+         chdir: {{streaming_home}}
+
+- name: Downloading Matterhorn streaming components
+  get_url: url=https://bitbucket.org/opencast-community/matterhorn-engage-streaming/get/master.tar.gz
+           dest={{streaming_home}}/matterhorn-streaming-master.tar.gz
+           force=no
+           mode=0644
+
+- name: Unzipping Matterhorn streaming components5
+  shell: tar xzf matterhorn-streaming-master.tar.gz
+         chdir={{streaming_home}}
+         creates=opencast-community-matterhorn-engage-streaming-*
+
+- name: Symlinking Matterhorn streaming components5
+- name: Symlinking Matterhorn
+  shell: ln -s opencast-community-matterhorn-engage-streaming-* matterhorn-engage-streaming
+         chdir: {{streaming_home}}
+
