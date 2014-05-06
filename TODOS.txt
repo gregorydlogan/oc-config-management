@@ -4,3 +4,6 @@ matterhorn user name (could be other than matterhorn)
 cleanup APT lines
 proper variables (different build profiles, etc)
 permissions bits
+apache
+multiple solrs
+support for NFS that's not on the admin server

@@ -21,7 +21,7 @@
   sudo: true
 
 - name: Create MH shared dir
-  shell: mkdir -p {{mh_parent_dir}}/shared
+  shell: mkdir -p {{mh_work_dir}}
 
 #- name: Download Maven
 #  get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
@@ -47,6 +47,14 @@
 
 - include: ../../common/tasks/clone_mh.yml
 
+- name: Check if Matterhorn is symlinked
+  command: test -e felix
+           chdir={{mh_parent_dir}}
+  ignore_errors: True
+  register: felix_done
+
 - name: Symlinking Matterhorn
   shell: ln -s matterhorn felix
-         chdir: {{mh_parent_dir}}
+         chdir={{mh_parent_dir}}
+  ignore_errors: True
+  when: felix_done.rc != 0

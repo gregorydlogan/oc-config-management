@@ -5,7 +5,7 @@
   sudo: yes
 
 - name: Setup NFS Exports
-  nfsexport: path={{mh_work_dir}} clients="{{nfs_exports}}"
+  nfsexport: path={{mh_work_dir}} clients="{{nfs_exports}}" options="rw,no_subtree_check"
   sudo: yes
 
 - name: Restart portmap

@@ -1,0 +1,46 @@
+#! /bin/sh
+# For RedHat and cousins:
+# chkconfig: 2345 85 85
+# description: Red5 flash streaming server
+# processname: red5
+PROG=red5
+export RED5_HOME={{streaming_home}}/$PROG
+DAEMON=$RED5_HOME/$PROG.sh
+PIDFILE=/var/run/$PROG.pid
+LOCKFILE=/var/lock/$PROG
+RETVAL=0
+     
+case "$1" in
+    start)
+        echo -n $"Starting $PROG: "
+        $DAEMON >/dev/null 2>/dev/null &
+            RETVAL=$?
+            if [ $RETVAL -eq 0 ]; then
+                echo $! > $PIDFILE
+                touch $LOCKFILE
+                  
+            fi
+            [ $RETVAL -eq 0 ] && success $"$PROG startup" || failure $"$PROG startup"
+            echo
+        ;;
+    stop)
+        echo -n $"Shutting down $PROG: "
+        killproc -p $PIDFILE
+        RETVAL=$?
+        echo
+        [ $RETVAL -eq 0 ] && rm -f $LOCKFILE
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        ;;
+    status)
+        status $PROG -p $PIDFILE
+        RETVAL=$?
+        ;;
+    *)
+            echo $"Usage: $0 {start|stop|restart|status}"
+        RETVAL=1
+esac
+     
+exit $RETVAL

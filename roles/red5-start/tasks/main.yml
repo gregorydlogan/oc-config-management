@@ -1,0 +1,5 @@
+---
+
+- name: Start Red5
+  service: name=red5 state=restarted enabled=yes
+  sudo: yes
