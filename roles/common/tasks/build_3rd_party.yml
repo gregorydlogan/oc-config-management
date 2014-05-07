@@ -1,7 +1,7 @@
 ---
 
 - name: Check if 3rd party tools are installed
-  command: test -e {{mh_base_dir}}/docs/script/3rd_party/.done
+  command: test -e {{mh_base_dir}}/docs/scripts/3rd_party/.done
   ignore_errors: True
   register: 3rdparty_done
 

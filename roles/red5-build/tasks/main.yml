@@ -12,13 +12,19 @@
   apt: pkg=nfs-common state=present
   sudo: yes
 
+- name: Create MH parent dir
+  shell: mkdir -p {{ mh_parent_dir }}
+  sudo: yes
+
+- name: Fix MH parent dir permissions
+  file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
+  sudo: true
+
 - name: Create streaming parent dir
   shell: mkdir -p {{streaming_home}}
-  sudo: yes
 
 - name: Create MH shared dir
   shell: mkdir -p {{mh_work_dir}}
-  sudo: yes
 
   #Mount NFS
 - include: ../../common/tasks/nfs_mount.yml
@@ -40,6 +46,7 @@
 - name: Symlinking Red5
   shell: ln -s red5-1.0.0-build-jenkins-red5-226 red5
          chdir={{streaming_home}}
+         creates=red5
 
 - name: Downloading Matterhorn streaming components
   get_url: url=https://bitbucket.org/opencast-community/matterhorn-engage-streaming/get/master.tar.gz
@@ -52,12 +59,22 @@
          chdir={{streaming_home}}
          creates=opencast-community-matterhorn-engage-streaming-*
 
-- name: Symlinking Matterhorn streaming components5
+- name: Symlinking Matterhorn streaming components
   shell: ln -s opencast-community-matterhorn-engage-streaming-* matterhorn-engage-streaming
          chdir={{streaming_home}}
+         creates=matterhorn-engage-streaming
+
+- name: Building Matterhorn streaming application
+  shell: ant
+         chdir={{streaming_home}}/matterhorn-engage-streaming/for-1.0-and-newer-red5
+
+- name: Applying Matterhorn streaming application to Red5
+  shell: unzip matterhorn-engage-streaming/for-1.0-and-newer-red5/dist/*.war -d red5/webapps/matterhorn
+         chdir={{streaming_home}}
+         creates=red5/webapps/matterhorn
 
 - name: Setup Red5 Mounts
-  mount: name={{mh_streaming_dir}} src={{streaming_home}}/red5/webapps/streams state=mounted opts=bind
+  mount: name={{mh_streaming_dir}} src={{streaming_home}}/red5/webapps/matterhorn/streams fstype=none state=mounted opts=bind
   sudo: yes
 
 - name: Configure red5 init script
