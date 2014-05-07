@@ -1,5 +1,5 @@
 ---
 
-- name: Start Red5
-  service: name=red5 state=restarted enabled=yes
+- name: Setting Red5 to start on boot
+  service: name=red5 enabled=yes
   sudo: yes

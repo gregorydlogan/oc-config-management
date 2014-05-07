@@ -9,7 +9,7 @@
     - matterhorn-core
     - nfs-build
     - admin-build
-#    - matterhorn-start
+    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - roles/admin-build/vars/admin.yml
@@ -22,7 +22,7 @@
     - matterhorn-base
     - matterhorn-core
     - engage-build
-#    - matterhorn-start
+    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - roles/engage-build/vars/engage.yml
@@ -35,7 +35,7 @@
     - matterhorn-base
     - matterhorn-core
     - worker-build
-#    - matterhorn-start
+    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - roles/ingest-build/vars/ingest.yml
@@ -48,7 +48,7 @@
     - matterhorn-base
     - matterhorn-core
     - worker-build
-#    - matterhorn-start
+    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - roles/worker-build/vars/worker.yml
@@ -59,7 +59,7 @@
 
   roles:
     - red5-build
-#    - red5-start
+    - red5-start
   vars_files:
     - group_vars/common.yml
 
