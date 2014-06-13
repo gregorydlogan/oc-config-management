@@ -12,6 +12,7 @@
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
+    - group_vars/cluster.yml
     - roles/admin-build/vars/admin.yml
 
 
@@ -25,6 +26,7 @@
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
+    - group_vars/cluster.yml
     - roles/engage-build/vars/engage.yml
 
 
@@ -34,10 +36,11 @@
   roles:
     - matterhorn-base
     - matterhorn-core
-    - worker-build
+    - ingest-build
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
+    - group_vars/cluster.yml
     - roles/ingest-build/vars/ingest.yml
 
 
@@ -51,6 +54,7 @@
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
+    - group_vars/cluster.yml
     - roles/worker-build/vars/worker.yml
 
 
@@ -62,6 +66,7 @@
     - red5-start
   vars_files:
     - group_vars/common.yml
+    - group_vars/cluster.yml
 
 
 - hosts: solr
@@ -73,7 +78,7 @@
     - mysql-build
   vars_files:
     - group_vars/common.yml
-
+    - group_vars/cluster.yml
 
 - hosts: mysql
   user: matterhorn
@@ -82,7 +87,7 @@
     - mysql-build
   vars_files:
     - group_vars/common.yml
-
+    - group_vars/cluster.yml
 
 - hosts: fileserver
   user: matterhorn
@@ -91,4 +96,5 @@
     - nfs-build
   vars_files:
     - group_vars/common.yml
+    - group_vars/cluster.yml
 

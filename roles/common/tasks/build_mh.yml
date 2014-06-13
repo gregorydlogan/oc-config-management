@@ -4,5 +4,5 @@
 - include: clean_mh.yml
 
 - name: Build
-  shell: mvn clean install -DdeployTo={{mh_base_dir}} -P {{mh_build_profile}}
+  shell: mvn clean install -Dmaven.repo.local={{mh_work_dir}}/.m2 -DdeployTo={{mh_base_dir}} -P {{mh_build_profile}}
          chdir={{mh_base_dir}}

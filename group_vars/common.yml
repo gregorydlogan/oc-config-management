@@ -3,32 +3,3 @@
 git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 
 mh_version: develop
-
-mh_parent_dir: /opt/matterhorn
-mh_base_dir: "{{mh_parent_dir}}/matterhorn"
-mh_work_dir: "{{mh_parent_dir}}/shared"
-mh_streaming_dir: "{{mh_work_dir}}/streams"
-
-admin_url: http://gdl420-0.usask.ca:8080
-engage_url: http://gdl420-2.usask.ca:8080
-streaming_url: gdl420-5.usask.ca
-
-db_schema: matterhorn
-db_host: gdl420-7.usask.ca
-db_url: "jdbc:mysql://{{db_host}}/{{db_schema}}"
-db_user: matterhorn
-db_pass: matterhorn_db_passwd
-db_ddl: false
-
-is_ca: false
-
-solr_port: 8983
-engage_solr_index: "http://gdl420-3.usask.ca:{{solr_port}}"
-solr_data_dir: /opt/matterhorn/apache-tomcat-7.0.5/solr
-
-nfs_server: gdl420-0.usask.ca
-
-nfs_exports: gdl420-1.usask.ca, gdl420-2.usask.ca, gdl420-3.usask.ca, gdl420-4.usask.ca, gdl420-5.usask.ca, gdl420-6.usask.ca, gdl420-7.usask.ca
-
-streaming_home: /opt/matterhorn/streaming
-red5_home: "{{streaming_home}}/red5"
