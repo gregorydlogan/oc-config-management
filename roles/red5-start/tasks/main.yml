@@ -1,5 +1,0 @@
----
-
-- name: Setting Red5 to start on boot
-  service: name=red5 enabled=yes
-  sudo: yes

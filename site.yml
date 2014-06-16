@@ -63,7 +63,6 @@
 
   roles:
     - red5-build
-    - red5-start
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml
@@ -73,9 +72,7 @@
   user: matterhorn
 
   roles:
-    - matterhorn-base #Needed for Solr, for now
     - solr-build
-    - mysql-build
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml

@@ -1,5 +1,8 @@
 ---
 
+  #Mount NFS
+- include: ../../common/tasks/nfs_mount.yml
+
 - name: Downloading Tomcat
   get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.5-beta/bin/apache-tomcat-7.0.5.zip
            dest={{mh_parent_dir}}/apache-tomcat-7.0.5.zip
@@ -35,7 +38,7 @@
   shell: mkdir -p {{solr_data_dir}}/lib
 
 - name: Copying required Solr jar
-  shell: cp -rv {{mh_base_dir}}/modules/matterhorn-solr/target/matterhorn-solr-*.jar {{solr_data_dir}}/lib
+  shell: cp -rv {{mh_work_dir}}/.m2/repository/org/opencastproject/matterhorn-solr/{{mh_pom_version}}/matterhorn-solr-{{mh_pom_version}}.jar {{solr_data_dir}}/lib
          chdir={{mh_parent_dir}}
 
 - name: Configure Tomcat
@@ -48,6 +51,10 @@
   shell: chmod 755 bin/*.sh
          chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
 
-- name: Starting Tomcat
-  command: ./bin/startup.sh
-           chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
+- name: Symlinking Tomcat
+  command: ln -s {{mh_parent_dir}}/apache-tomcat-7.0.5/bin/startup.sh /etc/init.d/solr
+  sudo: yes
+
+- name: Restarting Solr
+  service: name=solr state=restarted
+  sudo: yes

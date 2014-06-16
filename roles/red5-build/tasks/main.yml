@@ -12,6 +12,10 @@
   apt: pkg=nfs-common state=present
   sudo: yes
 
+- name: Install unzip
+  apt: pkg=unzip state=present
+  sudo: yes
+
 - name: Create MH parent dir
   shell: mkdir -p {{ mh_parent_dir }}
   sudo: yes
@@ -79,4 +83,8 @@
 
 - name: Configure red5 init script
   template: src=red5 dest=/etc/init.d/red5
+  sudo: yes
+
+- name: Setting Red5 to start on boot
+  service: name=red5 enabled=yes
   sudo: yes
