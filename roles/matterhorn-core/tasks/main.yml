@@ -2,8 +2,22 @@
 
 - include: ../../common/tasks/checkout_mh.yml
 
+- name: Creating config directory
+  shell: ln -s {{mh_base_dir}}/etc /etc/matterhorn
+         creates=/etc/matterhorn
+  sudo: yes
+
+- name: Create logging directory
+  shell: mkdir -p /var/log/matterhorn
+         creates=/var/log/matterhorn
+  sudo: yes
+
+- name: Fix logging directory permissions
+  file: path=/var/log/matterhorn owner=matterhorn group=matterhorn state=directory recurse=true
+  sudo: true
+
 - name: Configure init scripts
-  template: src=etc-matterhorn-service.conf dest={{mh_base_dir}}/docs/scripts/init/new/
+  template: src=etc-matterhorn-service.conf dest={{mh_base_dir}}/etc/service.conf
 
 - name: Install the init scripts
   shell: ./install.sh

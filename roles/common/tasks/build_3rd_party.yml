@@ -1,7 +1,7 @@
 ---
 
 - name: Check if 3rd party tools are installed
-  command: test -e {{mh_base_dir}}/docs/scripts/3rd_party/.done
+  command: test -e {{mh_base_dir}}/docs/scripts/3rd_party/.done-linux
   ignore_errors: True
   register: thirdparty
 
@@ -10,6 +10,3 @@
        chdir={{mh_base_dir}}/docs/scripts/3rd_party
   sudo: yes
   when: thirdparty is defined and thirdparty.rc != 0
-
-- name: Marking 3rd party tools as done
-  shell: touch {{mh_base_dir}}/docs/scripts/3rd_party/.done

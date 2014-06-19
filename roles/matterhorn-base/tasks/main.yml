@@ -8,10 +8,6 @@
   apt: pkg=git-core state=present
   sudo: yes
 
-- name: Install NFS client
-  apt: pkg=nfs-common state=present
-  sudo: yes
-
 - name: Create MH parent dir
   shell: mkdir -p {{ mh_parent_dir }}
   sudo: yes

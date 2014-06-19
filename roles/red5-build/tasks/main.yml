@@ -85,6 +85,10 @@
   template: src=red5 dest=/etc/init.d/red5
   sudo: yes
 
+- name: Fixing init script permissions
+  shell: chmod a+x /etc/init.d/red5
+  sudo: yes
+
 - name: Setting Red5 to start on boot
   service: name=red5 enabled=yes
   sudo: yes

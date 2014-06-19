@@ -1,7 +1,29 @@
 ---
 
+- name: Install Java
+  apt: pkg=openjdk-7-jdk update_cache=yes state=present
+  sudo: yes
+
+- name: Install Git
+  apt: pkg=git-core state=present
+  sudo: yes
+
+- name: Install unzip
+  apt: pkg=unzip state=present
+  sudo: yes
+
+- name: Create MH parent dir
+  shell: mkdir -p {{ mh_parent_dir }}
+  sudo: yes
+
+- name: Fix MH parent dir permissions
+  file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
+  sudo: true
+
   #Mount NFS
 - include: ../../common/tasks/nfs_mount.yml
+
+- include: ../../common/tasks/clone_mh.yml
 
 - name: Downloading Tomcat
   get_url: url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.5-beta/bin/apache-tomcat-7.0.5.zip
@@ -52,7 +74,8 @@
          chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
 
 - name: Symlinking Tomcat
-  command: ln -s {{mh_parent_dir}}/apache-tomcat-7.0.5/bin/startup.sh /etc/init.d/solr
+  shell: ln -s {{mh_parent_dir}}/apache-tomcat-7.0.5/bin/startup.sh /etc/init.d/solr
+         creates=/etc/init.d/solr
   sudo: yes
 
 - name: Restarting Solr
