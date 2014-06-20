@@ -69,13 +69,12 @@
 - name: Configure Solr
   template: src=solrconfig.xml dest={{solr_data_dir}}/conf/
 
-- name: Fix file permissions
-  shell: chmod 755 bin/*.sh
-         chdir={{mh_parent_dir}}/apache-tomcat-7.0.5
+- name: Creating Solr init script
+  template: src=solr-init.sh dest=/etc/init.d/solr
+  sudo: yes
 
-- name: Symlinking Tomcat
-  shell: ln -s {{mh_parent_dir}}/apache-tomcat-7.0.5/bin/startup.sh /etc/init.d/solr
-         creates=/etc/init.d/solr
+- name: Fix file permissions
+  shell: chmod 755 /etc/init.d/solr
   sudo: yes
 
 - name: Restarting Solr

@@ -19,8 +19,9 @@ db_ddl: false
 is_ca: false
 
 solr_port: 8983
-engage_solr_index: "http://gdl420-3.usask.ca:{{solr_port}}"
-solr_data_dir: /opt/matterhorn/apache-tomcat-7.0.5/solr
+engage_solr_index: "http://gdl420-3.usask.ca:{{solr_port}}/solr"
+tomcat_dir: /opt/matterhorn/apache-tomcat-7.0.5
+solr_data_dir: "{{tomcat_dir}}/solr/"
 
 nfs_server: gdl420-0.usask.ca
 
