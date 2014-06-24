@@ -74,7 +74,7 @@
   sudo: yes
 
 - name: Fix file permissions
-  shell: chmod 755 /etc/init.d/solr
+  shell: chmod 755 /etc/init.d/solr {{solr_data_dir}}/bin/*.sh
   sudo: yes
 
 - name: Restarting Solr
