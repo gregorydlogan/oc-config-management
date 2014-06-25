@@ -78,5 +78,5 @@
   sudo: yes
 
 - name: Restarting Solr
-  service: name=solr state=restarted
+  service: name=solr state=restarted enabled=yes
   sudo: yes
