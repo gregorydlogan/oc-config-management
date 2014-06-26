@@ -50,7 +50,7 @@
 - name: Symlinking Red5
   shell: ln -s red5-1.0.0-build-jenkins-red5-226 red5
          chdir={{streaming_home}}
-         creates=red5
+         creates={{red5_home}}
 
 - name: Downloading Matterhorn streaming components
   get_url: url=https://bitbucket.org/opencast-community/matterhorn-engage-streaming/get/master.tar.gz
@@ -69,16 +69,25 @@
          creates=matterhorn-engage-streaming
 
 - name: Building Matterhorn streaming application
-  shell: ant
+  shell: ant clean war
          chdir={{streaming_home}}/matterhorn-engage-streaming/for-1.0-and-newer-red5
+  environment:
+    RED5_HOME: "{{red5_home}}"
+
+- name: Clearing any Red5 mounts
+  mount: name={{red5_home}}/webapps/matterhorn/streams src={{mh_streaming_dir}} fstype=none state=unmounted
+  sudo: yes
+
+- name: Cleaning out any old installs
+  shell: rm -rf {{red5_home}}/webapps/matterhorn
 
 - name: Applying Matterhorn streaming application to Red5
-  shell: unzip matterhorn-engage-streaming/for-1.0-and-newer-red5/dist/*.war -d red5/webapps/matterhorn
+  shell: unzip matterhorn-engage-streaming/for-1.0-and-newer-red5/dist/*.war -d {{red5_home}}/webapps/matterhorn
          chdir={{streaming_home}}
-         creates=red5/webapps/matterhorn
+         creates={{red5_home}}/webapps/matterhorn
 
-- name: Setup Red5 Mounts
-  mount: name={{streaming_home}}/red5/webapps/matterhorn/streams src={{mh_streaming_dir}} fstype=none state=mounted opts=bind
+- name: Setup Red5 mounts
+  mount: name={{red5_home}}/webapps/matterhorn/streams src={{mh_streaming_dir}} fstype=none state=mounted opts=bind
   sudo: yes
 
 - name: Configure red5 init script
