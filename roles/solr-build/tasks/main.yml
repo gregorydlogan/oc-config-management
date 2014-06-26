@@ -21,7 +21,7 @@
   sudo: true
 
   #Mount NFS
-- include: ../../common/tasks/nfs_mount.yml
+- include: ../../common/tasks/nfs_mount_ro.yml
 
 - include: ../../common/tasks/clone_mh.yml
 
