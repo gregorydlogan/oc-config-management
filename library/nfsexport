@@ -68,7 +68,7 @@ def main():
     params = module.params
     params['path'] = params['path'].strip()
 
-    client_list = params['clients'].split(',')
+    client_list = filter(None, params['clients'].split(','))
     exports = []
     for client in client_list:
         exports.append("%s(%s)" % (client, params['options']))

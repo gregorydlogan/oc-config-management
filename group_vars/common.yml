@@ -5,3 +5,29 @@ git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 #These two must match
 mh_version: r/1.5.0
 mh_pom_version: 1.5.0-SNAPSHOT
+
+mh_parent_dir: /opt/matterhorn
+mh_base_dir: "{{mh_parent_dir}}/matterhorn"
+mh_work_dir: "{{mh_parent_dir}}/work"
+mh_streaming_dir: "{{mh_work_dir}}/streams"
+
+admin_url: "http://{{groups['admin'][0]}}:8080"
+engage_url: "http://{{groups['engage'][0]}}:8080"
+streaming_url: "{{groups['streamer'][0]}}"
+
+db_schema: matterhorn
+db_host: "{{groups['mysql'][0]}}"
+db_url: "jdbc:mysql://{{db_host}}/{{db_schema}}"
+db_user: matterhorn
+db_pass: matterhorn_db_passwd
+db_ddl: false
+
+is_ca: false
+
+solr_port: 8983
+engage_solr_index: "http://{{groups['solr'][0]}}:{{solr_port}}/solr"
+tomcat_dir: /opt/matterhorn/apache-tomcat-7.0.5
+solr_data_dir: "{{tomcat_dir}}/solr/"
+
+streaming_home: /opt/matterhorn/streaming
+red5_home: "{{streaming_home}}/red5"
