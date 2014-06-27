@@ -47,6 +47,20 @@
          chdir={{mh_parent_dir}}
          creates=apache-solr-1.4.1
 
+- name: Checking if Solr exists
+  command: test -e /etc/init.d/solr
+  ignore_errors: True
+  register: solrpresent
+
+- name: Stopping Solr
+  service: name=solr state=stopped
+  sudo: yes
+  when: solrpresent is defined and solrpresent.rc != 0
+
+- name: Clearing old Solr data
+  shell: rm -rf {{solr_data_dir}} apache-tomcat-7.0.5/webapps/solr
+         chdir={{mh_parent_dir}}
+
 - name: Applying Solr to Tomcat
   shell: unzip apache-solr-1.4.1/example/webapps/solr.war -d apache-tomcat-7.0.5/webapps/solr
          chdir={{mh_parent_dir}}

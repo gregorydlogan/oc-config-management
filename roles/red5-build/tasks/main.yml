@@ -24,6 +24,16 @@
   file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
   sudo: true
 
+- name: Checking if Red5 exists
+  command: test -e /etc/init.d/red5
+  ignore_errors: True
+  register: red5present
+
+- name: Stopping Red5
+  service: name=red5 state=stopped
+  sudo: yes
+  when: red5present is defined and red5present.rc != 0
+
 - name: Create streaming parent dir
   shell: mkdir -p {{streaming_home}}
 
@@ -75,7 +85,7 @@
     RED5_HOME: "{{red5_home}}"
 
 - name: Clearing any Red5 mounts
-  mount: name={{red5_home}}/webapps/matterhorn/streams src={{mh_streaming_dir}} fstype=none state=unmounted
+  mount: name={{red5_home}}/webapps/matterhorn/streams src={{red5_home}}/webapps/matterhorn/streams fstype=none state=unmounted
   sudo: yes
 
 - name: Cleaning out any old installs
@@ -99,5 +109,5 @@
   sudo: yes
 
 - name: Setting Red5 to start on boot
-  service: name=red5 enabled=yes
+  service: name=red5 state=restarted enabled=yes
   sudo: yes
