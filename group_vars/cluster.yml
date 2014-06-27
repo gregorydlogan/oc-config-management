@@ -2,8 +2,5 @@
 
 nfs_server: "{{groups['fileserver'][0]}}"
 
-nfs_exports: 
-  "{% for host in groups['all']%}
-    {{hostvars[host]['inventory_hostname']}}, 
-  {%endfor%}"
+nfs_exports:  "{{groups['all']|join(',')}}"
 
