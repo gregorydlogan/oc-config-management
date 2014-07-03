@@ -1,6 +1,3 @@
-#[fileserver]
-#gdl420-6.usask.ca
-
 [mysql]
 gdl420-7.usask.ca
 

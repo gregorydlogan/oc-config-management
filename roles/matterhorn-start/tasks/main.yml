@@ -1,5 +1,5 @@
 ---
 
 - name: Setting Matterhorn to start on boot
-  service: name=matterhorn enabled=yes
+  service: name=matterhorn state=started enabled=yes
   sudo: yes
