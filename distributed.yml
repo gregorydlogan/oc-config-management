@@ -27,7 +27,6 @@
   roles:
     - matterhorn-base
     - matterhorn-core
-    - nfs-build
     - admin-build
     - matterhorn-start
   vars_files:
