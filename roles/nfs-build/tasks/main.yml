@@ -10,6 +10,7 @@
 
 - name: Restart portmap
   service: name=portmap state=restarted enabled=yes
+  ignore_errors: yes
   sudo: yes
 
 - name: Restart NFS
