@@ -4,13 +4,25 @@
   apt: pkg=nfs-kernel-server state=present
   sudo: yes
 
+- name: Create MH storage dir
+  shell: mkdir -p {{ mh_work_dir }}
+  sudo: yes
+
+- name: Fix MH parent dir permissions
+  file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
+  sudo: true
+
 - name: Setup NFS Exports
   nfsexport: path={{mh_work_dir}} clients="{{nfs_exports}}" options="rw,no_subtree_check"
   sudo: yes
 
+- name: Check for Portmap
+  stat: path=/etc/init.d/portmap
+  register: portmap
+
 - name: Restart portmap
   service: name=portmap state=restarted enabled=yes
-  ignore_errors: yes
+  when: portmap.stat.exists is defined and portmap.stat.exists == True
   sudo: yes
 
 - name: Restart NFS

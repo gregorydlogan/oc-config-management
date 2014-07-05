@@ -1,12 +1,11 @@
 ---
 
 - name: Check if 3rd party tools are installed
-  command: test -e {{mh_base_dir}}/docs/scripts/3rd_party/.done-linux
-  ignore_errors: True
+  stat: path={{mh_base_dir}}/docs/scripts/3rd_party/.done-linux
   register: thirdparty
 
 - name: Install 3rd party tools
   shell: ./do-all
        chdir={{mh_base_dir}}/docs/scripts/3rd_party
   sudo: yes
-  when: thirdparty is defined and thirdparty.rc != 0
+  when: thirdparty.stat.exists is defined and thirdparty.stat.exists == False

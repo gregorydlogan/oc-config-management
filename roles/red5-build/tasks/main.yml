@@ -25,14 +25,13 @@
   sudo: true
 
 - name: Checking if Red5 exists
-  command: test -e /etc/init.d/red5
-  ignore_errors: True
-  register: red5present
+  stat: path=/etc/init.d/red5
+  register: redfivepresent
 
 - name: Stopping Red5
   service: name=red5 state=stopped
+  when: redfivepresent.stat.exists is defined and redfivepresent.stat.exists == True
   sudo: yes
-  when: red5present is defined and red5present.rc != 0
 
 - name: Create streaming parent dir
   shell: mkdir -p {{streaming_home}}

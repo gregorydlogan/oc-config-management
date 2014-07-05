@@ -41,16 +41,23 @@
 #              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
 #  sudo: yes
 
+- name: Checking if Matterhorn is already installed
+  stat: path=/etc/init.d/matterhorn
+  register: matterhorn_installed
+
+- name: Stopping Matterhorn
+  service: name=matterhorn state=stopped
+  when: matterhorn_installed.stat.exists is defined and matterhorn_installed.stat.exists == True
+  sudo: yes
+
 - include: ../../common/tasks/clone_mh.yml
 
 - name: Check if Matterhorn is symlinked
-  command: test -e felix
-           chdir={{mh_parent_dir}}
-  ignore_errors: True
+  stat: path={{mh_parent_dir}}/felix
   register: felix_done
 
 - name: Symlinking Matterhorn
   shell: ln -s matterhorn felix
          chdir={{mh_parent_dir}}
   ignore_errors: True
-  when: felix_done.rc != 0
+  when: felix_done.stat.islink is defined and felix_done.stat.islink == True
