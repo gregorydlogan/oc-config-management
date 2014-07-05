@@ -3,6 +3,7 @@
 - name: Install NFS client
   apt: pkg=nfs-common state=present
   sudo: yes
+  when: nfs_server is defined
 
 - name: Setup NFS Mounts
   mount: name={{mh_work_dir}} src={{nfs_server}}:{{mh_work_dir}} fstype=nfs state=mounted opts=rw,sync

@@ -1,4 +1,7 @@
 ---
 
+  #Mount NFS
+- include: ../../common/tasks/nfs_mount.yml
+
   #Build the system
 - include: ../../common/tasks/build_mh.yml
