@@ -2,6 +2,8 @@
 
 git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 
+matterhorn_user: matterhorn
+
 #These two must match
 mh_version: r/1.5.0
 mh_pom_version: 1.5.0-SNAPSHOT
