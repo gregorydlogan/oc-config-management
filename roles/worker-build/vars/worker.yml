@@ -1,2 +1,2 @@
 ---
-mh_build_profile: worker-standalone,serviceregistry,workspace,export-worker
+mh_build_profile: worker-standalone,serviceregistry,workspace

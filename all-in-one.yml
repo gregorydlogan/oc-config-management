@@ -22,7 +22,7 @@
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
-    - roles/admin-build/vars/admin.yml
+    - roles/admin-build/vars/admin-all-in-one.yml
 
 
 - hosts: streamer
@@ -56,21 +56,7 @@
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
-    - roles/engage-build/vars/engage.yml
-
-
-- hosts: ingest
-  user: matterhorn
-
-  roles:
-    - matterhorn-base
-    - matterhorn-core
-    - ingest-build
-    - matterhorn-start
-  vars_files:
-    - group_vars/common.yml
-    - group_vars/all-in-one.yml
-    - roles/ingest-build/vars/ingest.yml
+    - roles/engage-build/vars/engage-all-in-one.yml
 
 
 - hosts: worker
@@ -84,5 +70,5 @@
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
-    - roles/worker-build/vars/worker.yml
+    - roles/worker-build/vars/worker-all-in-one.yml
 
