@@ -84,7 +84,10 @@
     RED5_HOME: "{{red5_home}}"
 
 - name: Clearing any Red5 mounts
-  mount: name={{red5_home}}/webapps/matterhorn/streams src={{red5_home}}/webapps/matterhorn/streams fstype=none state=unmounted
+# The mount module does not seem to work for *umounting* things...
+#  mount: name={{red5_home}}/webapps/matterhorn/streams src={{mh_streaming_dir}} fstype=none state=absent fstype=none
+  command: umount {{red5_home}}/webapps/matterhorn/streams
+  ignore_errors: yes
   sudo: yes
 
 - name: Cleaning out any old installs
