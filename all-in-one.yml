@@ -72,3 +72,16 @@
     - group_vars/all-in-one.yml
     - roles/worker-build/vars/worker-all-in-one.yml
 
+
+- hosts: capture
+  user: matterhorn
+
+  roles:
+    - matterhorn-base
+    - matterhorn-core
+    - capture-agent-build
+    - matterhorn-start
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/all-in-one.yml
+    - roles/capture-agent-build/vars/capture-agent-all-in-one.yml

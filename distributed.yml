@@ -96,3 +96,16 @@
     - group_vars/cluster.yml
     - roles/worker-build/vars/worker.yml
 
+
+- hosts: capture
+  user: matterhorn
+
+  roles:
+    - matterhorn-base
+    - matterhorn-core
+    - capture-agent-build
+    - matterhorn-start
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+    - roles/capture-agent-build/vars/capture-agent.yml
