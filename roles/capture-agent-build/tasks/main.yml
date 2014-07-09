@@ -1,7 +1,7 @@
 ---
 
 - name: Installing GStreamer dependencies
-  apt: pkg=libglib2.0-dev,gstreamer0.10-plugins-good,gstreamer0.10-plugins-base,gstreamer0.10-plugins-bad,gstreamer0.10-plugins-ugly  update_cache=yes state=present
+  apt: pkg=libglib2.0-dev,libgstreamer-plugins-base0.10-dev,gstreamer0.10-plugins-good,gstreamer0.10-plugins-base,gstreamer0.10-plugins-bad,gstreamer0.10-plugins-ugly  update_cache=yes state=present
   sudo: yes
 
 - name: Running ldconfig

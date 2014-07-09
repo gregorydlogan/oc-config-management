@@ -31,5 +31,7 @@ engage_solr_index: "http://{{groups['solr'][0]}}:{{solr_port}}/solr"
 tomcat_dir: /opt/matterhorn/apache-tomcat-7.0.5
 solr_data_dir: "{{tomcat_dir}}/solr/"
 
-streaming_home: /opt/matterhorn/streaming
+streaming_home: "{{mh_parent_dir}}/streaming"
 red5_home: "{{streaming_home}}/red5"
+
+m2_repo: "{{mh_work_dir}}/.m2/repository"
