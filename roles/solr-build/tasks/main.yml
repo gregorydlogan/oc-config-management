@@ -73,7 +73,7 @@
   shell: mkdir -p {{solr_data_dir}}/lib
 
 - name: Copying required Solr jar
-  shell: cp -rv {{mh_work_dir}}/.m2/repository/org/opencastproject/matterhorn-solr/{{mh_pom_version}}/matterhorn-solr-{{mh_pom_version}}.jar {{solr_data_dir}}/lib
+  shell: cp -rv {{m2_repo}}/org/opencastproject/matterhorn-solr/{{mh_pom_version}}/matterhorn-solr-{{mh_pom_version}}.jar {{solr_data_dir}}/lib
          chdir={{mh_parent_dir}}
 
 - name: Configure Tomcat
