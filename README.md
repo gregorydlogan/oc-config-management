@@ -1,29 +1,29 @@
-## Standalone Tomcat Deployment
+## Standalone Matterhorn Deployment
 
-- Requires Ansible 1.2 or newer
-- Expects CentOS/RHEL 6.x hosts
+- Requires Ansible 1.3 or newer
+- Expects Ubuntu 12.04 or 14.04 hosts
 
-These playbooks deploy a very basic implementation of Tomcat Application Server,
-version 7. To use them, first edit the "hosts" inventory file to contain the
-hostnames of the machines on which you want Tomcat deployed, and edit the 
-group_vars/tomcat-servers file to set any Tomcat configuration parameters you need.
+These playbooks deploy a full Matterhorn cluster, from source.
+To use them, first edit the "hosts" inventory file to contain the
+hostnames of the machines on which you want Matterhorn deployed, and edit the 
+group_vars files to set any Tomcat configuration parameters you need.
 
 Then run the playbook, like this:
 
-	ansible-playbook -i hosts site.yml
+	ansible-playbook -K -i $hosts_file.hosts $playbook.yml
 
-When the playbook run completes, you should be able to see the Tomcat
-Application Server running on the ports you chose, on the target machines.
+When the playbook run completes, you should be able to see Matterhorn on the 
+port 8080, on the target machines.
 
-This is a very simple playbook and could serve as a starting point for more
-complex Tomcat-based projects. 
+This playbook is *not* meant to deploy production machines, although it could
+easily form the basis of a playbook which does.
 
 ### Ideas for Improvement
 
 Here are some ideas for ways that these playbooks could be extended:
 
-- Write a playbook to deploy an actual application into the server.
-- Deploy Tomcat clustered with a load balancer in front.
-
-We would love to see contributions and improvements, so please fork this
-repository on GitHub and send us your changes via pull requests.
+- Support for CentOS/RHEL
+- Install Apache proxies
+- Enable multiple Solr cluster (for services other than search)
+- Set the username from a variable
+- Clean up the packaging (apt) lines

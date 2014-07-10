@@ -1,7 +1,0 @@
-todos:
-
-matterhorn user name (could be other than matterhorn)
-cleanup APT lines
-apache
-multiple solrs
-build from scratch (deploying ssh keys?)
