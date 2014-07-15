@@ -18,6 +18,10 @@ port 8080, on the target machines.
 This playbook is *not* meant to deploy production machines, although it could
 easily form the basis of a playbook which does.
 
+## Detailed Docs
+
+More detailed docs can be found at https://bitbucket.org/opencast-community/configuration-management/src/master/docs.md
+
 ### Ideas for Improvement
 
 Here are some ideas for ways that these playbooks could be extended:
@@ -25,5 +29,4 @@ Here are some ideas for ways that these playbooks could be extended:
 - Support for CentOS/RHEL
 - Install Apache proxies
 - Enable multiple Solr cluster (for services other than search)
-- Set the username from a variable
 - Clean up the packaging (apt) lines
