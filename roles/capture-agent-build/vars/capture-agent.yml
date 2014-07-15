@@ -1,4 +1,4 @@
 ---
 mh_build_profile: capture,serviceregistry-stub
 
-is_ca: false
+is_ca: true
