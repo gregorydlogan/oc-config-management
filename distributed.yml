@@ -2,7 +2,7 @@
 # This playbook deploys a full Matterhorn cluster
 
 - hosts: fileserver
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - nfs-build
@@ -12,7 +12,7 @@
 
 
 - hosts: mysql
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - mysql-build
@@ -22,7 +22,7 @@
 
 
 - hosts: admin
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - matterhorn-base
@@ -36,7 +36,7 @@
 
 
 - hosts: streamer
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - red5-build
@@ -46,7 +46,7 @@
 
 
 - hosts: solr
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - solr-build
@@ -56,7 +56,7 @@
 
 
 - hosts: engage
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - matterhorn-base
@@ -70,7 +70,7 @@
 
 
 - hosts: ingest
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - matterhorn-base
@@ -84,7 +84,7 @@
 
 
 - hosts: worker
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - matterhorn-base
@@ -98,7 +98,7 @@
 
 
 - hosts: capture
-  user: matterhorn
+  user: "{{matterhorn_user}}"
 
   roles:
     - matterhorn-base
