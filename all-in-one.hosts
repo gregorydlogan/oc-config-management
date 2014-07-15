@@ -1,26 +1,26 @@
 [fileserver]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [mysql]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [admin]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [streamer]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [solr]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [worker]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [engage]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [ingest]
-gdl420-6.usask.ca
+all-in-one.example.org
 
 [capture]
-gdl420-6.usask.ca
+all-in-one.example.org

@@ -1,26 +1,25 @@
 [fileserver]
-gdl420-0.usask.ca
+admin.example.org
 
 [mysql]
-gdl420-0.usask.ca
+admin.example.org
 
 [admin]
-gdl420-0.usask.ca
+admin.example.org
 
 [streamer]
-gdl420-2.usask.ca
+engage.example.org
 
 [solr]
-gdl420-2.usask.ca
+engage.example.org
 
 [worker]
-gdl420-1.usask.ca
+worker.example.org
 
 [engage]
-gdl420-2.usask.ca
+engage.example.org
 
 [ingest]
-gdl420-3.usask.ca
 
 [capture]
-gdl420-4.usask.ca
+capture.example.org
