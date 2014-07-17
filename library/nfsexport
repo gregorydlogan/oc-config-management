@@ -81,6 +81,8 @@ def main():
         # Check if the parameters match an export which is already
         # defined
         for i, line in enumerate(current_exports):
+            if '' == line.strip():
+              continue
             path = line.split()[0].strip()
             if path == params['path']:
                 if line.split(' ', 1)[1].strip() == clients:
