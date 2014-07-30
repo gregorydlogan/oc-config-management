@@ -1,0 +1,29 @@
+---
+
+- name: Install Apache
+  apt: pkg=apache2 state=present
+  sudo: yes
+
+- name: Configure Apache proxying
+  template: src=matterhorn.conf dest=/etc/apache2/sites-available/matterhorn
+  sudo: yes
+
+#- name: Configure Apache log availability
+#  template: src=alias.conf dest=/etc/apache2/mods-available/alias.conf
+#  sudo: yes
+
+- name: Enabling Apache proxy
+  shell: a2enmod proxy && a2enmod proxy_http
+  sudo: yes
+
+- name: Disabling default site
+  shell: a2dissite 000-default
+  sudo: yes
+
+- name: Enabling Matterhorn site
+  shell: a2ensite matterhorn
+  sudo: yes
+
+- name: Restarting Apache
+  service: name=apache2 state=restarted
+  sudo: yes
