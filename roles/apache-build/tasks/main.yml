@@ -5,7 +5,7 @@
   sudo: yes
 
 - name: Configure Apache proxying
-  template: src=matterhorn.conf dest=/etc/apache2/sites-available/matterhorn
+  template: src=matterhorn.conf dest=/etc/apache2/sites-available/matterhorn.conf
   sudo: yes
 
 #- name: Configure Apache log availability
@@ -21,7 +21,7 @@
   sudo: yes
 
 - name: Enabling Matterhorn site
-  shell: a2ensite matterhorn
+  shell: a2ensite matterhorn || a2ensite matterhorn.conf
   sudo: yes
 
 - name: Restarting Apache
