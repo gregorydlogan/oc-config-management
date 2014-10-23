@@ -27,6 +27,5 @@ More detailed docs can be found at https://bitbucket.org/opencast-community/conf
 Here are some ideas for ways that these playbooks could be extended:
 
 - Support for CentOS/RHEL
-- Install Apache proxies
 - Enable multiple Solr cluster (for services other than search)
 - Clean up the packaging (apt) lines
