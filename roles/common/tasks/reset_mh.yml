@@ -1,0 +1,7 @@
+---
+
+- name: Reset Matterhorn data directory
+  shell: rm -rf {{mh_parent_dir}}/work/archive/ {{mh_parent_dir}}/work/files/* {{mh_parent_dir}}/work/inbox* {{mh_parent_dir}}/work/streams/* {{mh_parent_dir}}/work/workspace/**
+
+- name: Reset Matterhorn log
+  shell: rm -rf /var/log/matterhorn/*

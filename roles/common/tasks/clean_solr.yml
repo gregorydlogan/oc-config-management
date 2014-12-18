@@ -1,0 +1,8 @@
+---
+
+- name: Shut down Solr
+  service: name=solr state=stopped enabled=yes
+  sudo: yes
+
+- name: Clearing old Solr data
+  shell: rm -rf {{solr_data_dir}}/index
