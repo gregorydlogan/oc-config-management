@@ -1,5 +1,8 @@
 ---
 
+- name: Pushing SSH configs
+  copy: src=../../../group_vars/ssh/ dest=/home/{{matterhorn_user}}/.ssh mode=600
+
 - name: Checkout Matterhorn
   git: repo={{git_repo_location}}
        dest={{mh_base_dir}}
