@@ -41,6 +41,19 @@
 #              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
 #  sudo: yes
 
+- name: Adding M2 repo path to environment
+  lineinfile: dest=/home/{{matterhorn_user}}/.bash_aliases
+              state=present
+              create=yes
+              regexp='export M2_REPO=.*$'
+              line="export M2_REPO={{m2_repo}}"
+
+- name: Creating M2 directory
+  shell: mkdir -p /home/{{matterhorn_user}}/.m2
+
+- name: Symlinking M2 repository
+  shell: ln -s {{m2_repo}} repository
+
 - name: Checking if Matterhorn is already installed
   stat: path=/etc/init.d/matterhorn
   register: matterhorn_installed
