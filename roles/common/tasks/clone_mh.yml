@@ -8,3 +8,4 @@
        dest={{mh_base_dir}}
        update=yes
        version={{mh_version}}
+       depth=1
