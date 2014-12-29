@@ -8,5 +8,5 @@
   sudo: true
 
 - name: Build
-  shell: MAVEN_OPTS="-Xms256m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m" mvn clean install -DdeployTo={{mh_base_dir}} -P {{mh_build_profile}}
+  shell: MAVEN_OPTS="{{maven_opts}}" mvn clean install -DdeployTo={{mh_base_dir}} -P {{mh_build_profile}} -Dcheckstyles.skip={{checkstyle_skip}}
          chdir={{mh_base_dir}}
