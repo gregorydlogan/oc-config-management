@@ -7,6 +7,12 @@
   file: path={{mh_parent_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_user}}" state=directory recurse=true
   sudo: true
 
-- name: Build
-  shell: MAVEN_OPTS="{{maven_opts}}" mvn clean install -DdeployTo={{mh_base_dir}} -P {{mh_build_profile}} -Dcheckstyles.skip={{checkstyle_skip}}
+- name: Build with tests
+  shell: MAVEN_OPTS="{{maven_opts}}" mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}"
          chdir={{mh_base_dir}}
+  when: not skip_tests
+
+- name: Build without tests
+  shell: MAVEN_OPTS="{{maven_opts}}" mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}" -DskipTests
+         chdir={{mh_base_dir}}
+  when: skip_tests
