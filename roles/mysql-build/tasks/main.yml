@@ -8,6 +8,25 @@
   apt: pkg=python-mysqldb state=present
   sudo: yes
 
+- name: Install Git
+  apt: pkg=git-core state=present
+  sudo: yes
+
+- name: Create MH parent dir
+  shell: mkdir -p {{ mh_parent_dir }}
+  sudo: yes
+
+- name: Fix MH parent dir permissions
+  file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
+  sudo: true
+
+- name: Create MH shared dir
+  shell: mkdir -p {{mh_work_dir}}
+
+- include: ../../common/tasks/clone_mh.yml
+
+- include: ../../common/tasks/checkout_mh.yml
+
 - name: MySQL ROOT Dumping DB
   mysql_db: name={{db_schema}} login_user=root login_password= state=absent
   ignore_errors: yes
@@ -15,11 +34,8 @@
 - name: MySQL ROOT Creating DB
   mysql_db: name={{db_schema}} login_user=root login_password= state=present encoding="utf8" collation="utf8_general_ci"
 
-- name: Downloading MySQL schema
-  get_url: url=https://bitbucket.org/opencast-community/matterhorn/raw/{{mh_version}}/docs/scripts/ddl/mysql5.sql dest=/tmp/
-
 - name: Applying MySQL schema
-  mysql_db: name={{db_schema}} login_user=root login_password= state=import target=/tmp/mysql5.sql
+  mysql_db: name={{db_schema}} login_user=root login_password= state=import target={{mh_base_dir}}/docs/scripts/ddl/mysql5.sql
 
 - name: MySQL ROOT Granting user permissions on DB
   mysql_user: login_user=root login_password= name={{db_user}} password={{db_pass}} host="%" priv="{{db_schema}}.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX"

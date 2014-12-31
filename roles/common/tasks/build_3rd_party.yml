@@ -4,8 +4,12 @@
   stat: path={{mh_base_dir}}/docs/scripts/3rd_party/.done-linux
   register: thirdparty
 
+#- name: Copy 3rd party tools to build area
+#  command:  cp -r {{mh_base_dir}}/docs/scripts/3rd_party {{mh_work_dir}}/.3rd_party
+#  when: thirdparty.stat.exists is defined and thirdparty.stat.exists == False
+
 - name: Install 3rd party tools
   shell: ./do-all
-       chdir={{mh_base_dir}}/docs/scripts/3rd_party
+       chdir={{mh_base_dir}}/docs/scripts/3rd_party/
   sudo: yes
   when: thirdparty.stat.exists is defined and thirdparty.stat.exists == False

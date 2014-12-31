@@ -35,3 +35,7 @@ streaming_home: "{{mh_parent_dir}}/streaming"
 red5_home: "{{streaming_home}}/red5"
 
 m2_repo: "{{mh_work_dir}}/.m2/repository"
+maven_opts: "-Xms256m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dmaven.repo.local={{m2_repo}}"
+
+checkstyle_skip: false
+skip_tests: false

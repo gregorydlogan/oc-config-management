@@ -41,6 +41,13 @@
 #              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
 #  sudo: yes
 
+- name: Configuring Maven for Matterhorn
+  lineinfile: dest=/home/{{matterhorn_user}}/.bash_aliases
+              state=present
+              create=yes
+              regexp='export MAVEN_OPTS=.*$'
+              line='export MAVEN_OPTS="{{maven_opts}}"'
+
 - name: Checking if Matterhorn is already installed
   stat: path=/etc/init.d/matterhorn
   register: matterhorn_installed
