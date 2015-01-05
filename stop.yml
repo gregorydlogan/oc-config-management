@@ -8,7 +8,6 @@
     - matterhorn-stop
   vars_files:
     - group_vars/common.yml
-    - group_vars/cluster.yml
 
 
 - hosts: solr
@@ -18,5 +17,4 @@
     - solr-stop
   vars_files:
     - group_vars/common.yml
-    - group_vars/cluster.yml
 

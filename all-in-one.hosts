@@ -24,3 +24,11 @@ all-in-one.example.org
 
 [capture]
 all-in-one.example.org
+
+
+[matterhorn:children]
+admin
+worker
+engage
+ingest
+capture

@@ -8,7 +8,15 @@
     - solr-start
   vars_files:
     - group_vars/common.yml
-    - group_vars/cluster.yml
+
+
+- hosts: admin
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - matterhorn-start
+  vars_files:
+    - group_vars/common.yml
 
 
 - hosts: matterhorn
@@ -18,5 +26,4 @@
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
-    - group_vars/cluster.yml
 

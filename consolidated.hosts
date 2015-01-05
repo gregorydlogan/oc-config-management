@@ -25,8 +25,8 @@ engage.example.org
 
 
 [matterhorn:children]
-capture
-engage
-worker
-ingest
 admin
+worker
+engage
+ingest
+capture
