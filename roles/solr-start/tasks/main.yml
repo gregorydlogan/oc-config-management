@@ -1,5 +1,5 @@
 ---
 
 - name: Starting Solr
-  service: name=solr state=started
+  service: name=solr state=restarted
   sudo: yes
