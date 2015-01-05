@@ -1,0 +1,5 @@
+---
+
+- name: Starting Solr
+  service: name=solr state=started
+  sudo: yes

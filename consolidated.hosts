@@ -22,4 +22,11 @@ engage.example.org
 [ingest]
 
 [capture]
-capture.example.org
+
+
+[matterhorn:children]
+capture
+engage
+worker
+ingest
+admin

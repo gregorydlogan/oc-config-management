@@ -1,49 +1,18 @@
 ---
 # This playbook resets a full Matterhorn cluster
 
-- hosts: engage
-  user: "{{matterhorn_user}}"
-
-  roles:
-    - matterhorn-stop
-  vars_files:
-    - group_vars/common.yml
-    - group_vars/all-in-one.yml
-    - roles/engage-build/vars/engage-all-in-one.yml
-
-
-- hosts: worker
-  user: "{{matterhorn_user}}"
-
-  roles:
-    - matterhorn-stop
-  vars_files:
-    - group_vars/common.yml
-    - group_vars/all-in-one.yml
-    - roles/worker-build/vars/worker-all-in-one.yml
-
-
-- hosts: capture
-  user: "{{matterhorn_user}}"
-
-  roles:
-    - matterhorn-stop
-    - matterhorn-clean
-  vars_files:
-    - group_vars/common.yml
-    - group_vars/all-in-one.yml
-    - roles/capture-agent-build/vars/capture-agent-all-in-one.yml
+- include: stop.yml
 
 - hosts: admin
   user: "{{matterhorn_user}}"
 
   roles:
-    - matterhorn-stop
     - matterhorn-clean
   vars_files:
     - group_vars/common.yml
-    - group_vars/all-in-one.yml
-    - roles/admin-build/vars/admin-all-in-one.yml
+    - group_vars/cluster.yml
+    - roles/admin-build/vars/admin.yml
+
 
 - hosts: solr
   user: "{{matterhorn_user}}"
@@ -52,5 +21,14 @@
     - solr-clean
   vars_files:
     - group_vars/common.yml
-    - group_vars/all-in-one.yml
+    - group_vars/cluster.yml
 
+
+- hosts: mysql
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - mysql-clean
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml

@@ -1,0 +1,5 @@
+---
+
+- name: Stopping Solr
+  service: name=solr state=stopped
+  sudo: yes

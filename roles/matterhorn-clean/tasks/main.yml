@@ -1,5 +1,3 @@
 ---
 
 - include: ../../common/tasks/reset_mh.yml
-
-- include: ../../common/tasks/clean_db.yml

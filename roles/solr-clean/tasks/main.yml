@@ -1,7 +1,3 @@
 ---
 
-- name: Stopping Solr
-  service: name=solr state=stopped
-  sudo: yes
-
 - include: ../../common/tasks/clean_solr.yml

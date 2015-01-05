@@ -13,12 +13,12 @@ PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
 start() {
  cd {{tomcat_dir}}
- sh {{tomcat_dir}}/bin/catalina.sh start
+ sudo -u {{matterhorn_user}} sh {{tomcat_dir}}/bin/catalina.sh start
 }
 
 stop() {
  cd {{tomcat_dir}}
- sh {{tomcat_dir}}/bin/catalina.sh stop
+ sudo -u {{matterhorn_user}} sh {{tomcat_dir}}/bin/catalina.sh stop
 }
 
 case $1 in
