@@ -19,7 +19,6 @@
     - matterhorn-core
     - admin-build
     - apache-build
-    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -54,7 +53,6 @@
     - matterhorn-core
     - engage-build
     - apache-build
-    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -69,7 +67,6 @@
     - matterhorn-core
     - worker-build
     - apache-build
-    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -84,7 +81,6 @@
     - matterhorn-core
     - capture-agent-build
     - apache-build
-    - matterhorn-start
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
