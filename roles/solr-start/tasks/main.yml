@@ -3,3 +3,6 @@
 - name: Starting Solr
   service: name=solr state=restarted
   sudo: yes
+
+#- name: Waiting on Solr to be available
+#  wait_for: host=http://{{ inventory_hostname }} port={{ solr_port }} search_regex="Welcome to Matterhorn"

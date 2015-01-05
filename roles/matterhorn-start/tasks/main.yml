@@ -3,3 +3,13 @@
 - name: Setting Matterhorn to start on boot
   service: name=matterhorn state=started enabled=yes
   sudo: yes
+
+- name: Waiting on Matterhorn to be available
+  wait_for: port=8080
+
+- name: Waiting until Matterhorn page contains `Welcome to Matterhorn` string
+  uri: url=http://{{ inventory_hostname }} return_content=true
+  register: response
+  until: "'Welcome to Matterhorn' in response.content"
+  delay: 10
+  retries: 6
