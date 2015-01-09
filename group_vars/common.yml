@@ -40,3 +40,4 @@ maven_opts: "-Xms256m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dmaven.rep
 checkstyle_skip: false
 skip_tests: false
 do_build: true
+build_thirdparty: true

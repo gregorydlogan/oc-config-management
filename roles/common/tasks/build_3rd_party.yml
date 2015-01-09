@@ -12,4 +12,4 @@
   shell: ./do-all
        chdir={{mh_base_dir}}/docs/scripts/3rd_party/
   sudo: yes
-  when: thirdparty.stat.exists is defined and thirdparty.stat.exists == False
+  when: build_thirdparty and thirdparty.stat.exists is defined and thirdparty.stat.exists == False
