@@ -10,6 +10,8 @@
 - name: Waiting until Matterhorn page contains `Welcome to Matterhorn` string
   uri: url=http://{{ inventory_hostname }} return_content=true
   register: response
-  until: "'Welcome to Matterhorn' in response.content"
-  delay: 10
-  retries: 6
+  ignore_errors: True
+  until: response.content is defined and response.content | search("Welcome to Matterhorn")
+  delay: 30
+  retries: 10
+
