@@ -1,5 +1,9 @@
 ---
 
+- name: Install httplib2
+  apt: pkg=python-httplib2 state=present
+  sudo: yes
+
 - name: Setting Matterhorn to start on boot
   service: name=matterhorn state=started enabled=yes
   sudo: yes
@@ -10,8 +14,7 @@
 - name: Waiting until Matterhorn page contains `Welcome to Matterhorn` string
   uri: url=http://{{ inventory_hostname }} return_content=true
   register: response
-  ignore_errors: True
   until: response.content is defined and response.content | search("Welcome to Matterhorn")
-  delay: 30
+  delay: 10
   retries: 10
 
