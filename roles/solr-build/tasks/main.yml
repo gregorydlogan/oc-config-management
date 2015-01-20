@@ -82,6 +82,12 @@
 - name: Configure Solr
   template: src=solrconfig.xml dest={{solr_data_dir}}/conf/
 
+- name: Creating Tomcat configuration directory
+  shell: mkdir -p {{mh_parent_dir}}/apache-tomcat-7.0.5/conf/Catalina/localhost/
+
+- name: Configure Tomcat Solr configuration
+  template: src=solr.xml dest={{mh_parent_dir}}/apache-tomcat-7.0.5/conf/Catalina/localhost/
+
 - name: Creating Solr init script
   template: src=solr-init.sh dest=/etc/init.d/solr
   sudo: yes
