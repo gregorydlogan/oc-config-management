@@ -15,7 +15,6 @@ mh_streaming_dir: "{{mh_work_dir}}/streams"
 
 admin_url: "http://{{groups['admin'][0]}}"
 engage_url: "http://{{groups['engage'][0]}}"
-streaming_url: "rtmp://{{groups['streamer'][0]}}/matterhorn-engage"
 
 db_schema: matterhorn
 db_host: "{{groups['mysql'][0]}}"
