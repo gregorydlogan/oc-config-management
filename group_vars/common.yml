@@ -1,42 +1,67 @@
 ---
 
+#The location of the Git repo you want to fetch
+#Note: If this is a protected repository you will need to make it ssh accessible, and populate the ssh directory in group_vars with an appropriate deployment key and known hosts file
 git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 
+#The user to run the Matterhorn service(s) as.  This includes any Solr or Red5 instances.
 matterhorn_user: matterhorn
 
 #These two must match
+#The git branch/tag to check out.
 mh_version: 1.5.1
+#The pom version within that branch/tag
 mh_pom_version: 1.5.1
 
+#The parent directory for all Matterhorn related services
 mh_parent_dir: /opt/matterhorn
+#Where to store Matterhorn itself
 mh_base_dir: "{{mh_parent_dir}}/matterhorn"
+#Where to store Matterhorn's data.  Note: this is also the NFS mount point, if applicable
 mh_work_dir: "{{mh_parent_dir}}/work"
+#Where to store Matterhorn's streams.  This is used by the streaming servers, if any.
 mh_streaming_dir: "{{mh_work_dir}}/streams"
 
+#The admin URL.  This is the URL you use to access the admin UI
 admin_url: "http://{{groups['admin'][0]}}"
+#The engage URL.  This is the URL you use to access the engage UI
 engage_url: "http://{{groups['engage'][0]}}"
 
+#The database schema's name
 db_schema: matterhorn
+#The database server
 db_host: "{{groups['mysql'][0]}}"
+#The full URL of the database server
 db_url: "jdbc:mysql://{{db_host}}/{{db_schema}}"
+#The database user
 db_user: matterhorn
+#The database password
 db_pass: matterhorn_db_passwd
-db_ddl: false
 
-is_ca: false
-
+#The engage solr server's port
 solr_port: 8983
+#The engage solr server URL
 engage_solr_index: "http://{{groups['solr'][0]}}:{{solr_port}}/solr"
+#The engage solr server's directory
 tomcat_dir: /opt/matterhorn/apache-tomcat-7.0.5
+#Where to store the engage solr data
 solr_data_dir: "{{tomcat_dir}}/solr/"
 
+#Where to store the streaming server application
 streaming_home: "{{mh_parent_dir}}/streaming"
+#Where to store the red5
 red5_home: "{{streaming_home}}/red5"
 
+#Where to store the Maven repository
 m2_repo: "{{mh_work_dir}}/.m2/repository"
+#The default Maven options.
 maven_opts: "-Xms256m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dmaven.repo.local={{m2_repo}}"
 
+#Set to true to skip checkstyles during build
 checkstyle_skip: false
+#Set to tru to skip tests during build
 skip_tests: false
+#Set to false to skip building entirely (just reset the configuration files)
 do_build: true
+#Set to false to skip building the 3rd party tools.
 build_thirdparty: true

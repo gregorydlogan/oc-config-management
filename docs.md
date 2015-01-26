@@ -1,7 +1,7 @@
 ## Ansible Deployment Scripts
 
 * Requires Ansible 1.3 or newer
-* Expects Ubuntu 12.04 or 14.04 hosts
+* Expects Ubuntu 12.04 or 14.04 hosts, may work on Debian hosts
 
 ### Background
 
