@@ -13,10 +13,12 @@ Then run the playbook, like this:
 	ansible-playbook -K -i $hosts_file.hosts $playbook.yml
 
 When the playbook run completes, you should be able to see Matterhorn on the 
-port 8080, on the target machines.
+port 80, on the target machines.
 
 This playbook is *not* meant to deploy production machines, although it could
 easily form the basis of a playbook which does.
+
+If you are using a private repository and it is available via SSH, you can use the group_vars/ssh directory to push an appropriate deployment key and known\_hosts file so that cloning on the target machines functions as expected.  Just place the files in that directory and run the playbooks.
 
 ## Detailed Docs
 

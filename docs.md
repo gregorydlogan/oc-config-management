@@ -45,7 +45,7 @@ This means that the _matterhorn_ user should be used to run all of roles listed,
 
 #### Variables
 
-At this point we delve into variables.  For the most part you should not need to modify the variables aside from the mh\_version and mh\_pom\_version variables, but for completeness we will examine what the various variable files do.  Ansible's variable files have an inheritance structure, which flows from global variables (group\_vars/\*.yml), to role variables (roles/\*/vars/\*), to task variables (items within roles/\*/tasks/\*).  For instance, the global _common.yml_ file defines _is\_ca_ to be false, but in the _capture-agent-build_ role we redefine it to true.
+At this point we delve into variables.  For the most part you should not need to modify the variables aside from the mh\_version and mh\_pom\_version variables, but for completeness we will examine what the various variable files do.  Ansible's variable files have an inheritance structure, which flows from global variables (group\_vars/\*.yml), to role variables (roles/\*/vars/\*), to task variables (items within roles/\*/tasks/\*).
 
 ### Extending this codebase (Advanced)
 
