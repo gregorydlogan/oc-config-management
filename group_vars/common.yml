@@ -31,6 +31,10 @@ engage_url: "http://{{groups['engage'][0]}}"
 db_schema: matterhorn
 #The database server
 db_host: "{{groups['mysql'][0]}}"
+#True to generate the DB tables on startup, false use the schema below
+db_ddl: false
+#The database schema location
+db_schema_location: "{{mh_base_dir}}/docs/scripts/ddl/mysql5.sql"
 #The full URL of the database server
 db_url: "jdbc:mysql://{{db_host}}/{{db_schema}}"
 #The database user

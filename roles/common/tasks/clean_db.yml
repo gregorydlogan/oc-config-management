@@ -1,5 +1,13 @@
 ---
 
+- name: Ensuring MySQL is installed
+  apt: pkg=mysql-server update_cache=yes state=present
+  sudo: yes
+
+- name: Ensuring Python MySQLdb module is installed
+  apt: pkg=python-mysqldb state=present
+  sudo: yes
+
 - name: MySQL ROOT Dumping DB
   mysql_db: name={{db_schema}} login_user=root login_password= state=absent
   ignore_errors: yes
@@ -7,5 +15,10 @@
 - name: MySQL ROOT Creating DB
   mysql_db: name={{db_schema}} login_user=root login_password= state=present encoding="utf8" collation="utf8_general_ci"
 
+- name: Checking if DDL exists
+  stat: path={{db_schema_location}}
+  when: not db_ddl
+
 - name: Applying MySQL schema
-  mysql_db: name={{db_schema}} login_user=root login_password= state=import target={{mh_base_dir}}/docs/scripts/ddl/mysql5.sql
+  mysql_db: name={{db_schema}} login_user=root login_password= state=import target={{db_schema_location}}
+  when: not db_ddl

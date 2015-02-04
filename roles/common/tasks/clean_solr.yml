@@ -1,8 +1,6 @@
 ---
 
-- name: Shut down Solr
-  service: name=solr state=stopped enabled=yes
-  sudo: yes
+- include: ../../solr-stop/tasks/main.yml
 
 - name: Clearing old Solr data
   shell: rm -rf {{solr_data_dir}}/index
