@@ -1,0 +1,77 @@
+---
+
+- name: Install Git
+  apt: pkg=git update_cache=yes state=present
+  sudo: yes
+
+- name: Install PCRE library
+  apt: pkg=libpcre3-dev state=present
+  sudo: yes
+
+- name: Install OpenSSL development headers
+  apt: pkg=libssl-dev state=present
+  sudo: yes
+
+- name: Create MH parent dir
+  shell: mkdir -p {{ mh_parent_dir }}
+  sudo: yes
+
+- name: Fix MH parent dir permissions
+  file: path={{mh_parent_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_user}}" state=directory recurse=true
+  sudo: true
+
+- name: Checking if nginx exists
+  stat: path=/etc/init.d/nginx
+  register: nginxpresent
+
+- name: Stopping nginx
+  service: name=nginx state=stopped
+  when: nginxpresent.stat.exists is defined and nginxpresent.stat.exists == True
+  sudo: yes
+
+- name: Create streaming parent dir
+  shell: mkdir -p {{streaming_home}}
+
+- name: Create MH shared dir
+  shell: mkdir -p {{mh_work_dir}}
+
+  #Mount NFS
+- include: ../../common/tasks/nfs_mount.yml
+
+- name: Create MH streams dir
+  shell: mkdir -p {{mh_streaming_dir}}
+
+- name: Downloading nginx
+  get_url: url=http://nginx.org/download/nginx-1.2.4.tar.gz
+           dest={{streaming_home}}/nginx-1.2.4.tar.gz
+           force=no
+           mode=0644
+
+- name: Unzipping nginx
+  shell: tar xzf nginx-1.2.4.tar.gz
+         chdir={{streaming_home}}
+         creates=nginx-1.2.4
+
+- name: Downloading RTMP module for nginx
+  git: repo=https://github.com/arut/nginx-rtmp-module
+       dest={{streaming_home}}/nginx-rtmp-module
+       update=yes
+
+- name: Building nginx
+  shell: ./configure --add-module={{streaming_home}}/nginx-rtmp-module --prefix={{streaming_home}}/nginx
+         chdir={{streaming_home}}/nginx-1.2.4
+
+- name: Configuring nginx
+  template: src=nginx.conf dest={{streaming_home}}/nginx/conf/nginx.conf
+
+- name: Configuring nginx init script
+  template: src=nginx dest=/etc/init.d/nginx
+  sudo: yes
+
+- name: Fixing init script permissions
+  shell: chmod a+x /etc/init.d/nginx
+  sudo: yes
+
+- name: Setting nginx to start on boot
+  service: name=nginx state=started enabled=yes
+  sudo: yes

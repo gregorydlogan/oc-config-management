@@ -4,7 +4,7 @@
 #Note: If this is a protected repository you will need to make it ssh accessible, and populate the ssh directory in group_vars with an appropriate deployment key and known hosts file
 git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 
-#The user to run the Matterhorn service(s) as.  This includes any Solr or Red5 instances.
+#The user to run the Matterhorn service(s) as.  This includes any Solr or nginx instances.
 matterhorn_user: matterhorn
 
 #These two must match
@@ -53,8 +53,8 @@ solr_data_dir: "{{tomcat_dir}}/solr/"
 
 #Where to store the streaming server application
 streaming_home: "{{mh_parent_dir}}/streaming"
-#Where to store the red5
-red5_home: "{{streaming_home}}/red5"
+#Where to store nginx
+nginx_home: "{{streaming_home}}/nginx"
 
 #Where to store the Maven repository
 m2_repo: "{{mh_work_dir}}/.m2/repository"

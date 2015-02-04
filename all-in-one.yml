@@ -18,7 +18,7 @@
     - matterhorn-base
     - matterhorn-core
     - admin-build
-    - apache-build
+    - nginx-build
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -29,7 +29,7 @@
   user: "{{matterhorn_user}}"
 
   roles:
-    - red5-build
+    - nginx-build
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -52,7 +52,7 @@
     - matterhorn-base
     - matterhorn-core
     - engage-build
-    - apache-build
+    - nginx-build
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -66,7 +66,7 @@
     - matterhorn-base
     - matterhorn-core
     - worker-build
-    - apache-build
+    - nginx-build
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
@@ -80,7 +80,7 @@
     - matterhorn-base
     - matterhorn-core
     - capture-agent-build
-    - apache-build
+    - nginx-build
   vars_files:
     - group_vars/common.yml
     - group_vars/all-in-one.yml
