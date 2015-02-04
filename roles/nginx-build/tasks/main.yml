@@ -12,6 +12,10 @@
   apt: pkg=libssl-dev state=present
   sudo: yes
 
+- name: Install build tools
+  apt: pkg=build-essential state=present
+  sudo: yes
+
 - name: Create MH parent dir
   shell: mkdir -p {{ mh_parent_dir }}
   sudo: yes
@@ -57,8 +61,16 @@
        dest={{streaming_home}}/nginx-rtmp-module
        update=yes
 
-- name: Building nginx
+- name: Preparing to build nginx
   shell: ./configure --add-module={{streaming_home}}/nginx-rtmp-module --prefix={{streaming_home}}/nginx
+         chdir={{streaming_home}}/nginx-1.2.4
+
+- name: Building nginx
+  shell: make
+         chdir={{streaming_home}}/nginx-1.2.4
+
+- name: Installing nginx
+  shell: make install
          chdir={{streaming_home}}/nginx-1.2.4
 
 - name: Configuring nginx
