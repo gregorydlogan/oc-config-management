@@ -60,10 +60,18 @@
   git: repo=https://github.com/arut/nginx-rtmp-module
        dest={{streaming_home}}/nginx-rtmp-module
        update=yes
+  when: inventory_hostname in groups['streamer']
 
 - name: Preparing to build nginx
-  shell: ./configure --add-module={{streaming_home}}/nginx-rtmp-module --prefix={{streaming_home}}/nginx
+  shell: ./configure --prefix={{streaming_home}}/nginx --pid-path=/var/run/nginx.pid
          chdir={{streaming_home}}/nginx-1.2.4
+  when: inventory_hostname not in groups['streamer']
+
+
+- name: Preparing to build nginx with streaming components
+  shell: ./configure --add-module={{streaming_home}}/nginx-rtmp-module --prefix={{streaming_home}}/nginx --pid-path=/var/run/nginx.pid
+         chdir={{streaming_home}}/nginx-1.2.4
+  when: inventory_hostname in groups['streamer']
 
 - name: Building nginx
   shell: make
@@ -73,8 +81,13 @@
   shell: make install
          chdir={{streaming_home}}/nginx-1.2.4
 
-- name: Configuring nginx
-  template: src=nginx.conf dest={{streaming_home}}/nginx/conf/nginx.conf
+- name: Configuring nginx for http
+  template: src=nginx-http.conf dest={{streaming_home}}/nginx/conf/nginx.conf
+  when: inventory_hostname not in groups['streamer']
+
+- name: Configuring nginx for http and streaming
+  template: src=nginx-streaming.conf dest={{streaming_home}}/nginx/conf/nginx.conf
+  when: inventory_hostname in groups['streamer']
 
 - name: Configuring nginx init script
   template: src=nginx dest=/etc/init.d/nginx
