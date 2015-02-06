@@ -24,13 +24,13 @@
   file: path={{mh_parent_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_user}}" state=directory recurse=true
   sudo: true
 
-- name: Checking if nginx exists
-  stat: path=/etc/init.d/nginx
+- name: Checking if nginx binary exists
+  stat: path={{streaming_home}}/nginx/sbin/nginx
   register: nginxpresent
 
 - name: Stopping nginx
-  service: name=nginx state=stopped
-  when: nginxpresent.stat.exists is defined and nginxpresent.stat.exists == True
+  shell: killall nginx
+  ignore_errors: yes
   sudo: yes
 
 - name: Create streaming parent dir
