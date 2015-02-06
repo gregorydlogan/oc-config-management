@@ -5,3 +5,6 @@
 
   #Build the system
 - include: ../../common/tasks/build_mh.yml
+
+- name: Reconfigure service registry
+  template: src=org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.properties dest={{mh_base_dir}}/etc/services/

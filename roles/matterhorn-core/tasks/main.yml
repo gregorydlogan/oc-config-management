@@ -39,3 +39,6 @@
 
 - name: Configure organization profile
   template: src=org.opencastproject.organization-mh_default_org.cfg dest={{mh_base_dir}}/etc/load/
+
+- name: Configure service registry
+  template: src=org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.properties dest={{mh_base_dir}}/etc/services/
