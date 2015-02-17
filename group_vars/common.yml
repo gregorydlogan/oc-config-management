@@ -51,10 +51,12 @@ tomcat_dir: /opt/matterhorn/apache-tomcat-7.0.5
 #Where to store the engage solr data
 solr_data_dir: "{{tomcat_dir}}/solr/"
 
-#Where to store the streaming server application
-streaming_home: "{{mh_parent_dir}}/streaming"
+#Where to store the auxilliary application
+mh_tools_dir: "{{mh_parent_dir}}/tools"
+#This directory is added to the path, symlinks are encouraged
+mh_tools_bin: "{{mh_tools_dir}}/bin"
 #Where to store nginx
-nginx_home: "{{streaming_home}}/nginx"
+nginx_home: "{{mh_tools_dir}}/nginx"
 
 #Where to store the Maven repository
 m2_repo: "{{mh_work_dir}}/.m2/repository"

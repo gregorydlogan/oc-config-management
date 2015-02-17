@@ -32,14 +32,18 @@
   apt: pkg=maven state=present
   sudo: yes
 
+#We're deliberately creating a the bin directory here since it also creates the tools dir
+- name: Creating Matterhorn tools directory
+  shell: mkdir -p {{mh_tools_bin}}
+
 #From https://coderwall.com/p/ynvi0q
-#- name: add Maven to path
-#  lineinfile: dest=/etc/environment
-#              state=present
-#              backrefs=yes
-#              regexp='PATH=(["]*)((?!.*?{{mh_parent_dir}}\/apache-maven-{{mvn_version}}\/bin).*?)(["]*)$'
-#              line="PATH=\1\2:{{mh_parent_dir}}/apache-maven-{{mvn_version}}/bin\3"
-#  sudo: yes
+- name: Add tools to path
+  lineinfile: dest=/etc/environment
+              state=present
+              backrefs=yes
+              regexp='PATH=(["]*)((?!.*?{{mh_tools_bin}}).*?)(["]*)$'
+              line="PATH=\1\2:{{mh_tools_bin}}\3"
+  sudo: yes
 
 - name: Configuring Maven for Matterhorn
   lineinfile: dest=/home/{{matterhorn_user}}/.bash_aliases

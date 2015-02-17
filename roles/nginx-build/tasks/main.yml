@@ -25,7 +25,7 @@
   sudo: true
 
 - name: Checking if nginx binary exists
-  stat: path={{streaming_home}}/nginx/sbin/nginx
+  stat: path={{mh_tools_dir}}/nginx/sbin/nginx
   register: nginxpresent
 
 - name: Stopping nginx
@@ -34,7 +34,7 @@
   sudo: yes
 
 - name: Create streaming parent dir
-  shell: mkdir -p {{streaming_home}}
+  shell: mkdir -p {{mh_tools_dir}}
 
 - name: Create MH shared dir
   shell: mkdir -p {{mh_work_dir}}
@@ -47,46 +47,46 @@
 
 - name: Downloading nginx
   get_url: url=http://nginx.org/download/nginx-1.2.4.tar.gz
-           dest={{streaming_home}}/nginx-1.2.4.tar.gz
+           dest={{mh_tools_dir}}/nginx-1.2.4.tar.gz
            force=no
            mode=0644
 
 - name: Unzipping nginx
   shell: tar xzf nginx-1.2.4.tar.gz
-         chdir={{streaming_home}}
+         chdir={{mh_tools_dir}}
          creates=nginx-1.2.4
 
 - name: Downloading RTMP module for nginx
   git: repo=https://github.com/arut/nginx-rtmp-module
-       dest={{streaming_home}}/nginx-rtmp-module
+       dest={{mh_tools_dir}}/nginx-rtmp-module
        update=yes
   when: inventory_hostname in groups['streamer']
 
 - name: Preparing to build nginx
-  shell: ./configure --prefix={{streaming_home}}/nginx --pid-path=/var/run/nginx.pid
-         chdir={{streaming_home}}/nginx-1.2.4
+  shell: ./configure --prefix={{mh_tools_dir}}/nginx --pid-path=/var/run/nginx.pid
+         chdir={{mh_tools_dir}}/nginx-1.2.4
   when: inventory_hostname not in groups['streamer']
 
 
 - name: Preparing to build nginx with streaming components
-  shell: ./configure --add-module={{streaming_home}}/nginx-rtmp-module --prefix={{streaming_home}}/nginx --pid-path=/var/run/nginx.pid
-         chdir={{streaming_home}}/nginx-1.2.4
+  shell: ./configure --add-module={{mh_tools_dir}}/nginx-rtmp-module --prefix={{mh_tools_dir}}/nginx --pid-path=/var/run/nginx.pid
+         chdir={{mh_tools_dir}}/nginx-1.2.4
   when: inventory_hostname in groups['streamer']
 
 - name: Building nginx
   shell: make
-         chdir={{streaming_home}}/nginx-1.2.4
+         chdir={{mh_tools_dir}}/nginx-1.2.4
 
 - name: Installing nginx
   shell: make install
-         chdir={{streaming_home}}/nginx-1.2.4
+         chdir={{mh_tools_dir}}/nginx-1.2.4
 
 - name: Configuring nginx for http
-  template: src=nginx-http.conf dest={{streaming_home}}/nginx/conf/nginx.conf
+  template: src=nginx-http.conf dest={{mh_tools_dir}}/nginx/conf/nginx.conf
   when: inventory_hostname not in groups['streamer']
 
 - name: Configuring nginx for http and streaming
-  template: src=nginx-streaming.conf dest={{streaming_home}}/nginx/conf/nginx.conf
+  template: src=nginx-streaming.conf dest={{mh_tools_dir}}/nginx/conf/nginx.conf
   when: inventory_hostname in groups['streamer']
 
 - name: Configuring nginx init script
