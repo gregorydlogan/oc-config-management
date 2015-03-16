@@ -4,6 +4,14 @@
   apt: pkg=openjdk-7-jdk update_cache=yes state=present
   sudo: yes
 
+- name: Removing pre-1.7 Java JDK
+  apt: pkg=openjdk-6-jdk state=absent
+  sudo: yes
+
+- name: Removing pre-1.7 Java JRE
+  apt: pkg=openjdk-6-jre state=absent
+  sudo: yes
+
 - name: Install Git
   apt: pkg=git-core state=present
   sudo: yes

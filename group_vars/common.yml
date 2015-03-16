@@ -9,9 +9,9 @@ matterhorn_user: matterhorn
 
 #These two must match
 #The git branch/tag to check out.
-mh_version: 1.5.1
+mh_version: 1.6.1
 #The pom version within that branch/tag
-mh_pom_version: 1.5.1
+mh_pom_version: 1.6.1
 
 #The parent directory for all Matterhorn related services
 mh_parent_dir: /opt/matterhorn
