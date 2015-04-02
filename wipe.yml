@@ -1,0 +1,24 @@
+---
+# This playbook wipes a full Matterhorn cluster
+
+- include: stop.yml
+
+- hosts: all
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - matterhorn-reset
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+    - roles/admin-build/vars/admin.yml
+
+
+- hosts: solr
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - solr-reset
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml

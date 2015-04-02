@@ -1,0 +1,4 @@
+---
+
+- name: Wipe out Solr install
+  shell: rm -rf {{mh_parent_dir}}/apache-solr-1.4.1 {{mh_parent_dir}}/apache-tomcat-7.0.5
