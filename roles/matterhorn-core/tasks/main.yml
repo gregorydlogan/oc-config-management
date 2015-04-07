@@ -13,7 +13,7 @@
   sudo: yes
 
 - name: Fix logging directory permissions
-  file: path=/var/log/matterhorn owner=matterhorn group=matterhorn state=directory recurse=true
+  file: path=/var/log/matterhorn owner={{matterhorn_user}} group={{matterhorn_user}} state=directory recurse=true
   sudo: true
 
 - name: Configure init scripts

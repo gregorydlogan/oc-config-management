@@ -9,7 +9,7 @@
   sudo: yes
 
 - name: Removing pre-1.7 Java JRE
-  apt: pkg=openjdk-6-jre openjdk-6-jre-headless state=absent
+  apt: pkg=openjdk-6-jre,openjdk-6-jre-headless state=absent
   sudo: yes
 
 - name: Install Git
@@ -21,7 +21,7 @@
   sudo: yes
 
 - name: Fix MH parent dir permissions
-  file: path={{mh_parent_dir}}/ owner=matterhorn group=matterhorn state=directory recurse=true
+  file: path={{mh_parent_dir}}/ owner={{matterhorn_user}} group={{matterhorn_user}} state=directory recurse=true
   sudo: true
 
 - name: Create MH shared dir

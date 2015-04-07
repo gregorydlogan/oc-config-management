@@ -40,16 +40,7 @@ db_url: "jdbc:mysql://{{db_host}}/{{db_schema}}"
 #The database user
 db_user: matterhorn
 #The database password
-db_pass: matterhorn_db_passwd
-
-#The engage solr server's port
-solr_port: 8983
-#The engage solr server URL
-engage_solr_index: "http://{{groups['solr'][0]}}:{{solr_port}}/solr"
-#The engage solr server's directory
-tomcat_dir: /opt/matterhorn/apache-tomcat-7.0.5
-#Where to store the engage solr data
-solr_data_dir: "{{tomcat_dir}}/solr/"
+db_pass: matterhorn_db_passwd 
 
 #Where to store the auxilliary application
 mh_tools_dir: "{{mh_parent_dir}}/tools"
@@ -57,6 +48,15 @@ mh_tools_dir: "{{mh_parent_dir}}/tools"
 mh_tools_bin: "{{mh_tools_dir}}/bin"
 #Where to store nginx
 nginx_home: "{{mh_tools_dir}}/nginx"
+
+#The engage solr server's port
+solr_port: 8983
+#The engage solr server URL
+engage_solr_index: "http://{{groups['solr'][0]}}:{{solr_port}}/solr"
+#The engage solr server's directory
+tomcat_dir: "{{mh_tools_dir}}/apache-tomcat-7.0.5"
+#Where to store the engage solr data
+solr_data_dir: "{{tomcat_dir}}/solr/"
 
 #Where to store the Maven repository
 m2_repo: "{{mh_work_dir}}/.m2/repository"
