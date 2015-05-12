@@ -19,7 +19,30 @@
   unarchive: src=apache-activemq-5.11.0-bin.tar.gz dest={{mh_tools_dir}}/apache-activemq-5.11.0
          copy=no
          chdir={{mh_tools_dir}}
-         creates=apache-activemq-5.11.0
+         creates={{mh_tools_dir}}/apache-activemq-5.11.0
+
+- name: Configuring ActiveMQ user
+  shell: sed -i 's/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="{{matterhorn_user}}"/' {{mh_tools_dir}}/apache-activemq-5.11.0/bin/env
+
+- name: Configuring ActiveMQ group
+  shell: echo 'ACTIVEMQ_GROUP="{{matterhorn_user}}"' >> {{mh_tools_dir}}/apache-activemq-5.11.0/bin/env
+
+- name: Configuring ActiveMQ home location
+  shell: echo 'ACTIVEMQ_HOME="{{mh_tools_dir}}/apache-activemq-5.11.0/"' >> {{mh_tools_dir}}/apache-activemq-5.11.0/bin/env
+
+- name: Creating ActiveMQ data directory
+  shell: mkdir -p {{mh_tools_dir}}/apache-activemq-data
+  sudo: yes
+
+- name: Verifying ActiveMQ directory permissions
+  shell: chown {{matterhorn_user}}:{{matterhorn_user}} {{mh_tools_dir}}/apache-activemq-data
+
+- name: Configuring ActiveMQ data location
+  shell: echo 'ACTIVEMQ_DATA="{{mh_tools_dir}}/apache-activemq-data"' >> {{mh_tools_dir}}/apache-activemq-5.11.0/bin/env
+
+- name: Copying ActiveMQ global variables
+  shell: cp -rv {{mh_tools_dir}}/apache-activemq-5.11.0/bin/env /etc/default/activemq
+  sudo: yes
 
 - name: Applying ActiveMQ configuration
   shell: cp -rv {{mh_base_dir}}/docs/scripts/activemq/activemq.xml {{mh_tools_dir}}/apache-activemq-5.11.0/conf/
