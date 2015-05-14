@@ -7,6 +7,9 @@ git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 #The user to run the Matterhorn service(s) as.  This includes any Solr or nginx instances.
 matterhorn_user: matterhorn
 
+#Set this to true to enable the JVM debugging interface.  Do not do this for production systems.
+mh_debug: false
+
 #These two must match
 #The git branch/tag to check out.
 mh_version: 1.6.1
