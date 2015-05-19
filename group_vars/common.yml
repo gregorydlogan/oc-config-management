@@ -49,6 +49,9 @@ mh_tools_bin: "{{mh_tools_dir}}/bin"
 #Where to store nginx
 nginx_home: "{{mh_tools_dir}}/nginx"
 
+#The maven version.  Many distros do not have 3.1.0 as part of their packages yet
+mvn_version: 3.1.0
+
 #The engage solr server's port
 solr_port: 8983
 #The engage solr server URL
