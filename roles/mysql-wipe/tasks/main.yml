@@ -1,0 +1,3 @@
+---
+
+- include: ../../common/tasks/wipe_db.yml

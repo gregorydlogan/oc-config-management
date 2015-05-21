@@ -1,24 +1,53 @@
 ---
-# This playbook wipes a full Matterhorn cluster
+# This playbook destroys a full Matterhorn cluster, data and binaries included
 
 - include: stop.yml
 
-- hosts: all
+- hosts: matterhorn
   user: "{{matterhorn_user}}"
 
   roles:
-    - matterhorn-reset
+    - matterhorn-wipe
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml
     - roles/admin-build/vars/admin.yml
 
 
+- hosts: activemq
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - activemq-wipe
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+
+
 - hosts: solr
   user: "{{matterhorn_user}}"
 
   roles:
-    - solr-reset
+    - solr-wipe
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+
+
+- hosts: mysql
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - mysql-wipe
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+
+- hosts: all
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - nginx-wipe
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml

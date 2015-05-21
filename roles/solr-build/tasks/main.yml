@@ -96,6 +96,6 @@
   shell: chmod 755 /etc/init.d/solr {{mh_tools_dir}}/apache-tomcat-7.0.5/bin/*.sh
   sudo: yes
 
-- name: Restarting Solr
-  service: name=solr state=started enabled=yes
+- name: Setting Solr to start on boot
+  service: name=solr state=stopped enabled=yes
   sudo: yes

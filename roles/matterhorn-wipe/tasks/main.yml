@@ -1,0 +1,34 @@
+---
+
+- name: Checking if Matterhorn exists
+  stat: path=/etc/init.d/matterhorn
+  register: matterhornpresent
+
+- name: Stop Matterhorn
+  service: name=matterhorn state=stopped enabled=no
+  sudo: yes
+  when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
+
+- name: Removing Matterhorn init script
+  file: path=/etc/init.d/matterhorn state=absent
+  sudo: yes
+  when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
+
+- name: Unmount NFS Mounts
+  mount: name={{mh_work_dir}} src={{nfs_server}}:{{mh_work_dir}} fstype=nfs state=unmounted opts=rw,sync
+  sudo: yes
+  when: nfs_server is defined and 'fileserver' not in group_names
+
+- name: Removing Matterhorn log directory
+  file: src={{mh_log_dir}} state=absent
+  sudo: yes
+  when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
+
+- name: Remove Matterhorn configuration directory
+  file: src={{mh_log_dir}} state=absent
+  sudo: yes
+  when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
+
+- name: Wipe Matterhorn root directory
+  shell: rm -rf {{mh_parent_dir}}
+  sudo: yes

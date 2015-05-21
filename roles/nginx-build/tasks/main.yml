@@ -98,5 +98,5 @@
   sudo: yes
 
 - name: Setting nginx to start on boot
-  service: name=nginx state=started enabled=yes
+  service: name=nginx state=stopped enabled=yes
   sudo: yes
