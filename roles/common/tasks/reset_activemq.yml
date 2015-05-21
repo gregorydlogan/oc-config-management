@@ -1,0 +1,7 @@
+---
+
+- name: Delete ActiveMQ data directory
+  shell: rm -rf {{activemq_data_dir}}/*
+
+- name: Delete ActiveMQ log
+  shell: rm -rf {{activemq_log_dir}}/*

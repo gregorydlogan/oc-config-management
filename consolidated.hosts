@@ -4,6 +4,9 @@ admin.example.org
 [mysql]
 admin.example.org
 
+[activemq]
+admin.example.org
+
 [admin]
 admin.example.org
 

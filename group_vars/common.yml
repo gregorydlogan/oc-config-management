@@ -11,9 +11,9 @@ matterhorn_group: matterhorn
 
 #These two must match
 #The git branch/tag to check out.
-mh_version: 1.6.1
+mh_version: r/2.0.x
 #The pom version within that branch/tag
-mh_pom_version: 1.6.1
+mh_pom_version: 2.0.0-SNAPSHOT
 
 #The parent directory for all Matterhorn related services
 mh_parent_dir: /opt/matterhorn
@@ -64,6 +64,19 @@ engage_solr_index: "http://{{groups['solr'][0]}}:{{solr_port}}/solr"
 tomcat_dir: "{{mh_tools_dir}}/apache-tomcat-7.0.5"
 #Where to store the engage solr data
 solr_data_dir: "{{tomcat_dir}}/solr/"
+
+#The ActiveMQ main directory
+activemq_home_dir: "{{mh_tools_dir}}/apache-activemq-5.11.0"
+
+activemq_data_dir: "{{activemq_home_dir}}/data"
+
+activemq_temp_dir: "{{activemq_home_dir}}/temp"
+
+activemq_log_dir: "{{activemq_home_dir}}/logs"
+
+activemq_user: "{{matterhorn_user}}"
+
+activemq_group: "{{matterhorn_group}}"
 
 #Where to store the Maven repository
 m2_repo: "{{mh_work_dir}}/.m2/repository"

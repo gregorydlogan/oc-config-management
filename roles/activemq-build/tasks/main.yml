@@ -1,0 +1,52 @@
+---
+
+- include: ../../common/tasks/clone_mh.yml
+
+- name: Ensuring tools directory exists
+  file: path={{mh_tools_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  sudo: yes
+
+- name: Downloading ActiveMQ
+  get_url: url=http://archive.apache.org/dist/activemq/5.11.0/apache-activemq-5.11.0-bin.tar.gz
+           dest={{mh_tools_dir}}/apache-activemq-5.11.0-bin.tar.gz
+           force=no
+           mode=0644
+
+- name: Unzipping ActiveMQ
+  shell: tar xvzf apache-activemq-5.11.0-bin.tar.gz
+         chdir={{mh_tools_dir}}
+         creates={{activemq_home_dir}}
+
+- name: Configuring ActiveMQ user
+  shell: sed -i 's/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="{{activemq_user}}"/' {{activemq_home_dir}}/bin/env
+
+- name: Configuring ActiveMQ group
+  shell: echo 'ACTIVEMQ_GROUP="{{activemq_group}}"' >> {{activemq_home_dir}}/bin/env
+
+- name: Configuring ActiveMQ home location
+  shell: echo 'ACTIVEMQ_HOME="{{activemq_home_dir}}"' >> {{activemq_home_dir}}/bin/env
+
+- name: Creating ActiveMQ data directory
+  file: path={{activemq_data_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  sudo: yes
+
+- name: Verifying ActiveMQ directory permissions
+  shell: chown {{activemq_user}}:{{activemq_group}} {{activemq_data_dir}}
+
+- name: Configuring ActiveMQ data location
+  shell: echo 'ACTIVEMQ_DATA="{{activemq_data_dir}}"' >> {{activemq_home_dir}}/bin/env
+
+- name: Linking ActiveMQ global variables
+  file: src={{activemq_home_dir}}/bin/env dest=/etc/default/activemq state=link
+  sudo: yes
+
+- name: Applying ActiveMQ configuration
+  shell: cp -rv {{mh_base_dir}}/docs/scripts/activemq/activemq.xml {{activemq_home_dir}}/conf/
+
+- name: Installing ActiveMQ init script
+  file: src={{activemq_home_dir}}/bin/activemq dest=/etc/init.d/activemq state=link
+  sudo: yes
+
+- name: Setting ActiveMQ to start on boot
+  service: name=activemq state=stopped enabled=yes
+  sudo: yes

@@ -4,6 +4,9 @@ all-in-one.example.org
 [mysql]
 all-in-one.example.org
 
+[activemq]
+all-in-one.example.org
+
 [admin]
 all-in-one.example.org
 

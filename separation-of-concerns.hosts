@@ -4,6 +4,9 @@ fileserver.example.org
 [mysql]
 mysql.example.org
 
+[activemq]
+activemq.example.org
+
 [admin]
 admin.example.org
 

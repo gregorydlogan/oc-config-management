@@ -14,6 +14,16 @@
     - roles/admin-build/vars/admin.yml
 
 
+- hosts: activemq
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - activemq-clean
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+
+
 - hosts: solr
   user: "{{matterhorn_user}}"
 

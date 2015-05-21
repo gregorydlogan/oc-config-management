@@ -1,0 +1,5 @@
+---
+
+- name: Starting ActiveMQ
+  service: name=activemq state=restarted
+  sudo: yes

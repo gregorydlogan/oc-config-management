@@ -1,5 +1,9 @@
 ---
 
+- name: Create MH parent dir
+  file: path={{ mh_parent_dir }} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  sudo: yes
+
 - name: Pushing SSH configs
   copy: src=../../../group_vars/ssh/ dest=/home/{{matterhorn_user}}/.ssh mode=600
 

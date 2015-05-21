@@ -11,6 +11,16 @@
     - group_vars/all-in-one.yml
 
 
+- hosts: activemq
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - activemq-build
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+
+
 - hosts: admin
   user: "{{matterhorn_user}}"
 
