@@ -13,7 +13,7 @@
   sudo: yes
 
 - name: Create tool parent dir
-  shell: mkdir -p {{ mh_tools_dir }}
+  file: path={{ mh_tools_dir }} owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory
   sudo: yes
 
 - name: Fix MH parent dir permissions
@@ -70,7 +70,7 @@
          chdir={{mh_tools_dir}}
 
 - name: Creating lib directory
-  shell: mkdir -p {{solr_data_dir}}/lib
+  file: path={{solr_data_dir}}/lib owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory
 
 - name: Copying required Solr jar
   shell: cp -rv {{m2_repo}}/org/opencastproject/matterhorn-solr/{{mh_pom_version}}/matterhorn-solr-{{mh_pom_version}}.jar {{solr_data_dir}}/lib
@@ -83,7 +83,7 @@
   template: src=solrconfig.xml dest={{solr_data_dir}}/conf/
 
 - name: Creating Tomcat configuration directory
-  shell: mkdir -p {{mh_tools_dir}}/apache-tomcat-7.0.5/conf/Catalina/localhost/
+  file: path={{mh_tools_dir}}/apache-tomcat-7.0.5/conf/Catalina/localhost/ owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory
 
 - name: Configure Tomcat Solr configuration
   template: src=solr.xml dest={{mh_tools_dir}}/apache-tomcat-7.0.5/conf/Catalina/localhost/

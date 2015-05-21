@@ -8,12 +8,11 @@
   sudo: yes
 
 - name: Create logging directory
-  shell: mkdir -p {{mh_log_dir}}
-         creates={{mh_log_dir}}
-  sudo: yes
+  shell: mkdir -p {{mh_base_dir}}/logs
+         creates={{mh_base_dir}}/logs
 
-- name: Fix logging directory permissions
-  file: path={{mh_log_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory recurse=true
+- name: Fix logging directory permissions and linking
+  file: src={{mh_base_dir}}/logs dest={{mh_log_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=link
   sudo: true
 
 - name: Configure init scripts
