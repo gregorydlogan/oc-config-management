@@ -17,7 +17,7 @@
   sudo: yes
 
 - name: Fix MH parent dir permissions
-  file: path={{mh_tools_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_user}}" state=directory recurse=true
+  file: path={{mh_tools_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory recurse=true
   sudo: true
 
   #Mount NFS

@@ -8,12 +8,12 @@
   sudo: yes
 
 - name: Create logging directory
-  shell: mkdir -p /var/log/matterhorn
-         creates=/var/log/matterhorn
+  shell: mkdir -p {{mh_log_dir}}
+         creates={{mh_log_dir}}
   sudo: yes
 
 - name: Fix logging directory permissions
-  file: path=/var/log/matterhorn owner={{matterhorn_user}} group={{matterhorn_user}} state=directory recurse=true
+  file: path={{mh_log_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory recurse=true
   sudo: true
 
 - name: Configure init scripts

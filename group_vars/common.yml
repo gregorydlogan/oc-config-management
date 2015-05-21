@@ -6,6 +6,8 @@ git_repo_location: https://bitbucket.org/opencast-community/matterhorn.git
 
 #The user to run the Matterhorn service(s) as.  This includes any Solr or nginx instances.
 matterhorn_user: matterhorn
+#The group to run the Matterhorn service(s) as.  This includes any Solr or nginx instances.
+matterhorn_group: matterhorn
 
 #These two must match
 #The git branch/tag to check out.
@@ -21,6 +23,8 @@ mh_base_dir: "{{mh_parent_dir}}/matterhorn"
 mh_work_dir: "{{mh_parent_dir}}/work"
 #Where to store Matterhorn's streams.  This is used by the streaming servers, if any.
 mh_streaming_dir: "{{mh_work_dir}}/streams"
+#Where to store Matterhorn's logs.
+mh_log_dir: "/var/log/matterhorn"
 
 #The admin URL.  This is the URL you use to access the admin UI
 admin_url: "http://{{groups['admin'][0]}}"
