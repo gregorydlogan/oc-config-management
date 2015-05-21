@@ -20,15 +20,20 @@
   when: nfs_server is defined and 'fileserver' not in group_names
 
 - name: Removing Matterhorn log directory
-  file: src={{mh_log_dir}} state=absent
+  file: path={{mh_log_dir}} state=absent
   sudo: yes
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
 
 - name: Remove Matterhorn configuration directory
-  file: src={{mh_log_dir}} state=absent
+  file: path={{mh_log_dir}} state=absent
   sudo: yes
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
 
+- name: Preserving Maven repository directory
+  shell: mv {{m2_repo}} /opt/matterhorn/m2_backup
+  sudo: yes
+  when: "'fileserver' in group_names"
+
 - name: Wipe Matterhorn root directory
-  shell: rm -rf {{mh_parent_dir}}
+  file: path={{mh_parent_dir}} state=absent
   sudo: yes

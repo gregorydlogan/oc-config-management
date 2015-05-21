@@ -85,3 +85,15 @@
          chdir={{mh_parent_dir}}
   ignore_errors: True
   when: felix_done.stat.islink is defined and felix_done.stat.islink == True
+
+- name: Detecting backup M2 repository
+  stat: path=/opt/matterhorn/m2_backup
+  register: repository_exists
+
+- name: Restoring Maven repository
+  shell: mv /opt/matterhorn/m2_backup {{m2_repo}}
+  sudo: yes
+  when: repository_exists.stat.islink is defined and repository_exists.stat.islink == True
+
+- name: Repairing Maven repository permissions
+  file: path={{m2_repo}}../ owner={{matterhorn_user}} group={{matterhorn_group}} recurse=true
