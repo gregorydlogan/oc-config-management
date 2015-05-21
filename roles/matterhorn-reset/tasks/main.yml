@@ -1,9 +1,0 @@
----
-
-- name: Unmount NFS Mounts
-  mount: name={{mh_work_dir}} src={{nfs_server}}:{{mh_work_dir}} fstype=nfs state=unmounted opts=rw,sync
-  sudo: yes
-  when: nfs_server is defined and 'fileserver' not in group_names
-
-- name: Wipe Matterhorn install
-  shell: rm -rf {{mh_base_dir}}

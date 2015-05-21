@@ -1,0 +1,18 @@
+---
+
+- name: Checking if Nginx exists
+  stat: path=/etc/init.d/nginx
+  register: nginxpresent
+
+- name: Stop Nginx
+  service: name=nginx state=stopped enabled=no
+  sudo: yes
+  when: nginxpresent.stat.exists is defined and nginxpresent.stat.exists == True
+
+- name: Removing Nginx init script
+  file: path=/etc/init.d/nginx state=absent
+  sudo: yes
+
+- name: Wipe Nginx root directory
+  shell: rm -rf {{nginx_home}}
+  sudo: yes
