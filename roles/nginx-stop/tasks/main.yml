@@ -1,0 +1,5 @@
+---
+
+- name: Stopping nginx
+  service: name=nginx state=stopped
+  sudo: yes

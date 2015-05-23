@@ -6,6 +6,7 @@
 
   roles:
     - matterhorn-stop
+    - nginx-stop
   vars_files:
     - group_vars/common.yml
 
@@ -26,4 +27,3 @@
     - solr-stop
   vars_files:
     - group_vars/common.yml
-

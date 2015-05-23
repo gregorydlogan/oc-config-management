@@ -23,6 +23,7 @@
   user: "{{matterhorn_user}}"
 
   roles:
+    - nginx-start
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
@@ -32,6 +33,7 @@
   user: "{{matterhorn_user}}"
 
   roles:
+    - nginx-start
     - matterhorn-start
   vars_files:
     - group_vars/common.yml
