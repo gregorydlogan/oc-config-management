@@ -20,5 +20,5 @@
   when: activemqpresent.stat.exists is defined and activemqpresent.stat.exists == True
 
 - name: Wipe ActiveMQ root directory
-  shell: rm -rf {{activemq_home_dir}}
+  file: path={{activemq_home_dir}} state=absent
   sudo: yes

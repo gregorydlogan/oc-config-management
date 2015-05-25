@@ -3,12 +3,12 @@
 - include: ../../common/tasks/checkout_mh.yml
 
 - name: Creating config directory
-  shell: ln -s {{mh_base_dir}}/etc /etc/matterhorn
+  file: src={{mh_base_dir}}/etc dest=/etc/matterhorn state=link
          creates=/etc/matterhorn
   sudo: yes
 
 - name: Create logging directory
-  shell: mkdir -p {{mh_base_dir}}/logs
+  file: path={{mh_base_dir}}/logs state=directory owner={{materhorn_user}} group={{matterhorn_group}}
          creates={{mh_base_dir}}/logs
 
 - name: Fix logging directory permissions and linking

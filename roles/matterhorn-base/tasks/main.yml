@@ -81,7 +81,7 @@
   register: felix_done
 
 - name: Symlinking Matterhorn
-  shell: ln -s matterhorn felix
+  file: src=matterhorn dest=felix state=link
          chdir={{mh_parent_dir}}
   ignore_errors: True
   when: felix_done.stat.islink is defined and felix_done.stat.islink == True

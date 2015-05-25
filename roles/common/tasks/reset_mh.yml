@@ -1,7 +1,15 @@
 ---
 
-- name: Reset Matterhorn data directory
-  shell: rm -rf {{mh_parent_dir}}/work/archive/ {{mh_parent_dir}}/work/downloads/* {{mh_parent_dir}}/work/files/* {{mh_parent_dir}}/work/inbox* {{mh_parent_dir}}/work/streams/* {{mh_parent_dir}}/work/workspace/* {{mh_parent_dir}}/work/*index
+- name: Delete Matterhorn data
+  file: path={{mh_parent_dir}}/work/ state=absent
+  when: "'fileserver' in group_names"
 
-- name: Reset Matterhorn log
-  shell: rm -rf {{mh_log_dir}}/*
+- name: Recreate work directory
+  file: path={{mh_parent_dir}}/work/ owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  when: "'fileserver' in group_names"
+
+- name: Clean Matterhorn log
+  file: path={{mh_base_dir}}/logs state=absent
+
+- name: Create logging directory
+  file: path={{mh_base_dir}}/logs state=directory owner={{matterhorn_user}} group={{matterhorn_group}}

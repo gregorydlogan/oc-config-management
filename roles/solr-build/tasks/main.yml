@@ -57,8 +57,10 @@
   when: solrpresent.stat.exists is defined and solrpresent.stat.exists == True
 
 - name: Clearing old Solr data
-  shell: rm -rf {{solr_data_dir}} apache-tomcat-7.0.5/webapps/solr
-         chdir={{mh_tools_dir}}
+  file: path={{solr_data_dir}} state=absent
+
+- name: Clearing old Solr webapp
+  file: path={{tomcat_dir}}/webapps/solr state=absent
 
 - name: Applying Solr to Tomcat
   shell: unzip apache-solr-1.4.1/example/webapps/solr.war -d apache-tomcat-7.0.5/webapps/solr
@@ -92,9 +94,12 @@
   template: src=solr-init.sh dest=/etc/init.d/solr
   sudo: yes
 
-- name: Fix file permissions
-  shell: chmod 755 /etc/init.d/solr {{mh_tools_dir}}/apache-tomcat-7.0.5/bin/*.sh
+- name: Fix init script file permissions
+  file: path=/etc/init.d/solr mode=0755
   sudo: yes
+
+- name: Fix Tomcat script file permissions
+  shell: chmod 0755 {{mh_tools_dir}}/apache-tomcat-7.0.5/bin/*.sh
 
 - name: Setting Solr to start on boot
   service: name=solr state=stopped enabled=yes

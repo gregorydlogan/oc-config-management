@@ -30,5 +30,5 @@
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
 
 - name: Wipe Matterhorn root directory
-  shell: rm -rf {{mh_parent_dir}}
+  file: path={{mh_parent_dir}} state=absent
   sudo: yes

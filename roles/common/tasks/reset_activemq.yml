@@ -1,7 +1,16 @@
 ---
 
 - name: Delete ActiveMQ data directory
-  shell: rm -rf {{activemq_data_dir}}/*
+  file: path={{activemq_data_dir}} state=absent
 
-- name: Delete ActiveMQ log
-  shell: rm -rf {{activemq_log_dir}}/*
+- name: Recreate ActiveMQ data directory
+  file: path={{activemq_data_dir}} state=directory owner={{activemq_user}} group={{activemq_group}}
+  sudo: yes
+
+- name: Delete ActiveMQ log directory
+  file: path={{activemq_log_dir}} state=absent
+
+- name: Recreate ActiveMQ log directory
+  file: path={{activemq_log_dir}} state=directory owner={{activemq_user}} group={{activemq_group}}
+  sudo: yes
+

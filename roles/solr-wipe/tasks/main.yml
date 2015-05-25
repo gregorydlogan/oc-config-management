@@ -15,5 +15,5 @@
   when: solrpresent.stat.exists is defined and solrpresent.stat.exists == True
 
 - name: Wipe Solr root directory
-  shell: rm -rf {{tomcat_dir}}
+  file: path={{tomcat_dir}} state=absent
   sudo: yes

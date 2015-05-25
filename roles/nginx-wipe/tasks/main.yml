@@ -14,5 +14,5 @@
   sudo: yes
 
 - name: Wipe Nginx root directory
-  shell: rm -rf {{nginx_home}}
+  file: path={{nginx_home}} state=absent
   sudo: yes

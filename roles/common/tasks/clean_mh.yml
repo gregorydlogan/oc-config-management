@@ -1,4 +1,14 @@
 ---
 
-- name: Clean existing build
-  shell: rm -rf {{mh_base_dir}}/felix/lib {{mh_base_dir}}/felix/ext {{mh_parent_dir}}/shared/* /var/log/matterhorn/*
+- name: Clean existing build 1/2
+  file: path={{mh_base_dir}}/lib/ext state=absent
+
+- name: Clean existing build 2/2
+  file: path={{mh_base_dir}}/lib/matterhorn state=absent
+
+- name: Clean Matterhorn log
+  file: path={{mh_base_dir}}/logs state=absent
+
+- name: Create logging directory
+  file: path={{mh_base_dir}}/logs state=directory owner={{materhorn_user}} group={{matterhorn_group}}
+         creates={{mh_base_dir}}/logs

@@ -94,7 +94,7 @@
   sudo: yes
 
 - name: Fixing init script permissions
-  shell: chmod a+x /etc/init.d/nginx
+  file: path=/etc/init.d/nginx mode=0755
   sudo: yes
 
 - name: Setting nginx to start on boot

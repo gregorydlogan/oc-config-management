@@ -3,4 +3,4 @@
 - include: ../../solr-stop/tasks/main.yml
 
 - name: Clearing old Solr data
-  shell: rm -rf {{solr_data_dir}}/index
+  file: path={{solr_data_dir}}/index state=absent
