@@ -7,11 +7,10 @@
   user: "{{matterhorn_user}}"
 
   roles:
-    - matterhorn-wipe
+    - matterhorn-stop
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml
-    - roles/admin-build/vars/admin.yml
 
 
 - hosts: activemq
@@ -48,6 +47,15 @@
 
   roles:
     - nginx-wipe
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+
+- hosts: all
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - matterhorn-wipe
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml
