@@ -67,15 +67,13 @@ solr_data_dir: "{{tomcat_dir}}/solr/"
 
 #The ActiveMQ main directory
 activemq_home_dir: "{{mh_tools_dir}}/apache-activemq-5.11.0"
-
+#Where to store the ActiveMQ data
 activemq_data_dir: "{{activemq_home_dir}}/data"
-
-activemq_temp_dir: "{{activemq_home_dir}}/temp"
-
+#Where to store ActiveMQ's logs
 activemq_log_dir: "{{activemq_home_dir}}/logs"
-
+#Which user to run ActiveMQ as
 activemq_user: "{{matterhorn_user}}"
-
+#Which group to run ActiveMQ as
 activemq_group: "{{matterhorn_group}}"
 
 #Where to store the Maven repository

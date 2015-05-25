@@ -3,7 +3,7 @@
 - include: ../../common/tasks/clone_mh.yml
 
 - name: Ensuring tools directory exists
-  file: path={{mh_tools_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  file: path={{mh_tools_dir}} owner={{activemq_user}} group={{activemq_group}} state=directory
   sudo: yes
 
 - name: Downloading ActiveMQ
@@ -27,14 +27,19 @@
   shell: echo 'ACTIVEMQ_HOME="{{activemq_home_dir}}"' >> {{activemq_home_dir}}/bin/env
 
 - name: Creating ActiveMQ data directory
-  file: path={{activemq_data_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  file: path={{activemq_data_dir}} owner={{activemq_user}} group={{activemq_group}} state=directory
   sudo: yes
-
-- name: Verifying ActiveMQ directory permissions
-  shell: chown {{activemq_user}}:{{activemq_group}} {{activemq_data_dir}}
 
 - name: Configuring ActiveMQ data location
   shell: echo 'ACTIVEMQ_DATA="{{activemq_data_dir}}"' >> {{activemq_home_dir}}/bin/env
+
+- name: Creating ActiveMQ log directory
+  file: path={{activemq_log_dir}} owner={{activemq_user}} group={{activemq_group}} state=directory
+  sudo: yes
+
+#TODO make sure this and other activeMQ data are in sane locations
+- name: Configuring ActiveMQ log location
+  shell: echo 'ACTIVEMQ_LOG="{{activemq_log_dir}}"' >> {{activemq_home_dir}}/bin/env
 
 - name: Linking ActiveMQ global variables
   file: src={{activemq_home_dir}}/bin/env dest=/etc/default/activemq state=link
@@ -48,5 +53,5 @@
   sudo: yes
 
 - name: Setting ActiveMQ to start on boot
-  service: name=activemq state=stopped enabled=yes
+  service: name=activemq enabled=yes
   sudo: yes
