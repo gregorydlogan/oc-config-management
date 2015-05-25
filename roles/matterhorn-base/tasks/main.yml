@@ -96,4 +96,5 @@
   when: repository_exists.stat.islink is defined and repository_exists.stat.islink == True
 
 - name: Repairing Maven repository permissions
-  file: path={{m2_repo}}../ owner={{matterhorn_user}} group={{matterhorn_group}} recurse=true
+  file: path={{m2_repo}}../ owner={{matterhorn_user}} group={{matterhorn_group}} state=directory recurse=true
+  when: repository_exists.stat.islink is defined and repository_exists.stat.islink == True
