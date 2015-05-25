@@ -1,5 +1,10 @@
 ---
 
+- name: Checking if ActiveMQ exists
+  stat: path=/etc/init.d/activemq
+  register: activemqpresent
+
 - name: Starting ActiveMQ
-  service: name=activemq state=restarted
+  service: name=activemq state=start
+  when: activemqpresent.stat.exists is defined and activemqpresent.stat.exists == True
   sudo: yes

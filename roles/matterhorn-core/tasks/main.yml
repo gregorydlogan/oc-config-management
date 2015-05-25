@@ -41,3 +41,6 @@
 
 - name: Configure service registry
   template: src=org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.properties dest={{mh_base_dir}}/etc/services/
+
+- name: Set Matterhorn start on boot
+  service: name=matterhorn enabled=yes
