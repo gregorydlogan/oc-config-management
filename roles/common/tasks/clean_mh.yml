@@ -10,5 +10,4 @@
   file: path={{mh_base_dir}}/logs state=absent
 
 - name: Create logging directory
-  file: path={{mh_base_dir}}/logs state=directory owner={{materhorn_user}} group={{matterhorn_group}}
-         creates={{mh_base_dir}}/logs
+  file: path={{mh_base_dir}}/logs state=directory owner={{matterhorn_user}} group={{matterhorn_group}}

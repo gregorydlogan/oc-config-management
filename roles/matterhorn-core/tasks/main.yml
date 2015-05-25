@@ -4,12 +4,10 @@
 
 - name: Creating config directory
   file: src={{mh_base_dir}}/etc dest=/etc/matterhorn state=link
-         creates=/etc/matterhorn
   sudo: yes
 
 - name: Create logging directory
-  file: path={{mh_base_dir}}/logs state=directory owner={{materhorn_user}} group={{matterhorn_group}}
-         creates={{mh_base_dir}}/logs
+  file: path={{mh_base_dir}}/logs state=directory owner={{matterhorn_user}} group={{matterhorn_group}}
 
 - name: Fix logging directory permissions and linking
   file: src={{mh_base_dir}}/logs dest={{mh_log_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=link
