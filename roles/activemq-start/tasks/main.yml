@@ -5,6 +5,6 @@
   register: activemqpresent
 
 - name: Starting ActiveMQ
-  service: name=activemq state=start
+  service: name=activemq state=started
   when: activemqpresent.stat.exists is defined and activemqpresent.stat.exists == True
   sudo: yes
