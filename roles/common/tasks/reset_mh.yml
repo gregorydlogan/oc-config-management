@@ -13,3 +13,4 @@
 
 - name: Create logging directory
   file: path={{mh_base_dir}}/logs state=directory owner={{matterhorn_user}} group={{matterhorn_group}}
+  sudo: yes
