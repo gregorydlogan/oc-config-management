@@ -26,6 +26,8 @@ mh_base_dir: "{{mh_parent_dir}}/matterhorn"
 mh_work_dir: "{{mh_parent_dir}}/work"
 #Where to store Matterhorn's streams.  This is used by the streaming servers, if any.
 mh_streaming_dir: "{{mh_work_dir}}/streams"
+#Where to store Matterhorn's configuration data.
+mh_config_dir: "/etc/matterhorn"
 #Where to store Matterhorn's logs.
 mh_log_dir: "/var/log/matterhorn"
 

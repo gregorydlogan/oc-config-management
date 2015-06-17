@@ -8,9 +8,4 @@
   file: path={{mh_parent_dir}}/work/ owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
   when: "'fileserver' in group_names"
 
-- name: Clean Matterhorn log
-  file: path={{mh_base_dir}}/logs state=absent
-
-- name: Create logging directory
-  file: path={{mh_base_dir}}/logs state=directory owner={{matterhorn_user}} group={{matterhorn_group}}
-  sudo: yes
+- include: clean_mh_logs.yml

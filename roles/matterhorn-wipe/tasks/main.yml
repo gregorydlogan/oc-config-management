@@ -25,7 +25,7 @@
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
 
 - name: Remove Matterhorn configuration directory
-  file: path={{mh_log_dir}} state=absent
+  file: path={{mh_config_dir}} state=absent
   sudo: yes
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
 

@@ -3,14 +3,13 @@
 - include: ../../common/tasks/checkout_mh.yml
 
 - name: Creating config directory
-  file: src={{mh_base_dir}}/etc dest=/etc/matterhorn state=link
+  file: src={{mh_base_dir}}/etc dest={{mh_config_dir}} state=link
   sudo: yes
 
-- name: Create logging directory
-  file: path={{mh_base_dir}}/logs state=directory owner={{matterhorn_user}} group={{matterhorn_group}}
+- include: ../../common/tasks/clean_mh_logs.yml
 
 - name: Fix logging directory permissions and linking
-  file: src={{mh_base_dir}}/logs dest={{mh_log_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=link
+  file: src={{mh_log_dir}} dest={{mh_base_dir}}/logs owner={{matterhorn_user}} group={{matterhorn_group}} state=link
   sudo: true
 
 - name: Configure init scripts
