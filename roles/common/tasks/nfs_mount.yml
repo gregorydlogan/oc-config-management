@@ -6,6 +6,6 @@
   when: nfs_server is defined and 'fileserver' not in group_names
 
 - name: Setup NFS Mounts
-  mount: name={{mh_work_dir}} src={{nfs_server}}:{{mh_work_dir}} fstype=nfs state=mounted opts=rw,sync
+  mount: name={{mh_work_dir}} src={{nfs_server}}:{{mh_work_dir}} fstype=nfs state=mounted opts=rw,sync,vers=3
   sudo: yes
   when: nfs_server is defined and 'fileserver' not in group_names
