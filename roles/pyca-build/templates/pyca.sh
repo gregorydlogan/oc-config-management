@@ -11,131 +11,112 @@
 # Provides: pyca
 # Required-Start: $local_fs $remote_fs $syslog $network
 # Required-Stop:
-# Default-Start:
-# Default-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop: 0 1 6
 # Short-Description: run pyca
 # Description: PyCA is a fully functional Opencast Matterhorn capture agent
 #              written in Python. It is free software licenced under the terms
 #              of the GNU Lesser General Public : License.
 ### END INIT INFO
 
-pyca="{{pyca_base_dir}}/start.sh"
-prog="pyca"
-logfile={{pyca_log_dir}}/pyca.log
-lockfile=/var/lock/subsys/pyca
-[ -d "/var/lock/subsys" ] || lockfile="/var/lock/LCK.${prog}"
-pidfile="/var/run/${prog}.pid"
+# Documentation available at
+# http://refspecs.linuxfoundation.org/LSB_3.1.0/LSB-Core-generic/LSB-Core-generic/iniscrptfunc.html
+# Debian provides some extra functions though
+. /lib/lsb/init-functions
 
-killdelay=7
 
-# Load configuration files
-[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+DAEMON_NAME="pyca"
+DAEMON_USER="{{matterhorn_user}}"
+DAEMON_PATH="{{pyca_base_dir}}/start.sh"
+DAEMON_OPTS=""
+DAEMON_PWD="${PWD}"
+DAEMON_DESC=$(get_lsb_header_val $0 "Short-Description")
+DAEMON_PID="/var/run/${DAEMON_NAME}.pid"
+DAEMON_NICE=0
+DAEMON_LOG='{{pyca_log_dir}}/pyca.log'
 
-success() {
-	printf "\r%-58s [\033[32m  OK  \033[0m]\n" "$1"
-}
+[ -r "/etc/default/${DAEMON_NAME}" ] && . "/etc/default/${DAEMON_NAME}"
 
-failed() {
-	printf "\r%-58s [\033[31mFAILED\033[0m]\n" "$1"
-}
+do_start() {
+  local result
 
-start() {
-	smsg="Starting $prog: "
-	echo -n $smsg
-
-	# Start pyca and create a lockfile
-	( flock -n 9 && $pyca > $logfile & ) 9> $lockfile
-	retval=$?
-
-	# If we failed with retval=1 pyca might be already up and running. In
-	# that case we still want to return a success:
-	[ $retval -eq 1 ] && rh_status_q && echo && exit 1
-
-	# If we failed to start pyca but a lock was created, we want to remove
-	# the file (flock does not remove the file automatically):
-	[ ! $retval -eq 0 ] && rm -f $lockfile
-
-	[ $retval -eq 0 ] && success "$smsg" || failed "$smsg"
-	return $retval
-}
-
-stop() {
-	smsg="Stopping $prog: "
-	echo -n $smsg
-    [ -f $lockfile ] || ( failed "$smsg"; return 1 )
-
-    pretval=$?
-	if [ $retval -eq 0 ]
-	then
-		rm -f $lockfile
-		success "$smsg"
+	pidofproc -p "${DAEMON_PID}" "${DAEMON_PATH}" > /dev/null
+	if [ $? -eq 0 ]; then
+		log_warning_msg "${DAEMON_NAME} is already started"
+		result=0
 	else
-		failed "$smsg"
+		log_daemon_msg "Starting ${DAEMON_DESC}" "${DAEMON_NAME}"
+		touch "${DAEMON_LOG}"
+		chown $DAEMON_USER "${DAEMON_LOG}"
+		chmod u+rw "${DAEMON_LOG}"
+		export PYTHONPATH={{pyca_base_dir}}
+		if [ -z "${DAEMON_USER}" ]; then
+			start-stop-daemon --start --oknodo --background \
+				--nicelevel $DAEMON_NICE \
+				--chdir "${DAEMON_PWD}" \
+				--pidfile "${DAEMON_PID}" --make-pidfile \
+				--startas /bin/bash -- \
+				-c "exec python -m pyca.__main__ > ${DAEMON_LOG} 2>&1" -- $DAEMON_OPTS
+			result=$?
+		else
+			start-stop-daemon --start --oknodo --background \
+				--nicelevel $DAEMON_NICE \
+				--chdir "${DAEMON_PWD}" \
+				--pidfile "${DAEMON_PID}" --make-pidfile \
+				--chuid "${DAEMON_USER}" \
+				--startas /bin/bash -- \
+				-c "exec python -m pyca.__main__ > ${DAEMON_LOG} 2>&1" -- $DAEMON_OPTS
+			result=$?
+		fi
+		log_end_msg $result
 	fi
-	return $retval
+	return $result
 }
 
-restart() {
-	stop
-	start
-}
+do_stop() {
+	local result
 
-reload() {
-	restart
-}
-
-force_reload() {
-	restart
-}
-
-rh_status() {
-	# run checks to determine if the service is running or use generic status
-	if [ -f $lockfile ] && [ -f $pidfile ]
-	then
-		pid="$(cat $pidfile)"
-		ps p $pid &> /dev/null && echo $"${prog} (pid $pid) is running..." && return 0
-		echo $"${prog} dead but pid file exists"
-		return 1
+	pidofproc -p "${DAEMON_PID}" "${DAEMON_PATH}" > /dev/null
+	if [ $? -ne 0 ]; then
+		log_warning_msg "${DAEMON_NAME} is not started"
+		result=0
+	else
+		log_daemon_msg "Stopping ${DAEMON_DESC}" "${DAEMON_NAME}"
+		killproc -p "${DAEMON_PID}" "${DAEMON_PATH}"
+		result=$?
+		log_end_msg $result
+		rm "${DAEMON_PID}"
 	fi
-	[ -f $pidfile ] && echo "pidfile exists but subsys not locked" && return 4
-	[ -f $lockfile ] && echo "${prog} dead but subsys locked" && return 2
-	echo "${prog} is stopped"
-	return 3
+	return $result
 }
 
-rh_status_q() {
-	rh_status >/dev/null 2>&1
+do_restart() {
+	local result
+	do_stop
+	result=$?
+	if [ $result = 0 ]; then
+		do_start
+		result=$?
+	fi
+	return $result
 }
 
+do_status() {
+	local result
+	status_of_proc -p "${DAEMON_PID}" "${DAEMON_PATH}" "${DAEMON_NAME}"
+	result=$?
+	return $result
+}
+
+do_usage() {
+	echo $"Usage: $0 {start | stop | restart | status}"
+	exit 1
+}
 
 case "$1" in
-	start)
-		rh_status_q && exit 0
-		$1
-		;;
-	stop)
-		rh_status_q || exit 0
-		$1
-		;;
-	restart)
-		$1
-		;;
-	reload)
-		rh_status_q || exit 7
-		$1
-		;;
-	force-reload)
-		force_reload
-		;;
-	status)
-		rh_status
-		;;
-	condrestart|try-restart)
-		rh_status_q || exit 0
-		restart
-		;;
-	*)
-		echo $"Usage: $0 {start|stop|status|restart|condrestart|try-restart|reload|force-reload}"
-		exit 2
+start)   do_start;   exit $? ;;
+stop)    do_stop;    exit $? ;;
+restart) do_restart; exit $? ;;
+status)  do_status;  exit $? ;;
+*)       do_usage;   exit  1 ;;
 esac
-exit $?

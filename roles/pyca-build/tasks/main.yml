@@ -24,6 +24,15 @@
   apt: pkg=git-core state=present
   sudo: yes
 
+- name: Checking if pyCA is already installed
+  stat: path=/etc/init.d/pyca
+  register: pyca_installed
+
+- name: Stopping pyCA
+  service: name=pyca state=stopped
+  when: pyca_installed.stat.exists is defined and pyca_installed.stat.exists == True
+  sudo: yes
+
 - name: Create pyCA parent dir
   file: path={{mh_parent_dir}}/ owner={{matterhorn_user}} group={{matterhorn_user}} state=directory recurse=true
   sudo: yes
@@ -52,6 +61,10 @@
 
 - name: Templating pyCA config file
   template: src=pyca.conf dest={{pyca_base_dir}}/etc/
+
+- name: Linking pyCA config file
+  file: src={{pyca_base_dir}}/etc/pyca.conf dest=/etc/pyca.conf state=link
+  sudo: yes
 
 - name: Templating pyCA init file
   template: src=pyca.sh dest=/etc/init.d/pyca mode=755
