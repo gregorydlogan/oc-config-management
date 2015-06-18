@@ -12,6 +12,17 @@ matterhorn_group: matterhorn
 #Set this to true to enable the JVM debugging interface.  Do not do this for production systems.
 mh_debug: false
 
+#Matterhorn's admin username
+mh_admin_username: admin
+#Matterhorn's admin password
+mh_admin_password: opencast
+#Matterhorn's digest username
+#Your CA will need this
+mh_digest_username: matterhorn_system_account
+#Matterhorn's digest password
+#Your CA will need this
+mh_digest_password: CHANGE_ME
+
 #These two must match
 #The git branch/tag to check out.
 mh_version: r/2.0.x

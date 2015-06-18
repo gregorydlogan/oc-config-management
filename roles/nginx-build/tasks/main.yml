@@ -17,10 +17,6 @@
   sudo: yes
 
 - name: Create MH parent dir
-  file: path={{ mh_parent_dir }} owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory
-  sudo: yes
-
-- name: Fix MH parent dir permissions
   file: path={{mh_parent_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory recurse=true
   sudo: true
 
@@ -41,9 +37,11 @@
 
   #Mount NFS
 - include: ../../common/tasks/nfs_mount.yml
+  when: inventory_hostname in groups['streamer']
 
 - name: Create MH streams dir
   file: path={{mh_streaming_dir}} owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory
+  when: inventory_hostname in groups['streamer']
 
 - name: Downloading nginx
   get_url: url=http://nginx.org/download/nginx-1.2.4.tar.gz
@@ -90,11 +88,7 @@
   when: inventory_hostname in groups['streamer']
 
 - name: Configuring nginx init script
-  template: src=nginx dest=/etc/init.d/nginx
-  sudo: yes
-
-- name: Fixing init script permissions
-  file: path=/etc/init.d/nginx mode=0755
+  template: src=nginx dest=/etc/init.d/nginx mode=0755
   sudo: yes
 
 - name: Setting nginx to start on boot

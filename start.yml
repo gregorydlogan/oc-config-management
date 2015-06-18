@@ -38,3 +38,10 @@
   vars_files:
     - group_vars/common.yml
 
+- hosts: capture
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - pyca-start
+  vars_files:
+    - group_vars/common.yml
