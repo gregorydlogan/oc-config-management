@@ -1,6 +1,14 @@
 ---
 # This playbook stops a full Matterhorn cluster
 
+- hosts: capture
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - pyca-start
+  vars_files:
+    - group_vars/common.yml
+
 - hosts: matterhorn
   user: "{{matterhorn_user}}"
 

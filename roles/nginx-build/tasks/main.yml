@@ -41,9 +41,11 @@
 
   #Mount NFS
 - include: ../../common/tasks/nfs_mount.yml
+  when: inventory_hostname in groups['streamer']
 
 - name: Create MH streams dir
   shell: mkdir -p {{mh_streaming_dir}}
+  when: inventory_hostname in groups['streamer']
 
 - name: Downloading nginx
   get_url: url=http://nginx.org/download/nginx-1.2.4.tar.gz

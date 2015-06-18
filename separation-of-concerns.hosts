@@ -24,3 +24,10 @@ ingest.example.org
 
 [capture]
 capture.example.org
+
+
+[matterhorn:children]
+admin
+worker
+engage
+ingest

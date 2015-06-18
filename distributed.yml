@@ -101,11 +101,9 @@
   user: "{{matterhorn_user}}"
 
   roles:
-    - matterhorn-base
-    - matterhorn-core
-    - capture-agent-build
+    - pyca-build
     - nginx-build
   vars_files:
     - group_vars/common.yml
     - group_vars/cluster.yml
-    - roles/capture-agent-build/vars/capture-agent.yml
+    - group_vars/pyca.yml
