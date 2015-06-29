@@ -107,3 +107,5 @@ skip_tests: false
 do_build: true
 #Set to false to skip building the 3rd party tools.
 build_thirdparty: true
+#Set to false to skip building nginx
+build_nginx: true

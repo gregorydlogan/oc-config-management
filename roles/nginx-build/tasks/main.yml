@@ -81,16 +81,18 @@
 
 - name: Configuring nginx for http
   template: src=nginx-http.conf dest={{mh_tools_dir}}/nginx/conf/nginx.conf
-  when: inventory_hostname not in groups['streamer']
+  when: inventory_hostname not in groups['streamer'] and build_nginx
 
 - name: Configuring nginx for http and streaming
   template: src=nginx-streaming.conf dest={{mh_tools_dir}}/nginx/conf/nginx.conf
-  when: inventory_hostname in groups['streamer']
+  when: inventory_hostname in groups['streamer'] and build_nginx
 
 - name: Configuring nginx init script
   template: src=nginx dest=/etc/init.d/nginx mode=0755
+  when: build_nginx
   sudo: yes
 
 - name: Setting nginx to start on boot
   service: name=nginx state=stopped enabled=yes
+  when: build_nginx
   sudo: yes
