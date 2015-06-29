@@ -1,10 +1,8 @@
 ---
 
-- name: Checking if Matterhorn exists
-  stat: path=/etc/init.d/matterhorn
-  register: matterhornpresent
+- include: ../../matterhorn-stop/tasks/main.yml
 
-- name: Stop Matterhorn
+- name: Stop and disable Matterhorn
   service: name=matterhorn state=stopped enabled=no
   sudo: yes
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True

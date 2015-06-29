@@ -24,14 +24,7 @@
   apt: pkg=git-core state=present
   sudo: yes
 
-- name: Checking if pyCA is already installed
-  stat: path=/etc/init.d/pyca
-  register: pyca_installed
-
-- name: Stopping pyCA
-  service: name=pyca state=stopped
-  when: pyca_installed.stat.exists is defined and pyca_installed.stat.exists == True
-  sudo: yes
+- include: ../../pyca-stop/tasks/main.yml
 
 - name: Create pyCA parent dir
   file: path={{mh_parent_dir}}/ owner={{matterhorn_user}} group={{matterhorn_user}} state=directory recurse=true

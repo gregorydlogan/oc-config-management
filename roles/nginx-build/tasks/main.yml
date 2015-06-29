@@ -24,10 +24,7 @@
   stat: path={{mh_tools_dir}}/nginx/sbin/nginx
   register: nginxpresent
 
-- name: Stopping nginx
-  shell: killall nginx
-  ignore_errors: yes
-  sudo: yes
+- include: ../../nginx-stop/tasks/main.yml
 
 - name: Create streaming parent dir
   file: path={{mh_tools_dir}} owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory

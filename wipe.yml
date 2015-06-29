@@ -3,6 +3,17 @@
 
 - include: stop.yml
 
+- hosts: capture
+  user: "{{matterhorn_user}}"
+
+  roles:
+    - pyca-wipe
+  vars_files:
+    - group_vars/common.yml
+    - group_vars/cluster.yml
+    - group_vars/pyca.yml
+
+
 - hosts: matterhorn
   user: "{{matterhorn_user}}"
 

@@ -1,10 +1,8 @@
 ---
 
-- name: Checking if Solr exists
-  stat: path=/etc/init.d/solr
-  register: solrpresent
+- include: ../../solr-stop/tasks/main.yml
 
-- name: Stop Solr
+- name: Stop and disable Solr
   service: name=solr state=stopped enabled=no
   sudo: yes
   when: solrpresent.stat.exists is defined and solrpresent.stat.exists == True

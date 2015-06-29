@@ -1,10 +1,8 @@
 ---
 
-- name: Checking if Nginx exists
-  stat: path=/etc/init.d/nginx
-  register: nginxpresent
+- include: ../../nginx-stop/tasks/main.yml
 
-- name: Stop Nginx
+- name: Stop and disable Nginx
   service: name=nginx state=stopped enabled=no
   sudo: yes
   when: nginxpresent.stat.exists is defined and nginxpresent.stat.exists == True
