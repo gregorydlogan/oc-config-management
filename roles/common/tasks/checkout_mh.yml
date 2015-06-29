@@ -1,5 +1,8 @@
 ---
 
 - name: Checkout correct version of Matterhorn
-  shell: git checkout {{mh_version}}
-         chdir={{mh_base_dir}}
+  git: repo={{git_repo_location}}
+       dest={{mh_base_dir}}
+       update=yes
+       version={{mh_version}}
+       force=yes

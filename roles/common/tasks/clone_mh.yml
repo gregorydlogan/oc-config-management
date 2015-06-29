@@ -11,8 +11,4 @@
   apt: pkg=git state=present
   sudo: yes
 
-- name: Checkout Matterhorn
-  git: repo={{git_repo_location}}
-       dest={{mh_base_dir}}
-       update=yes
-       version={{mh_version}}
+- include: checkout_mh.yml

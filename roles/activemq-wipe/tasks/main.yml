@@ -15,7 +15,7 @@
   when: activemqpresent.stat.exists is defined and activemqpresent.stat.exists == True
 
 - name: Removing ActiveMQ global settings
-  file: patch=/etc/default/activemq state=absent
+  file: path=/etc/default/activemq state=absent
   sudo: yes
   when: activemqpresent.stat.exists is defined and activemqpresent.stat.exists == True
 

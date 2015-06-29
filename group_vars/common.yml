@@ -92,6 +92,8 @@ activemq_user: "{{matterhorn_user}}"
 #Which group to run ActiveMQ as
 activemq_group: "{{matterhorn_group}}"
 
+#Where to store the M2 backup directory in the case of a wipe.
+m2_backup_dir: "/opt/m2_backup"
 #Where to store the Maven repository
 m2_repo: "{{mh_work_dir}}/.m2/repository"
 #The default Maven options.

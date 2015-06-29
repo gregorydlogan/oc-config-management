@@ -29,10 +29,14 @@
   sudo: yes
   when: matterhornpresent.stat.exists is defined and matterhornpresent.stat.exists == True
 
-- name: Preserving Maven repository directory
-  shell: mv {{m2_repo}} /opt/matterhorn/m2_backup
+- name: Detecting presence of Maven repository data
+  stat: path={{m2_repo}}
+  register: mavenpresent
+
+- name: Preserving Maven repository directory, if any
+  shell: mv {{m2_repo}} {{m2_backup_dir}}
   sudo: yes
-  when: "'fileserver' in group_names"
+  when: "'fileserver' in group_names and mavenpresent.stat.exists is defined and mavenpresent.stat.exists == True"
 
 - name: Wipe Matterhorn root directory
   file: path={{mh_parent_dir}} state=absent

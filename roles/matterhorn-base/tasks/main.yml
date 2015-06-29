@@ -87,11 +87,11 @@
   when: felix_done.stat.islink is defined and felix_done.stat.islink == True
 
 - name: Detecting backup M2 repository
-  stat: path=/opt/matterhorn/m2_backup
+  stat: path={{m2_backup_dir}}
   register: repository_exists
 
 - name: Restoring Maven repository
-  shell: mv /opt/matterhorn/m2_backup {{m2_repo}}
+  shell: mv {{m2_backup_dir}} {{m2_repo}}
   sudo: yes
   when: repository_exists.stat.islink is defined and repository_exists.stat.islink == True
 
