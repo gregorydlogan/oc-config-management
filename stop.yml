@@ -5,7 +5,7 @@
   user: "{{matterhorn_user}}"
 
   roles:
-    - pyca-start
+    - pyca-stop
   vars_files:
     - group_vars/common.yml
 
