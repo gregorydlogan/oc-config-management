@@ -1,6 +1,4 @@
 ---
-- include: checkout_mh.yml
-
 - include: clean_mh.yml
 
 - name: Fix MH parent dir permissions

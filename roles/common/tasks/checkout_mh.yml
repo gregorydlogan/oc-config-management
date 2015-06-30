@@ -3,6 +3,4 @@
 - name: Checkout correct version of Matterhorn
   git: repo={{git_repo_location}}
        dest={{mh_base_dir}}
-       update=yes
        version={{mh_version}}
-       force=yes
