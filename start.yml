@@ -38,6 +38,7 @@
   vars_files:
     - group_vars/common.yml
 
+
 - hosts: capture
   user: "{{matterhorn_user}}"
 

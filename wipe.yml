@@ -53,19 +53,12 @@
     - group_vars/common.yml
     - group_vars/cluster.yml
 
+
 - hosts: all
   user: "{{matterhorn_user}}"
 
   roles:
     - nginx-wipe
-  vars_files:
-    - group_vars/common.yml
-    - group_vars/cluster.yml
-
-- hosts: all
-  user: "{{matterhorn_user}}"
-
-  roles:
     - matterhorn-wipe
   vars_files:
     - group_vars/common.yml
