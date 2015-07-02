@@ -41,15 +41,13 @@
   when: inventory_hostname in groups['streamer']
 
 - name: Downloading nginx
-  get_url: url=http://nginx.org/download/nginx-1.2.4.tar.gz
-           dest={{mh_tools_dir}}/nginx-1.2.4.tar.gz
+  get_url: url=http://nginx.org/download/nginx-{{nginx_version}}.tar.gz
+           dest={{mh_tools_dir}}/nginx-{{nginx_version}}.tar.gz
            force=no
-           mode=0644
 
-- name: Unzipping nginx
-  shell: tar xzf nginx-1.2.4.tar.gz
-         chdir={{mh_tools_dir}}
-         creates=nginx-1.2.4
+- name: Fetching and decompressing nginx
+  unarchive: src={{mh_tools_dir}}/nginx-{{nginx_version}}.tar.gz dest={{nginx_home}} copy=no
+            creates={{nginx_home}}
 
 - name: Downloading RTMP module for nginx
   git: repo=https://github.com/arut/nginx-rtmp-module

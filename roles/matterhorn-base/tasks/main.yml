@@ -46,17 +46,15 @@
 
 - name: Download Maven
   get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
-           dest={{mh_tools_dir}}
+           dest={{mh_tools_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz
            force=no
-           mode=0644
 
-- name: Install Maven
-  shell: tar xvzf apache-maven-{{mvn_version}}-bin.tar.gz
-         creates={{mh_tools_dir}}/apache-maven-{{mvn_version}}
-         chdir={{mh_tools_dir}}
+- name: Fetching and decompressing Maven
+  unarchive: src={{mh_tools_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz dest={{mvn_home}} copy=no
+            creates={{mvn_home}}
 
 - name: Symlinking Maven into tools directory
-  file: src={{mh_tools_dir}}/apache-maven-{{mvn_version}}/bin/mvn dest={{mh_tools_bin}}/mvn state=link
+  file: src={{mvn_home}}/bin/mvn dest={{mh_tools_bin}}/mvn state=link
 
 - name: Configuring Maven for Matterhorn
   lineinfile: dest=/home/{{matterhorn_user}}/.bash_aliases

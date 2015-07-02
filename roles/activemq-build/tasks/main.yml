@@ -7,14 +7,13 @@
   sudo: yes
 
 - name: Downloading ActiveMQ
-  get_url: url=http://archive.apache.org/dist/activemq/5.11.0/apache-activemq-5.11.0-bin.tar.gz
-           dest={{mh_tools_dir}}/apache-activemq-5.11.0-bin.tar.gz
+  get_url: url=http://archive.apache.org/dist/activemq/{{activemq_version}}/apache-activemq-{{activemq_version}}-bin.tar.gz
+           dest={{mh_tools_dir}}/apache-activemq-{{activemq_version}}-bin.tar.gz
            force=no
-           mode=0644
 
-- name: Unzipping ActiveMQ
-  shell: tar xvzf apache-activemq-5.11.0-bin.tar.gz
-         chdir={{mh_tools_dir}}
+- name: Decompressing ActiveMQ
+  unarchive: src={{mh_tools_dir}}/apache-activemq-{{activemq_version}}-bin.tar.gz dest={{activemq_home_dir}} copy=no
+            creates={{activemq_home_dir}}
 
 - name: Configuring ActiveMQ user
   shell: sed -i 's/^ACTIVEMQ_USER=""/ACTIVEMQ_USER="{{activemq_user}}"/' {{activemq_home_dir}}/bin/env
