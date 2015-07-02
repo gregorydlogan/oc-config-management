@@ -12,9 +12,7 @@
   apt: pkg=unzip state=present
   sudo: yes
 
-- name: Create tool parent dir
-  file: path={{ mh_tools_dir }} owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory
-  sudo: yes
+- include: ../../common/tasks/create_tools_bin.yml
 
 - name: Fix MH parent dir permissions
   file: path={{mh_tools_dir}}/ owner="{{matterhorn_user}}" group="{{matterhorn_group}}" state=directory recurse=true

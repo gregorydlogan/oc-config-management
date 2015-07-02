@@ -2,9 +2,7 @@
 
 - include: ../../common/tasks/clone_mh.yml
 
-- name: Ensuring tools directory exists
-  file: path={{mh_tools_dir}} owner={{activemq_user}} group={{activemq_group}} state=directory
-  sudo: yes
+- include: ../../common/tasks/create_tools_bin.yml
 
 - name: Downloading ActiveMQ
   get_url: url=http://archive.apache.org/dist/activemq/{{activemq_version}}/apache-activemq-{{activemq_version}}-bin.tar.gz

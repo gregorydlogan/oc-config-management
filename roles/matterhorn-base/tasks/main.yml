@@ -27,9 +27,7 @@
 - name: Create MH shared dir
   file: path={{mh_work_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
 
-#We're deliberately creating a the bin directory here since it also creates the tools dir
-- name: Creating Matterhorn tools directory
-  file: path={{mh_tools_bin}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+- include: ../../common/tasks/create_tools_bin.yml
 
 #From https://coderwall.com/p/ynvi0q
 - name: Add tools to path
