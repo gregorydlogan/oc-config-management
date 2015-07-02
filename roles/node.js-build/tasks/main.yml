@@ -5,11 +5,11 @@
            dest={{mh_tools_dir}}/node-{{node_version}}-linux-x64.tar.gz
            force=no
 
-- name: Fetching and decompressing nginx
-  unarchive: src={{mh_tools_dir}}/node-{{node_version}}-linux-x64.tar.gz dest={{nginx_home}} copy=no
-            creates={{nginx_home}}
+- name: Decompressing Node.js
+  unarchive: src={{mh_tools_dir}}/node-{{node_version}}-linux-x64.tar.gz dest={{mh_tools_dir}} copy=no
+             creates={{node_home}}
 
-- name: Symlinking Node.js
+- name: Symlinking node
   file: src={{node_home}}/bin/node dest={{mh_tools_bin}}/node state=link
 
 - name: Symlinking NPM

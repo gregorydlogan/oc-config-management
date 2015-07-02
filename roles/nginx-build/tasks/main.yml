@@ -46,7 +46,7 @@
            force=no
 
 - name: Fetching and decompressing nginx
-  unarchive: src={{mh_tools_dir}}/nginx-{{nginx_version}}.tar.gz dest={{nginx_home}} copy=no
+  unarchive: src={{mh_tools_dir}}/nginx-{{nginx_version}}.tar.gz dest={{mh_tools_dir}} copy=no
             creates={{nginx_home}}
 
 - name: Downloading RTMP module for nginx

@@ -75,7 +75,7 @@ nginx_home: "{{mh_tools_dir}}/nginx-{{nginx_version}}"
 #The node.js version to download
 node_version: v0.12.5
 #Where to store node.js
-node_home: "{{mh_tools_dir}}/node.js-{{node_version}}"
+node_home: "{{mh_tools_dir}}/node-{{node_version}}-linux-x64"
 
 #The engage solr server's port
 solr_port: 8983

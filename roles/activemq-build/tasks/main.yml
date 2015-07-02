@@ -12,7 +12,7 @@
            force=no
 
 - name: Decompressing ActiveMQ
-  unarchive: src={{mh_tools_dir}}/apache-activemq-{{activemq_version}}-bin.tar.gz dest={{activemq_home_dir}} copy=no
+  unarchive: src={{mh_tools_dir}}/apache-activemq-{{activemq_version}}-bin.tar.gz dest={{mh_tools_dir}} copy=no
             creates={{activemq_home_dir}}
 
 - name: Configuring ActiveMQ user
