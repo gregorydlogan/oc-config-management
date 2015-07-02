@@ -71,6 +71,7 @@
   roles:
     - matterhorn-base
     - matterhorn-core
+    - node-build
     - engage-build
     - nginx-build
   vars_files:
