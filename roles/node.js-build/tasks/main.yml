@@ -1,8 +1,13 @@
 ---
 
-- name: Fetching and decompressing Node.js
-  unarchive: src=https://nodejs.org/dist/{{node_version}}/node-{{node_version}}-linux-x64.tar.gz dest={{node_home}} copy=no
-            creates={{node_home}}
+- name: Downloading Node.js
+  get_url: url=https://nodejs.org/dist/{{node_version}}/node-{{node_version}}-linux-x64.tar.gz
+           dest={{mh_tools_dir}}/node-{{node_version}}-linux-x64.tar.gz
+           force=no
+
+- name: Fetching and decompressing nginx
+  unarchive: src={{mh_tools_dir}}/node-{{node_version}}-linux-x64.tar.gz dest={{nginx_home}} copy=no
+            creates={{nginx_home}}
 
 - name: Symlinking Node.js
   file: src={{node_home}}/bin/node dest={{mh_tools_bin}}/node state=link
