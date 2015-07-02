@@ -66,6 +66,8 @@ db_pass: matterhorn_db_passwd
 mh_tools_dir: "{{mh_parent_dir}}/tools"
 #This directory is added to the path, symlinks are encouraged
 mh_tools_bin: "{{mh_tools_dir}}/bin"
+#Where to store downloaded tool archives
+mh_tool_archive_dir: "{{mh_tools_dir}}/downloads"
 
 #The nginx version to use
 nginx_version: 1.2.4
@@ -109,6 +111,9 @@ m2_backup_dir: "/opt/m2_backup"
 m2_repo: "{{mh_work_dir}}/.m2/repository"
 #The default Maven options.
 maven_opts: "-Xms256m -Xmx512m -XX:PermSize=64m -XX:MaxPermSize=128m -Dmaven.repo.local={{m2_repo}}"
+
+#Where to get a static FFmpeg build from
+ffmpeg_static: http://johnvansickle.com/ffmpeg/releases/ffmpeg-release-64bit-static.tar.xz
 
 #Set to true to skip checkstyles during build
 checkstyle_skip: false

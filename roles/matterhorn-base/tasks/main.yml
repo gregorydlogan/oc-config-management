@@ -44,11 +44,11 @@
 
 - name: Download Maven
   get_url: url=http://archive.apache.org/dist/maven/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
-           dest={{mh_tools_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz
+           dest={{mh_tool_archive_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz
            force=no
 
 - name: Fetching and decompressing Maven
-  unarchive: src={{mh_tools_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz dest={{mh_tools_dir}} copy=no
+  unarchive: src={{mh_tool_archive_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz dest={{mh_tools_dir}} copy=no
             creates={{mvn_home}}
 
 - name: Symlinking Maven into tools directory

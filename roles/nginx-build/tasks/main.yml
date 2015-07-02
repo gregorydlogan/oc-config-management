@@ -41,11 +41,11 @@
 
 - name: Downloading nginx
   get_url: url=http://nginx.org/download/nginx-{{nginx_version}}.tar.gz
-           dest={{mh_tools_dir}}/nginx-{{nginx_version}}.tar.gz
+           dest={{mh_tool_archive_dir}}/nginx-{{nginx_version}}.tar.gz
            force=no
 
-- name: Fetching and decompressing nginx
-  unarchive: src={{mh_tools_dir}}/nginx-{{nginx_version}}.tar.gz dest={{mh_tools_dir}} copy=no
+- name: Decompressing nginx
+  unarchive: src={{mh_tool_archive_dir}}/nginx-{{nginx_version}}.tar.gz dest={{mh_tools_dir}} copy=no
             creates={{nginx_home}}
 
 - name: Downloading RTMP module for nginx
