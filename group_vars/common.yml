@@ -69,8 +69,10 @@ mh_tools_bin: "{{mh_tools_dir}}/bin"
 #Where to store nginx
 nginx_home: "{{mh_tools_dir}}/nginx"
 
-#The maven version.  Many distros do not have 3.1.0 as part of their packages yet
-mvn_version: 3.1.0
+#The node.js version to download
+node_version: v0.12.5
+#Where to store node.js
+node_home: "{{mh_tools_dir}}/node.js-{{node_version}}"
 
 #The engage solr server's port
 solr_port: 8983
@@ -92,6 +94,10 @@ activemq_user: "{{matterhorn_user}}"
 #Which group to run ActiveMQ as
 activemq_group: "{{matterhorn_group}}"
 
+#The maven version.  Many distros do not have 3.1.0 as part of their packages yet
+mvn_version: 3.1.0
+#Where to store Maven
+mvn_home: "{{mh_tools_dir}}/apache-maven-{{mvn_version}}"
 #Where to store the M2 backup directory in the case of a wipe.
 m2_backup_dir: "/opt/m2_backup"
 #Where to store the Maven repository
