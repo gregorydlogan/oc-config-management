@@ -41,7 +41,7 @@
            mode=0644
 
 - name: Unzipping Solr
-unarchive: src={{mh_tool_archive_dir}}/apache-solr-1.4.1.zip dest={{mh_tools_dir}} copy=no
+  unarchive: src={{mh_tool_archive_dir}}/apache-solr-1.4.1.zip dest={{mh_tools_dir}} copy=no
             creates={{mh_tools_dir}}/apache-solr-1.4.1
 
 - name: Checking if Solr exists
