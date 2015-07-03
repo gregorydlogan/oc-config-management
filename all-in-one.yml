@@ -25,6 +25,8 @@
   user: "{{matterhorn_user}}"
 
   roles:
+    - maven
+    - ffmpeg
     - matterhorn-base
     - matterhorn-core
     - admin-build
@@ -59,6 +61,7 @@
   user: "{{matterhorn_user}}"
 
   roles:
+    - maven
     - matterhorn-base
     - matterhorn-core
     - node.js-build
@@ -74,6 +77,8 @@
   user: "{{matterhorn_user}}"
 
   roles:
+    - maven
+    - ffmpeg
     - matterhorn-base
     - matterhorn-core
     - worker-build
