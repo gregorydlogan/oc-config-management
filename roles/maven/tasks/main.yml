@@ -5,7 +5,7 @@
   sudo: yes
 
 - name: Download Maven
-  get_url: url=http://archive.apache.org/dist/maven/maven-3/{{mvn_version}}/binaries/apache-maven-{{mvn_version}}-bin.tar.gz
+  get_url: url={{mvn_url}}
            dest={{mh_tool_archive_dir}}/apache-maven-{{mvn_version}}-bin.tar.gz
            force=no
 

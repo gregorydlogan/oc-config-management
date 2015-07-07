@@ -103,6 +103,8 @@ activemq_group: "{{matterhorn_group}}"
 
 #The maven version.  Many distros do not have 3.1.0 as part of their packages yet
 mvn_version: 3.1.0
+#Where to download Maven from
+mvn_url: "http://archive.apache.org/dist/maven/maven-3/{{mvn_version}}/binaries/apache-maven-{{mvn_version}}-bin.tar.gz"
 #Where to store Maven
 mvn_home: "{{mh_tools_dir}}/apache-maven-{{mvn_version}}"
 #Where to store the M2 backup directory in the case of a wipe.
