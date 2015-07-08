@@ -1,5 +1,7 @@
 ---
 
+- include: ../../common/tasks/create_tools_bin.yml
+
 - name: Uninstall packaged Maven
   apt: pkg=maven state=absent
   sudo: yes

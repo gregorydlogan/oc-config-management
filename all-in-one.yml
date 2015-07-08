@@ -79,6 +79,9 @@
   roles:
     - maven
     - ffmpeg
+    - hunspell
+    - sox
+    - tesseract
     - matterhorn-base
     - matterhorn-core
     - worker-build
