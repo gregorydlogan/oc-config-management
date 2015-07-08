@@ -8,8 +8,16 @@
 #  command:  cp -r {{mh_base_dir}}/docs/scripts/3rd_party {{mh_work_dir}}/.3rd_party
 #  when: thirdparty.stat.exists is defined and thirdparty.stat.exists == False
 
+- name: Install required build tools
+  apt: package=build-essential state=present
+  sudo: yes
+
+- name: Install required library
+  apt: package=libmp4v2-dev state=present
+  sudo: yes
+
 - name: Install 3rd party tools
-  shell: ./linux-compile
+  shell: HOME3P={{mh_base_dir}}/docs/scripts/3rd_party/ ./download-sources && HOME3P={{mh_base_dir}}/docs/scripts/3rd_party/ LOCAL_PREFIX={{mh_tools_dir}} ./linux-compile
        chdir={{mh_base_dir}}/docs/scripts/3rd_party/qtembedder
   sudo: yes
   when: build_thirdparty and thirdparty.stat.exists is defined and thirdparty.stat.exists == False
