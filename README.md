@@ -1,7 +1,7 @@
 ## Standalone Matterhorn Deployment
 
 - Requires Ansible 1.3 or newer
-- Expects Ubuntu 12.04 or 14.04 hosts, may work on Debian
+- Expects Ubuntu 12.04 or 14.04 hosts, should work on Debian
 
 These playbooks deploy a full Matterhorn cluster, from source.
 To use them, first edit the "hosts" inventory file to contain the
