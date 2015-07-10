@@ -3,7 +3,7 @@
 - Requires Ansible 1.3 or newer
 - Expects Ubuntu 12.04 or 14.04 hosts, should work on Debian
 
-These playbooks deploy a full Matterhorn cluster, from source.
+These playbooks deploy a full Matterhorn 2.0 cluster, from source.
 To use them, first edit the "hosts" inventory file to contain the
 hostnames of the machines on which you want Matterhorn deployed, and edit the 
 group_vars files to set any Tomcat configuration parameters you need.

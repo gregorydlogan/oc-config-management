@@ -35,7 +35,7 @@ Now that you have defined which plays should run on each node, it's time to exam
         - matterhorn-base
         - matterhorn-core
         - admin-build
-        - matterhorn-start
+        - nginx-build
       vars_files:
         - group_vars/common.yml
         - group_vars/cluster.yml
