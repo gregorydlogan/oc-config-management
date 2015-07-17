@@ -25,9 +25,9 @@ mh_digest_password: CHANGE_ME
 
 #These two must match
 #The git branch/tag to check out.
-mh_version: r/2.0.x
+mh_version: 2.0.0
 #The pom version within that branch/tag
-mh_pom_version: 2.0.0-SNAPSHOT
+mh_pom_version: 2.0.0
 
 #The parent directory for all Matterhorn related services
 mh_parent_dir: /opt/matterhorn
