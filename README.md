@@ -31,3 +31,4 @@ Here are some ideas for ways that these playbooks could be extended:
 - Support for CentOS/RHEL
 - Enable multiple Solr cluster (for services other than search)
 - Clean up the packaging (apt) lines
+- Add security to various installed services to prevent them from being world accessible

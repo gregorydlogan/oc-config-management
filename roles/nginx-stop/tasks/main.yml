@@ -1,7 +1,7 @@
 ---
 
 - name: Checking if nginx exists
-  stat: path=/etc/init.d/nginx
+  stat: path={{mh_tools_dir}}/nginx/sbin/nginx
   register: nginxpresent
 
 - name: Stopping nginx
