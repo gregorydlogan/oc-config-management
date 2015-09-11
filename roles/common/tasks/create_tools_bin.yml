@@ -4,3 +4,7 @@
 - name: Creating Matterhorn tools directory
   file: path={{mh_tools_bin}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
   sudo: yes
+
+- name: Creating Matterhorn tool archive directory
+  file: path={{mh_tool_archive_dir}} owner={{matterhorn_user}} group={{matterhorn_group}} state=directory
+  sudo: yes

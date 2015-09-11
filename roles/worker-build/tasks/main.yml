@@ -3,8 +3,5 @@
   #Mount NFS
 - include: ../../common/tasks/nfs_mount.yml
 
-  #Build the 3rd party tools
-- include: ../../common/tasks/build_3rd_party.yml
-
   #Build the system
 - include: ../../common/tasks/build_mh.yml

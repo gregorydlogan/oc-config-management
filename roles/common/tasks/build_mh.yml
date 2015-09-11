@@ -6,12 +6,12 @@
   sudo: true
 
 - name: Build with tests
-  shell: MAVEN_OPTS="{{maven_opts}}" {{mh_tools_bin}}/mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}"
+  shell: MAVEN_OPTS="{{maven_opts}}" PATH="{{mh_tools_bin}}:$PATH" mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}"
          chdir={{mh_base_dir}}
   when: not skip_tests and do_build
 
 - name: Build without tests
-  shell: MAVEN_OPTS="{{maven_opts}}" {{mh_tools_bin}}/mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}" -DskipTests
+  shell: MAVEN_OPTS="{{maven_opts}}" PATH="{{mh_tools_bin}}:$PATH" mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}" -DskipTests
          chdir={{mh_base_dir}}
   when: skip_tests and do_build
 
