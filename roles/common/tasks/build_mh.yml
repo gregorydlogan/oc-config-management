@@ -14,3 +14,6 @@
   shell: MAVEN_OPTS="{{maven_opts}}" {{mh_tools_bin}}/mvn clean install -DdeployTo="{{mh_base_dir}}" -P "{{mh_build_profile}}" -Dcheckstyles.skip="{{checkstyle_skip}}" -DskipTests
          chdir={{mh_base_dir}}
   when: skip_tests and do_build
+
+- name: Stamping built Matterhorn version to disk
+  shell: 'echo "`cd {{mh_base_dir}} && git rev-parse HEAD` from {{git_repo_location}} / {{mh_version}}" > {{mh_base_dir}}/build_version.txt'
