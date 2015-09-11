@@ -16,4 +16,4 @@
   when: skip_tests and do_build
 
 - name: Stamping built Matterhorn version to disk
-  shell: 'echo "`git rev-parse HEAD` from {{git_repo_location}} / {{mh_version}}" > {{mh_base_dir}}/build_version.txt'
+  shell: 'echo "`cd {{mh_base_dir}} && git rev-parse HEAD` from {{git_repo_location}} / {{mh_version}}" > {{mh_base_dir}}/build_version.txt'
