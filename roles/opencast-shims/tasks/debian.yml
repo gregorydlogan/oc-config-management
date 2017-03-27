@@ -1,0 +1,17 @@
+---
+
+- name: Adding jessie-backports to repo list
+  apt_repository:
+    repo: "deb http://deb.debian.org/debian jessie-backports main contrib non-free"
+    state: present
+    update_cache: yes
+  become: yes
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+
+- name: Installing Java 8 from jessie-backports
+  apt:
+    name: openjdk-8-jre
+    default_release: jessie-backports
+    state: present
+  become: yes
+  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"

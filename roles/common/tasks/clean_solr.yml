@@ -1,6 +1,0 @@
----
-
-- include: ../../solr-stop/tasks/main.yml
-
-- name: Clearing old Solr data
-  file: path={{solr_data_dir}}/index state=absent

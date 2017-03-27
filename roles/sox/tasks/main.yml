@@ -1,7 +1,0 @@
----
-
-- include: ../../common/tasks/create_tools_bin.yml
-
-- name: Installing Sox
-  apt: pkg=sox state=present
-  sudo: yes

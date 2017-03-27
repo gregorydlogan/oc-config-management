@@ -1,0 +1,28 @@
+- name: Allowing MariaDB, nginx, NFS, and related services past the firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+    zone: public
+    immediate: true
+  with_items:
+    - mountd
+    - rpc-bind
+    - nfs
+    - http
+    - mysql
+  become: yes
+
+- name: Installing semanagement modules
+  package:
+    name: libsemanage-python
+    state: present
+  become: yes
+
+- name: Allowing nginx to be a reverse proxy
+  seboolean:
+    name: httpd_can_network_connect
+    state: yes
+    persistent: yes
+  become: yes
+

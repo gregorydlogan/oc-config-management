@@ -1,0 +1,37 @@
+---
+
+- name: Removing existing Opencast repository
+  file:
+    path: /etc/apt/sources.list.d/pkg_opencast_org_debian.list
+    state: absent
+  become: yes
+
+- name: Installing apt-transport-https
+  apt:
+    pkg: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+  become: yes
+
+- name: Adding Debian signing key to apt keyring
+  apt_key:
+    url: https://pkg.opencast.org/gpgkeys/opencast-deb.key
+    id: 9A7EA8E5B3820B26
+    state: present
+  become: yes
+
+- name: Adding {{ repo_host }} stable to repo list
+  apt_repository:
+    repo: "deb {{ oc_deb_repo_url }} stable/"
+    state: present
+  become: yes
+
+- name: Adding {{ repo_host }} {{ deb_repo_suite }} to repo list
+  apt_repository:
+    repo: "deb {{ oc_deb_repo_url }} {{ deb_repo_suite }}/"
+    state: present
+    update_cache: yes
+  become: yes

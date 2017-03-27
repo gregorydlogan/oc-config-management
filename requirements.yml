@@ -1,0 +1,14 @@
+---
+
+# For Let's Encrypt certs #TODO
+#- src: geerlingguy.git
+#- src: geerlingguy.certbot
+
+# For proxying #TODO
+- src: geerlingguy.nginx
+
+# NFS #TODO
+- src: geerlingguy.nfs
+
+# Database
+- src: geerlingguy.mysql

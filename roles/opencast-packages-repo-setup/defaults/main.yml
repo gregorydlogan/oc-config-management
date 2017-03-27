@@ -1,0 +1,21 @@
+---
+
+#The hostname of the package repository
+repo_host: pkg.opencast.org
+
+
+#The default deb suite to install
+deb_repo_suite: stable
+
+#The full URL for the Debian repository
+oc_deb_repo_url: "https://{{ repo_username }}:{{ repo_password }}@{{ repo_host }}/debian"
+
+
+#The default rpm suite to install
+rpm_repo_suite: release
+
+#The full URL for the repository.
+oc_rpm_repo_base_url: "https://{{ repo_host }}/rpms"
+
+#The full URL for the gpg verification key for the RPMs.
+oc_rpm_key_url: "https://{{ repo_host }}/gpgkeys/opencast-el7-rpm.opencast.org.key"

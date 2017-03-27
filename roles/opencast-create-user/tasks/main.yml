@@ -1,0 +1,17 @@
+---
+
+- name: Creating the Opencast group
+  group:
+    name: "{{ oc_group }}"
+    gid: "{{ oc_group_gid }}"
+    state: present
+  become: yes
+
+- name: Creating the Opencast user
+  user:
+    name: "{{ oc_user }}"
+    uid: "{{ oc_user_uid }}"
+    groups: "{{ oc_group }}"
+    state: present
+    shell: /sbin/nologin
+  become: yes

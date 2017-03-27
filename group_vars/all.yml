@@ -1,0 +1,41 @@
+---
+
+### Broad configuration options ###
+
+#The user to run the Ansible playbook(s) as.  This user needs sudo access.
+ansible_user: ansible
+
+#True to have this script set up NFS mounts for your nodes.
+#This is mainly intended for testing, production users should probably configure their mounts themselves!
+handle_network_mounts: true
+
+#True to have this script install Mariadb for you nodes.
+#This is mainly intended for testing, production users should probably configure their database manually!
+install_mariadb: true
+
+### Credentials, change these ###
+
+#The Opencast admin user's name
+oc_admin_user: admin
+#The Opencast admin user's password
+oc_admin_pass: opencast
+
+#The digest username
+oc_digest_user: opencast_system_account
+#The digest password
+oc_digest_pass: CHANGE_ME
+
+#The database user
+oc_db_user: opencast
+#The database password
+oc_db_pass: opencast_db_passwd
+
+#The username that Opencast should use to log into activemq
+activemq_oc_user: opencast
+#The password that Opencast should use to log into activemq
+activemq_oc_pass: opencast_amq_passwd
+
+#The username to use when logging into the package repository.  Leave this blank for source installs.
+repo_username:
+#The password to use when logging into the package repository.  Leave this blank for source installs.
+repo_password:

@@ -1,0 +1,43 @@
+---
+
+- name: Loading platform variables
+  include_vars: "{{item}}"
+  with_first_found:
+    - "{{ansible_distribution}}-{{ansible_distribution_release}}.yml"
+    - "{{ansible_distribution}}.yml"
+    - "{{ansible_os_family}}.yml"
+
+- name: Installing ActiveMQ
+  package:
+    name: "{{ amq_packages }}"
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: Installing ActiveMQ firewall rules
+  copy:
+    src: activemq.xml
+    dest: /etc/firewalld/services/activemq.xml
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+
+  #We do this since otherwise the rule isn't in the list of available services below, and the ansible module can't do this yet.
+- name: Loading ActiveMQ firewall rules
+  shell: firewall-cmd --reload
+  become: yes
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+
+- name: Allowing ActiveMQ through the firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+    zone: public
+    immediate: true
+  with_items:
+    - activemq
+  become: yes
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"

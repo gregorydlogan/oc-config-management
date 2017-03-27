@@ -1,6 +1,0 @@
----
-
-nfs_server: "{{groups['fileserver'][0]}}"
-
-nfs_exports:  "{{groups['all']|join(',')}}"
-

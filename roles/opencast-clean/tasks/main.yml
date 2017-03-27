@@ -1,0 +1,25 @@
+---
+
+- name: Stopping Opencast
+  service:
+    name: opencast
+    state: stopped
+  ignore_errors: "{{ true if uninstall is defined else false }}"
+  become: yes
+
+- name: Umount NFS mount if mounted
+  mount:
+    name: "{{ oc_storage_dir }}"
+    state: unmounted
+  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
+  become: yes
+
+- name: Cleaning Opencast filesystem
+  shell: "rm -rf {{ item }}/*"
+  become: yes
+  with_items:
+    - "{{ oc_log_dir }}"
+    - "{{ oc_local_dir }}"
+    - "{{ oc_storage_dir }}"
+  notify: "restart opencast"
+

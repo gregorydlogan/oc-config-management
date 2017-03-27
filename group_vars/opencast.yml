@@ -1,0 +1,51 @@
+---
+
+#The Opencast major version to install.  This is the X in x.y versioning.
+oc_package_version: 3
+
+#The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
+oc_protocol: http
+
+#The database schema's name, changing this is unwise at the moment.
+oc_db_schema: opencast
+
+### The directories below are the defaults for package based installs, do not change them.
+
+#Where the opencast base files live
+oc_base_dir: /usr/share/opencast
+
+#Where to store opencast's configuration data.
+oc_config_dir: "/etc/opencast"
+
+#Where to store Opencast's logs.
+oc_log_dir: "/var/log/opencast"
+
+#The Opencast storage directory.  This is also the NFS mount, if applicable.
+oc_storage_dir: /srv/opencast
+
+#The local storage directory for Openast.  This will contain things like Solr indexes.
+oc_local_dir: "/var/lib/opencast"
+
+### Note: Do not change the user and group names below if you are installing via packages.
+### The packages use these names, and changing them here will cause directory permission issues.
+
+#The user to run the Opencast service as.
+oc_user: opencast
+
+#The user id for Opencast
+oc_user_uid: 7967
+
+#The group to run the Opencast service as.
+oc_group: opencast
+
+#The group id for Opencast
+oc_group_gid: 7967
+
+#The IP of the fileserver
+nfs_server: "{{ hostvars[groups['fileserver'][0]]['ansible_default_ipv4']['address'] }}"
+
+#The admin node, taken from the three admin class groups.  Note the order of precedence.
+admin_node: "{{ groups['admin_node'][0] }}"
+
+#The presentations nodes, taken from the three presentations class groups.  Note the order of precedence.
+presentation_node: "{{ groups['presentation_node'][0] }}"

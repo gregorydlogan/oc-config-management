@@ -1,0 +1,24 @@
+---
+
+admin:
+  - "opencast{{ oc_package_version }}-admin"
+
+adminpresentation:
+  - "opencast{{ oc_package_version }}-adminpresentation"
+
+adminworker:
+  - "opencast{{ oc_package_version }}-adminworker"
+  - "ffmpeg"
+
+allinone:
+  - "opencast{{ oc_package_version }}-allinone"
+
+ingest:
+  - "opencast{{ oc_package_version }}-ingest"
+
+presentation:
+  - "opencast{{ oc_package_version }}-presentation"
+
+worker:
+  - "opencast{{ oc_package_version }}-worker"
+  - "ffmpeg"

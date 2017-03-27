@@ -1,0 +1,49 @@
+---
+
+#Geerlingguy variables, do not change these unless you are very familiar with these playbooks
+
+nginx_remove_default_vhost: true
+nginx_vhosts_filename: "opencast.conf"
+
+nginx_vhosts:
+  - listen: "80"
+    server_name: "{{ inventory_hostname }}"
+    extra_parameters: |
+      client_max_body_size 0;
+      location / {
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Real-IP $remote_addr;
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_pass              http://localhost:8080;
+        # Do not buffer responses
+        proxy_buffering         off;
+        # Do not buffer requests
+        #FIXME: This should be uncommented, but breaks Jessie
+        #proxy_request_buffering off;
+      }
+
+### geerlingguy.mysql
+
+mysql_databases:
+  - name: "{{ oc_db_schema }}"
+    encoding: utf8
+    collation: utf8_general_ci
+# TODO: Handle setting appropriate host restictions
+mysql_users:
+  - name: "{{ oc_db_user }}"
+    host: "%"
+    password: "{{ oc_db_pass }}"
+    priv: "{{ oc_db_schema }}.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,TRIGGER,ALTER,REFERENCES"
+
+#Only set the root password if we're the first ones configuring, otherwise ignore the setting below
+mysql_root_password_update: false
+
+#The root mysql/mariadb password
+mysql_root_password: "{{ ansible_date_time.epoch | to_uuid }}"
+
+### geerlingguy.nfs
+
+nfs_exports:
+  - "{{ vars['oc_storage_dir'] }} {{ groups['opencast'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join('(rw,no_subtree_check) ') }}(rw,no_subtree_check)"
+

@@ -1,7 +1,0 @@
----
-
-- name: Wipe out Solr build
-  file: path={{mh_parent_dir}}/apache-solr-1.4.1 state=absent
-
-- name: Wipe out Tomcat
-  file: path={{tomcat_dir}} state=absent

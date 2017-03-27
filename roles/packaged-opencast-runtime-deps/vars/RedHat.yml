@@ -1,0 +1,48 @@
+---
+
+admin: []
+
+adminpresentation: []
+
+adminworker:
+  - "tesseract"
+  - "tesseract-langpack-deu"
+  - "tesseract-langpack-fra"
+  - "tesseract-langpack-spa"
+  - "sox"
+  - "hunspell"
+  - "hunspell-de"
+  - "hunspell-en-US"
+  - "hunspell-es"
+  - "hunspell-fr"
+  - "synfig"
+
+allinone:
+  - "tesseract"
+  - "tesseract-langpack-deu"
+  - "tesseract-langpack-fra"
+  - "tesseract-langpack-spa"
+  - "sox"
+  - "hunspell"
+  - "hunspell-de"
+  - "hunspell-en-US"
+  - "hunspell-es"
+  - "hunspell-fr"
+  - "synfig"
+
+ingest: []
+
+presentation: []
+
+worker:
+  - "tesseract"
+  - "tesseract-langpack-deu"
+  - "tesseract-langpack-fra"
+  - "tesseract-langpack-spa"
+  - "sox"
+  - "hunspell"
+  - "hunspell-de"
+  - "hunspell-en-US"
+  - "hunspell-es"
+  - "hunspell-fr"
+  - "synfig"

@@ -1,0 +1,29 @@
+---
+
+- name: Dropping any existing Opencast database schema
+  mysql_db:
+    state: absent
+    name: "{{ oc_db_schema }}"
+  become: yes
+  tags:
+    - never
+    - reset
+
+- name: Copying schema to database server
+  copy:
+    src: mysql5.sql
+    dest: /tmp/mysql5.sql
+    force: yes
+  tags:
+    - reset
+  when: not uninstall is defined
+
+- name: Importing Opencast database schema
+  mysql_db:
+    state: import
+    name: "{{ oc_db_schema }}"
+    target: "/tmp/mysql5.sql"
+  tags:
+    - reset
+  when: not uninstall is defined
+  become: yes

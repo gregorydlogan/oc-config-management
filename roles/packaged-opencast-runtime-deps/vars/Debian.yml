@@ -1,0 +1,48 @@
+---
+
+admin: []
+
+adminpresentation: []
+
+adminworker:
+  - "tesseract-ocr"
+  - "tesseract-ocr-deu"
+  - "tesseract-ocr-fra"
+  - "tesseract-ocr-spa"
+  - "sox"
+  - "hunspell"
+  - "hunspell-de-de"
+  - "hunspell-en-us"
+  - "hunspell-eu-es"
+  - "hunspell-fr"
+  - "synfig"
+
+allinone:
+  - "tesseract-ocr"
+  - "tesseract-ocr-deu"
+  - "tesseract-ocr-fra"
+  - "tesseract-ocr-spa"
+  - "sox"
+  - "hunspell"
+  - "hunspell-de-de"
+  - "hunspell-en-us"
+  - "hunspell-eu-es"
+  - "hunspell-fr"
+  - "synfig"
+
+ingest: []
+
+presentation: []
+
+worker:
+  - "tesseract-ocr"
+  - "tesseract-ocr-deu"
+  - "tesseract-ocr-fra"
+  - "tesseract-ocr-spa"
+  - "sox"
+  - "hunspell"
+  - "hunspell-de-de"
+  - "hunspell-en-us"
+  - "hunspell-eu-es"
+  - "hunspell-fr"
+  - "synfig"

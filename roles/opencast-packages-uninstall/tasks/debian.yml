@@ -1,0 +1,10 @@
+---
+
+- name: Removing Opencast packages
+  apt:
+    pkg: "opencast-7-common"
+    state: absent
+    purge: yes
+  with_items:  "{{ lookup('vars', group_names[1]) }}"
+  become: yes
+

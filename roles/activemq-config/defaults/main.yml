@@ -1,0 +1,21 @@
+---
+
+#The user to run the Opencast service as.
+activemq_user: opencast
+
+#The group to run the Opencast service as.
+activemq_group: opencast
+
+
+#Where the root ActiveMQ directory lives
+activemq_base: "/usr/share/activemq"
+
+#Where the ActiveMQ configuration files live
+activemq_conf: "{{ activemq_base }}/conf"
+
+#Where the ActiveMQ data lives
+activemq_data: "/var/lib/activemq/data"
+
+#Where the ActiveMQ temp dir lives
+activemq_temp: "/var/lib/activemq/tmp"
+

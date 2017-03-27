@@ -1,9 +1,0 @@
----
-
-- name: Clean Matterhorn log
-  file: path={{mh_log_dir}} state=absent
-  sudo: yes
-
-- name: Create logging directory
-  file: path={{mh_log_dir}} state=directory owner={{matterhorn_user}} group={{matterhorn_group}}
-  sudo: yes

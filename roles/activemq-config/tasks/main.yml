@@ -1,0 +1,15 @@
+---
+
+- name: Configuring ActiveMQ
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ activemq_user }}"
+    group: "{{ activemq_group }}"
+    force: yes
+  with_items:
+    - { src: "activemq.xml", dest: "{{ activemq_conf }}/activemq.xml" }
+    - { src: "users.properties", dest: "{{ activemq_conf }}/users.properties" }
+    - { src: "groups.properties", dest: "{{ activemq_conf }}/groups.properties" }
+  become: yes
+  notify: "restart activemq"

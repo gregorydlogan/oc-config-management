@@ -1,0 +1,4 @@
+---
+
+- include: nfs-client.yml
+  when: handle_network_mounts

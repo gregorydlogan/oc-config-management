@@ -1,9 +1,0 @@
----
-
-- name: Install httplib2
-  apt: pkg=python-httplib2 state=present
-  sudo: yes
-
-- name: Setting pyCA to start on boot
-  service: name=pyca state=started enabled=yes
-  sudo: yes

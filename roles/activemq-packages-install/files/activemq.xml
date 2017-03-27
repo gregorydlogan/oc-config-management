@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<service>
+  <short>ActiveMQ</short>
+  <description>ActiveMQ messaging platform</description>
+  <port protocol="tcp" port="61616"/>
+</service>

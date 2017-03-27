@@ -1,0 +1,19 @@
+---
+
+- name: Configuring Opencast
+  template:
+    backup: yes
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ oc_user }}"
+    group: "{{ oc_group }}"
+    force: yes
+  with_items:
+    - { src: "custom.properties", dest: "{{ oc_config_dir }}/custom.properties" }
+    - { src: "org.opencastproject.organization-mh_default_org.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.organization-mh_default_org.cfg" }
+    - { src: "org.ops4j.pax.logging.cfg", dest: "{{ oc_config_dir }}/org.ops4j.pax.logging.cfg" }
+    - { src: "org.opencastproject.kernel.mail.SmtpService.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.kernel.mail.SmtpService.cfg" }
+    - { src: "org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg" }
+  become: yes
+  notify: "restart opencast"
+

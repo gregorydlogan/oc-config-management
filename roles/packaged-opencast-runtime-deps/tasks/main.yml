@@ -1,0 +1,16 @@
+---
+
+- name: Loading platform variables
+  include_vars: "{{item}}"
+  with_first_found:
+    - "{{ansible_distribution}}-{{ansible_distribution_release}}.yml"
+    - "{{ansible_distribution}}.yml"
+    - "{{ansible_os_family}}.yml"
+
+- name: Installing runtime dependencies
+  package:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:  "{{ lookup('vars', group_names[1]) }}"
+  become: yes

@@ -1,0 +1,30 @@
+---
+
+- name: restart activemq
+  action: service
+    name=activemq
+    state=restarted
+    enabled=yes
+  become: yes
+
+- name: restart opencast
+  action: service
+    name=opencast
+    state=restarted
+    enabled=yes
+  when: not uninstall is defined
+  become: yes
+
+- name: restart nginx
+  action: service
+    name=nginx
+    state=restarted
+    enabled=yes
+  become: yes
+
+- name: restart mariadb
+  action: service
+    name=mysql
+    state=restarted
+    enabled=true
+  become: yes

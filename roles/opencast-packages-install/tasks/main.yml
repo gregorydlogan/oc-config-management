@@ -1,0 +1,33 @@
+---
+
+- name: Loading platform variables
+  include_vars: "{{item}}"
+  with_first_found:
+    - "{{ansible_distribution}}-{{ansible_distribution_release}}.yml"
+    - "{{ansible_distribution}}.yml"
+    - "{{ansible_os_family}}.yml"
+
+- name: Umount NFS mount if mounted
+  mount:
+    name: "{{ oc_storage_dir }}"
+    state: unmounted
+  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
+  become: yes
+
+- name: Installing Opencast
+  package:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:  "{{ lookup('vars', group_names[1]) }}"
+  become: yes
+
+- name: Remounting NFS mount if appropriate
+  mount:
+    name: "{{ oc_storage_dir }}"
+    src: "{{ nfs_server }}:{{ oc_storage_dir }}"
+    fstype: nfs
+    state: mounted
+    opts: "rw,sync,vers=3"
+  become: yes
+  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
