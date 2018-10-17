@@ -34,7 +34,7 @@ mysql_users:
   - name: "{{ oc_db_user }}"
     host: "%"
     password: "{{ oc_db_pass }}"
-    priv: "{{ oc_db_schema }}.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,TRIGGER,ALTER,REFERENCES"
+    priv: "{{ oc_db_schema }}.*:SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,INDEX,TRIGGER,CREATE TEMPORARY TABLES"
 
 #Only set the root password if we're the first ones configuring, otherwise ignore the setting below
 mysql_root_password_update: false
