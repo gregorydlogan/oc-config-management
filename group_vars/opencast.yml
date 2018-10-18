@@ -1,7 +1,7 @@
 ---
 
 #The Opencast major version to install.  This is the X in x.y versioning.
-oc_package_version: 6
+oc_package_version: 7
 
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
 oc_protocol: http
