@@ -25,11 +25,6 @@ oc_digest_user: opencast_system_account
 #The digest password
 oc_digest_pass: CHANGE_ME
 
-#The digest username for the capture agents
-oc_ca_digest_user: opencast_ca
-#The digest password for the capture agents
-oc_ca_digest_pass: CHANGE_ME
-
 #The database user
 oc_db_user: opencast
 #The database password
