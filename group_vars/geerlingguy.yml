@@ -25,6 +25,10 @@ nginx_vhosts:
 
 ### geerlingguy.mysql
 
+#Without this we get "ERROR 1709 (HY000) at line 358: Index column size too large. The maximum column size is 767 bytes."
+#This key makes innodb_large_prefix=1 and innodb_file_format=barracuda in /etc/mysql/my.cnf
+mysql_supports_innodb_large_prefix: False
+
 mysql_databases:
   - name: "{{ oc_db_schema }}"
     encoding: utf8
