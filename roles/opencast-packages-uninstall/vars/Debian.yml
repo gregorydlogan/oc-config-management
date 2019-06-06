@@ -8,11 +8,6 @@ adminpresentation:
   - "opencast-{{ oc_package_version }}-common"
   - "opencast-{{ oc_package_version }}-adminpresentation"
 
-adminworker:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-adminworker"
-  - "ffmpeg-dist"
-
 allinone:
   - "opencast-{{ oc_package_version }}-common"
   - "opencast-{{ oc_package_version }}-allinone"

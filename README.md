@@ -36,14 +36,14 @@ Host list requirements:
  - `fileserver`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `mariadb`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
- - `allinone`, `admin`, `adminworker`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
+ - `allinone`, `admin`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
    node used by the cluster is defined by the _first_ entry of the `admin_node` group.  This means that if you define an
-   a host under `admin`, and a host under `adminworker` then the cluster will use the host under `admin`.
+   a host under `admin`, and a host under `adminpresentation` then the cluster will use the host under `admin`.
  - `allinone`, `presentation`, `adminpresentation`: At most 1 host in all of these groups combined.  The presentation
    node used by the cluster is defined by the __first__ entry of the `presentation_node` group.  This means that if you
    define a host under `presentation`, and a host under `adminpresentation` then the cluster will use the host under
    `presentation`.
- - `allinone`, `worker`, `adminworker`: At least 1 host in at least one of these groups.  There are no outright errors if
+ - `allinone`, `worker`: At least 1 host in at least one of these groups.  There are no outright errors if
    you deploy a cluster without any workers, but Opencast will be unable to process any recordings.  In general this is
    a useless configuration, unless you are strictly testing configuration files.
 

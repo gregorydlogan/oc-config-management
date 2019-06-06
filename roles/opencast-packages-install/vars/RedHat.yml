@@ -6,10 +6,6 @@ admin:
 adminpresentation:
   - "opencast{{ oc_package_version }}-adminpresentation"
 
-adminworker:
-  - "opencast{{ oc_package_version }}-adminworker"
-  - "ffmpeg"
-
 allinone:
   - "opencast{{ oc_package_version }}-allinone"
 

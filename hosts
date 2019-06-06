@@ -10,8 +10,6 @@ admin.example.org
 [admin]
 admin.example.org
 
-[adminworker]
-
 [adminpresentation]
 
 [allinone]
@@ -30,7 +28,6 @@ presentation.example.org
 
 [opencast:children]
 admin
-adminworker
 adminpresentation
 allinone
 ingest
@@ -40,7 +37,6 @@ presentation
 [admin_node:children]
 allinone
 admin
-adminworker
 adminpresentation
 
 [presentation_node:children]
