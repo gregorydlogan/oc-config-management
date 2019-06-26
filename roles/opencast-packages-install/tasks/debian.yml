@@ -1,0 +1,8 @@
+---
+
+- name: Installing Opencast
+  apt:
+    name: "{{ lookup('vars', group_names[1]) }}"
+    state: latest
+    update_cache: yes
+  become: yes

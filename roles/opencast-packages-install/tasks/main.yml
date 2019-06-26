@@ -14,13 +14,11 @@
   when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
   become: yes
 
-- name: Installing Opencast
-  package:
-    name: "{{ item }}"
-    state: latest
-    update_cache: yes
-  with_items:  "{{ lookup('vars', group_names[1]) }}"
-  become: yes
+- import_tasks: debian.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- import_tasks: centos.yml
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
 
 - name: Remounting NFS mount if appropriate
   mount:

@@ -99,6 +99,27 @@ Here are some ideas for ways that these playbooks could be extended:
 
 ### Advanced Usage
 
+#### Using other repositories
+
+It is possible to use other repositories (ie, internal testing repositories) with these playbooks.  You will need to
+override a few variables.
+
+For Debian based systems:
+
+ - `deb_repo_suite` needs to be the repository suite (ie, `unstable`)
+ - `oc_deb_repo_url` needs to be the full URL to the repository base (ie, `http://ci.opencast.org/debian`)
+ - `oc_deb_key_url` needs to be the full URL to the repository signing key (ie, `https://pkg.opencast.org/gpgkeys/automated.key`)
+ - `oc_deb_key_id` needs to be the signing key's id (ie, `048D039F1DAE53EA0357ED824917F260EA15B53F`)
+
+For RedHat based systems:
+
+ - `rpm_repo_suite` needs to be the repository suite (ie, `unstable`)
+ - `oc_rpm_repo_url` needs to be the full URL to the repository base (ie, `http://ci.opencast.org/rpms`)
+ - `oc_rpm_key_url` needs to be the full URL to the repository signing key (ie, `https://pkg.opencast.org/gpgkeys/automated.key`)
+ - `oc_rpm_key_id` needs to be the signing key's id (ie, `048D039F1DAE53EA0357ED824917F260EA15B53F`)
+
+#### Tags
+
 The playbook contains tags, which cause Ansible to only execute part of the full playbook.  These tags are currently:
 
  - `config`, which updates all of the configuration files created by this playbook, then restarts Opencast.  Don't do

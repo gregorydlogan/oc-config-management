@@ -1,0 +1,18 @@
+---
+
+- name: Installing Opencast from stable
+  yum:
+    name: "{{ lookup('vars', group_names[1]) }}"
+    state: latest
+    update_cache: yes
+  when: rpm_repo_suite == 'stable'
+  become: yes
+
+- name: Installing Opencast from {{ rpm_repo_suite }}
+  yum:
+    name: "{{ lookup('vars', group_names[1]) }}"
+    state: latest
+    disablerepo: 'opencast-noarch'
+    update_cache: yes
+  when: rpm_repo_suite != 'stable'
+  become: yes

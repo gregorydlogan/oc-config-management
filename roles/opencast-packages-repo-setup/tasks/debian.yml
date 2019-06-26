@@ -18,20 +18,30 @@
 
 - name: Adding Debian signing key to apt keyring
   apt_key:
-    url: https://pkg.opencast.org/gpgkeys/opencast-deb.key
-    id: 9A7EA8E5B3820B26
+    url: "{{ default_oc_deb_key_url }}"
+    id: "{{ default_oc_deb_key_id }}"
     state: present
   become: yes
 
-- name: Adding {{ repo_host }} stable to repo list
+- name: Adding {{ default_repo_host }} stable to repo list
   apt_repository:
-    repo: "deb {{ oc_deb_repo_url }} stable/"
+    repo: "deb {{ default_oc_deb_repo_url }} stable/"
     state: present
   become: yes
 
-- name: Adding {{ repo_host }} {{ deb_repo_suite }} to repo list
+- name: Adding Debian signing key associated with optional repo to apt keyring
+  apt_key:
+    url: "{{ oc_deb_key_url }}"
+    id: "{{ oc_deb_key_id }}"
+    state: present
+  when: oc_deb_key_url != default_oc_deb_key_url
+  become: yes
+
+- name: Adding optional {{ deb_repo_suite }} to repo list
   apt_repository:
     repo: "deb {{ oc_deb_repo_url }} {{ deb_repo_suite }}/"
     state: present
     update_cache: yes
+  when: deb_repo_suite != default_deb_repo_suite
   become: yes
+
