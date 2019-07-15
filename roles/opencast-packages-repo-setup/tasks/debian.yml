@@ -8,12 +8,9 @@
 
 - name: Installing apt-transport-https
   apt:
-    pkg: "{{ item }}"
+    pkg: ['apt-transport-https', 'ca-certificates']
     state: latest
     update_cache: yes
-  with_items:
-    - apt-transport-https
-    - ca-certificates
   become: yes
 
 - name: Adding Debian signing key to apt keyring

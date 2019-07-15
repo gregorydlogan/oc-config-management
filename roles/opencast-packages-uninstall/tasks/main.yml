@@ -17,13 +17,9 @@
 
 - name: Removing Opencast packages
   package:
-    name: "{{ item }}"
+    name:  "{{ lookup('vars', group_names[1]) }}"
     state: absent
-  with_items:  "{{ lookup('vars', group_names[1]) }}"
   become: yes
-
-- import_tasks: debian.yml
-  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: Removing potential Opencast leftovers
   file:

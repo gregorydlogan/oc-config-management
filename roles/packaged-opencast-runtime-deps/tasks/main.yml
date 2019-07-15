@@ -9,8 +9,7 @@
 
 - name: Installing runtime dependencies
   package:
-    name: "{{ item }}"
+    name: "{{ lookup('vars', group_names[1]) }}"
     state: latest
     update_cache: yes
-  with_items:  "{{ lookup('vars', group_names[1]) }}"
   become: yes
