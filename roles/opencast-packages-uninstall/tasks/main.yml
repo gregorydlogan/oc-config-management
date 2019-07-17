@@ -1,11 +1,14 @@
 ---
 
+- name: Gathering service information
+  service_facts:
+
 - name: Stopping and disabling Opencast
   service:
     name: opencast
     state: stopped
     enabled: false
-  ignore_errors: yes
+  when: hostvars[inventory_hostname]['services']['opencast'] is defined
   become: yes
 
 - name: Loading platform variables
