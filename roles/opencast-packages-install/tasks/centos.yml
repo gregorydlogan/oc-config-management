@@ -1,18 +1,15 @@
 ---
 
-- name: Installing Opencast from stable
+- name: Determining installed Opencast repositories
+  command: find /etc/yum.repos.d -name opencast*.repo -exec grep -ho 'opencast.*-noarch' "{}" \;
+  register: excludes
+
+- name: Installing Opencast
   yum:
     name: "{{ lookup('vars', group_names[1]) }}"
     state: latest
     update_cache: yes
-  when: rpm_repo_suite == 'stable'
+    disablerepo: "{{ excludes.stdout_lines | join(',') }}"
+    enablerepo: 'opencast-{{ rpm_repo_suite }}-noarch'
   become: yes
 
-- name: Installing Opencast from {{ rpm_repo_suite }}
-  yum:
-    name: "{{ lookup('vars', group_names[1]) }}"
-    state: latest
-    disablerepo: 'opencast-noarch'
-    update_cache: yes
-  when: rpm_repo_suite != 'stable'
-  become: yes

@@ -2,7 +2,7 @@
 
 - name: Adding Opencast release yum repo
   yum_repository:
-    name: opencast-{{ item }}
+    name: opencast-{{ default_rpm_repo_suite }}-{{ item }}
     file: opencast
     description: "Opencast el 7 Repository - {{ item }}"
     baseurl: "{{ default_oc_rpm_repo_base_url }}/release/el/7/{{ item }}"
