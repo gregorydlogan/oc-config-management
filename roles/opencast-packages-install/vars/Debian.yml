@@ -16,6 +16,7 @@ adminworker:
 allinone:
   - "opencast-{{ oc_package_version }}-common"
   - "opencast-{{ oc_package_version }}-allinone"
+  - "ffmpeg-dist"
 
 ingest:
   - "opencast-{{ oc_package_version }}-common"

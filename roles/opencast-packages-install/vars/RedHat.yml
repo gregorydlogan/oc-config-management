@@ -12,6 +12,7 @@ adminworker:
 
 allinone:
   - "opencast{{ oc_package_version }}-allinone"
+  - "ffmpeg"
 
 ingest:
   - "opencast{{ oc_package_version }}-ingest"

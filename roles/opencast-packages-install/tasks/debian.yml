@@ -1,0 +1,8 @@
+---
+
+- name: Installing Opencast
+  apt:
+    name: "{{ lookup('vars', opencast_node_type) }}"
+    state: latest
+    update_cache: yes
+  become: yes

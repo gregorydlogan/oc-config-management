@@ -2,13 +2,13 @@
 
 - name: Adding Opencast release yum repo
   yum_repository:
-    name: opencast-{{ item }}
+    name: opencast-{{ default_rpm_repo_suite }}-{{ item }}
     file: opencast
     description: "Opencast el 7 Repository - {{ item }}"
-    baseurl: "{{ oc_rpm_repo_base_url }}/release/el/7/{{ item }}"
+    baseurl: "{{ default_oc_rpm_repo_base_url }}/release/el/7/{{ item }}"
     username: "{{ repo_username }}"
     password: "{{ repo_password }}"
-    gpgkey: "{{ oc_rpm_key_url }}"
+    gpgkey: "{{ default_oc_rpm_key_url }}"
     gpgcheck: yes
     enabled: yes
     state: present
@@ -19,9 +19,9 @@
 
 - name: Adding optional Opencast yum repos
   yum_repository:
-    name: opencast-{{ item }}
+    name: opencast-{{ rpm_repo_suite }}-{{ item }}
     file: "opencast-{{ rpm_repo_suite }}"
-    description: "Opencast el 7 Repository - {{ item }}"
+    description: "Opencast el 7 {{ rpm_repo_suite }} Repository - {{ item }}"
     baseurl: "{{ oc_rpm_repo_base_url }}/{{ rpm_repo_suite }}/el/7/{{ item }}"
     username: "{{ repo_username }}"
     password: "{{ repo_password }}"
@@ -30,9 +30,8 @@
     enabled: yes
     state: present
   with_items:
-    - x86_64
     - noarch
-  when: rpm_repo_suite != "release"
+  when: rpm_repo_suite != default_rpm_repo_suite
   become: yes
 
 - name: Install epel

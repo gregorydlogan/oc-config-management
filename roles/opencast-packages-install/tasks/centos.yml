@@ -1,0 +1,15 @@
+---
+
+- name: Determining installed Opencast repositories
+  command: find /etc/yum.repos.d -name opencast*.repo -exec grep -ho 'opencast.*-noarch' "{}" \;
+  register: excludes
+
+- name: Installing Opencast
+  yum:
+    name: "{{ lookup('vars', opencast_node_type) }}"
+    state: latest
+    update_cache: yes
+    disablerepo: "{{ excludes.stdout_lines | join(',') }}"
+    enablerepo: 'opencast-{{ rpm_repo_suite }}-noarch'
+  become: yes
+

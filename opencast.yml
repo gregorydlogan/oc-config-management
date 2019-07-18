@@ -28,7 +28,7 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user }
+    - { role: opencast-create-user, tags: [ "opencast" ] }
     - { role: geerlingguy.nfs, when: handle_network_mounts | bool, become: yes }
   vars_files:
     - group_vars/geerlingguy.yml
@@ -39,7 +39,7 @@
 
   roles:
     - { role: geerlingguy.mysql, when: install_mariadb | bool, become: yes }
-    - { role: mariadb-config }
+    - { role: mariadb-config, tags: [ "opencast" ] }
   handlers:
     - include: handlers/restarts.yml
   vars_files:
@@ -50,11 +50,11 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user }
-    - { role: opencast-packages-repo-setup }
-    - { role: opencast-shims }
+    - { role: opencast-create-user, tags: [ "opencast" ] }
+    - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
+    - { role: opencast-shims, tags: [ "opencast" ] }
     - { role: activemq-packages-install }
-    - { role: activemq-config }
+    - { role: activemq-config, tags: [ 'config' ] }
   handlers:
     - include: handlers/restarts.yml
 
@@ -63,15 +63,15 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user }
-    - { role: opencast-shims }
+    - { role: opencast-create-user, tags: [ "opencast" ] }
+    - { role: opencast-shims, tags: [ "opencast" ] }
     - { role: nfs-client, when: handle_network_mounts | bool }
-    - { role: opencast-packages-repo-setup }
+    - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
     - { role: packaged-opencast-runtime-deps }
     - { role: geerlingguy.nginx, become: yes }
-    - { role: opencast-packages-install }
+    - { role: opencast-packages-install, tags: [ "opencast" ] }
     - { role: opencast-clean, tags: [ "never", "reset" ] }
-    - { role: opencast-config, tags: "config" }
+    - { role: opencast-config, tags: [ "opencast", "config" ] }
     - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
   handlers:
     - include: handlers/restarts.yml
