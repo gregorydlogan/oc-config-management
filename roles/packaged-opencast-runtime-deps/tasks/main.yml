@@ -12,5 +12,5 @@
     name: "{{ item }}"
     state: latest
     update_cache: yes
-  with_items:  "{{ lookup('vars', group_names[1]) }}"
+  with_items:  "{{ lookup('vars', opencast_node_type) }}"
   become: yes
