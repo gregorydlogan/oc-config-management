@@ -1,3 +1,16 @@
+- name: Installing Firewalld
+  package:
+    name: firewalld
+    state: present
+  become: yes
+
+- name: Make sure firewall is running
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+  become: yes
+
 - name: Allowing MariaDB, nginx, NFS, and related services past the firewall
   firewalld:
     service: "{{ item }}"
