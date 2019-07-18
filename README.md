@@ -33,7 +33,7 @@ environment!  At this point, please change the hosts to match your environment.
 
 Host list requirements:
 
- - `fileserver`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
+ - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and only makes sense of you are just building an allinone host.
  - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminworker`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 

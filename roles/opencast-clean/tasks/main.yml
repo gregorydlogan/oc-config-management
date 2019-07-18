@@ -15,7 +15,7 @@
   mount:
     name: "{{ oc_storage_dir }}"
     state: unmounted
-  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
+  when: handle_network_mounts | bool and 'fileserver' not in groups_names 
   become: yes
 
 - name: Cleaning Opencast filesystem
