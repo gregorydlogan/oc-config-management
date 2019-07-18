@@ -5,6 +5,7 @@
     state: absent
     name: "{{ oc_db_schema }}"
   become: yes
+  ignore_errors: yes
   tags:
     - never
     - reset

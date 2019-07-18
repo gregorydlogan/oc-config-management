@@ -1,17 +1,21 @@
 ---
 
+- name: Populate service facts
+  service_facts:
+
 - name: Stopping Opencast
   service:
     name: opencast
     state: stopped
   ignore_errors: "{{ true if uninstall is defined else false }}"
+  when: hostvars[inventory_hostname]['services']['opencast'] is defined
   become: yes
 
 - name: Umount NFS mount if mounted
   mount:
     name: "{{ oc_storage_dir }}"
     state: unmounted
-  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
+  when: handle_network_mounts | bool and 'fileserver' not in groups_names 
   become: yes
 
 - name: Cleaning Opencast filesystem

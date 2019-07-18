@@ -33,8 +33,8 @@ environment!  At this point, please change the hosts to match your environment.
 
 Host list requirements:
 
- - `fileserver`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
- - `mariadb`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
+ - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and only makes sense of you are just building an allinone host.
+ - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
    node used by the cluster is defined by the _first_ entry of the `admin_node` group.  This means that if you define an
@@ -99,10 +99,33 @@ Here are some ideas for ways that these playbooks could be extended:
 
 ### Advanced Usage
 
+#### Using other repositories
+
+It is possible to use other repositories (ie, internal testing repositories) with these playbooks.  You will need to
+override a few variables.
+
+For Debian based systems:
+
+ - `deb_repo_suite` needs to be the repository suite (ie, `unstable`)
+ - `oc_deb_repo_url` needs to be the full URL to the repository base (ie, `http://ci.opencast.org/debian`)
+ - `oc_deb_key_url` needs to be the full URL to the repository signing key (ie, `https://pkg.opencast.org/gpgkeys/automated.key`)
+ - `oc_deb_key_id` needs to be the signing key's id (ie, `048D039F1DAE53EA0357ED824917F260EA15B53F`)
+
+For RedHat based systems:
+
+ - `rpm_repo_suite` needs to be the repository suite (ie, `unstable`)
+ - `oc_rpm_repo_url` needs to be the full URL to the repository base (ie, `http://ci.opencast.org/rpms`)
+ - `oc_rpm_key_url` needs to be the full URL to the repository signing key (ie, `https://pkg.opencast.org/gpgkeys/automated.key`)
+ - `oc_rpm_key_id` needs to be the signing key's id (ie, `048D039F1DAE53EA0357ED824917F260EA15B53F`)
+
+#### Tags
+
 The playbook contains tags, which cause Ansible to only execute part of the full playbook.  These tags are currently:
 
  - `config`, which updates all of the configuration files created by this playbook, then restarts Opencast.  Don't do
    this on your production system, figure out the correct settings on your test instance then reinstall for production.
+ - `opencast`, which does all of the steps for installing Opencast, and Opencast alone.  Use this if you're testing
+   packaging and you are confident that the rest of the system (NFS mounts, activemq, etc) is properly configured.
  - `uninstall`, which removes the Opencast packages, but does not remove the data.  Note that this uninstalls the 
    current branch's packages.  If you have r/5.x checked out and uninstall it will uninstall the 5.x packages, but not
    the 4.x or 6.x.
