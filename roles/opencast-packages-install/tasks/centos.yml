@@ -6,7 +6,7 @@
 
 - name: Installing Opencast
   yum:
-    name: "{{ lookup('vars', group_names[1]) }}"
+    name: "{{ lookup('vars', opencast_node_type) }}"
     state: latest
     update_cache: yes
     disablerepo: "{{ excludes.stdout_lines | join(',') }}"

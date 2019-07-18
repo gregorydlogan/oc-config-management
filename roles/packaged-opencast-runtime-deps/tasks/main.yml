@@ -9,7 +9,7 @@
 
 - name: Installing runtime dependencies
   package:
-    name: "{{ lookup('vars', group_names[1]) }}"
+    name: "{{ lookup('vars', opencast_node_type) }}"
     state: latest
     update_cache: yes
   become: yes
