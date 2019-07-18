@@ -34,7 +34,7 @@ environment!  At this point, please change the hosts to match your environment.
 Host list requirements:
 
  - `fileserver`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
- - `mariadb`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
+ - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminworker`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
    node used by the cluster is defined by the _first_ entry of the `admin_node` group.  This means that if you define an
