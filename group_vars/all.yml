@@ -7,7 +7,7 @@ ansible_user: ansible
 
 #True to have this script set up NFS mounts for your nodes.
 #This is mainly intended for testing, production users should probably configure their mounts themselves!
-handle_network_mounts: true
+handle_network_mounts: length(groups('filesever') > 0
 
 #True to have this script install Mariadb for you nodes.
 #This is mainly intended for testing, production users should probably configure their database manually!

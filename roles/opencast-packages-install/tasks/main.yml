@@ -11,7 +11,7 @@
   mount:
     name: "{{ oc_storage_dir }}"
     state: unmounted
-  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
+  when: handle_network_mounts | bool and 'fileserver' not in group_names
   become: yes
 
 - name: Installing Opencast
@@ -30,4 +30,4 @@
     state: mounted
     opts: "rw,sync,vers=3"
   become: yes
-  when: nfs_server is defined and 'fileserver' not in group_names and (handle_network_mounts | bool)
+  when: handle_network_mounts | bool and 'fileserver' not in group_names
