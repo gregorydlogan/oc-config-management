@@ -7,13 +7,8 @@
   become: yes
 
 - name: restart opencast
-  action: service_facts
-  changed_when: true
-  notify: actually restart opencast
-
-- name: actually restart opencast
   action: service
     name=opencast
     state=restarted
-  when: not uninstall is defined and hostvars[inventory_hostname]['services']['opencast'] is defined
+  when: not uninstall is defined
   become: yes
