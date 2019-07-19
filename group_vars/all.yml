@@ -13,6 +13,9 @@ handle_network_mounts: length(groups('filesever') > 0
 #This is mainly intended for testing, production users should probably configure their database manually!
 install_mariadb: true
 
+#True to have this script assume you are build an Amazon Web Services Machine Image (AMI)
+build_ami: false
+
 ### Credentials, change these ###
 
 #The Opencast admin user's name

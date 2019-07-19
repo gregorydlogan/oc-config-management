@@ -1,0 +1,10 @@
+---
+
+- name: "Install script to configure Opencast for the instance"
+  copy:
+    src: "opencast_allinone_config.sh"
+    dest: "/var/lib/cloud/scripts/per-instance"
+    mode: 0755
+  become: yes
+  when: build_ami | bool and "allinone" in group_names 
+  tags: allinone

@@ -72,6 +72,7 @@
     - { role: opencast-packages-install, tags: [ "opencast" ] }
     - { role: opencast-clean, tags: [ "never", "reset" ] }
     - { role: opencast-config, tags: [ "opencast", "config" ] }
+    - { role: aws-ami, tags: "ami", when: build_ami | bool }
     - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
   handlers:
     - include: handlers/restarts.yml
