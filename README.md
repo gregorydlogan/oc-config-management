@@ -136,5 +136,8 @@ Hints:
  - Running `--tags config,reset` resets the database, filesystem, and ensures all of your config files are in the
    expected state, then restarts Opencast.
  - If you are switching between Opencast versions when testing, first run `--tags uninstall` to remove the packages,
-   then checkout the correct branch of these playbooks.  Then run `--tags untagged,reset` to install and reset.
+   then checkout the correct branch of these playbooks.  Then run `--tags opencast,reset` to install and reset.
    Without the reset tag you will see an error when the database is imported because the schema will already exist.
+ - If you are testing a CI system you can combine the above as `--tags uninstall,opencast,reset` to uninstall the current
+   version, reinstall the same branch (but likely new build), and clear the database and storage system before restarting
+   Opencast.

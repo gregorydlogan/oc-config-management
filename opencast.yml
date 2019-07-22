@@ -69,10 +69,10 @@
     - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
     - { role: packaged-opencast-runtime-deps }
     - { role: geerlingguy.nginx, become: yes }
+    - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
     - { role: opencast-packages-install, tags: [ "opencast" ] }
     - { role: opencast-clean, tags: [ "never", "reset" ] }
     - { role: opencast-config, tags: [ "opencast", "config" ] }
-    - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
   handlers:
     - include: handlers/restarts.yml
   vars_files:
