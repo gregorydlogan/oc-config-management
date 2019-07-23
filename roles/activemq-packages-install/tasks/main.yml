@@ -22,7 +22,7 @@
     group: root
     mode: 0644
   become: yes
-  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "Amazon"
 
 - name: Enable ActiveMQ to start at bootup
   service:
@@ -34,7 +34,7 @@
 - name: Loading ActiveMQ firewall rules
   shell: firewall-cmd --reload
   become: yes
-  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "Amazon"
 
 - name: Allowing ActiveMQ through the firewall
   firewalld:
@@ -46,4 +46,4 @@
   with_items:
     - activemq
   become: yes
-  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "Amazon"

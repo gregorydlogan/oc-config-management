@@ -6,5 +6,11 @@
     dest: "/var/lib/cloud/scripts/per-instance"
     mode: 0755
   become: yes
-  when: build_ami | bool and "allinone" in group_names 
+  when: "'allinone' in group_names"
   tags: allinone
+
+- name: Make Opencast wait for cloud-init to complete
+  copy:
+    src: override.conf
+    dest: /etc/systemd/system/opencast.service.d/
+  become: yes
