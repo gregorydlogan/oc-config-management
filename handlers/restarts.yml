@@ -10,5 +10,5 @@
   action: service
     name=opencast
     state=restarted
-  when: not uninstall is defined
+  when: opencast_tag is defined or untagged is defined or (reset is defined and not uninstall is defined)
   become: yes
