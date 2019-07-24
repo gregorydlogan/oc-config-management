@@ -24,6 +24,17 @@
         - never
         - reset
 
+    - name: Check if opencast tag is present
+      command: /bin/true
+      register: opencast_tag
+      tags:
+        - opencast
+
+    - name: Check if untagged
+      command: /bin/true
+      register: untagged
+
+
 - hosts: fileserver
   user: "{{ ansible_user }}"
 
