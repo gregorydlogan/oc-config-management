@@ -1,0 +1,8 @@
+---
+
+- name: Removing Opencast packages
+  yum:
+    name:  "{{ lookup('vars', group_names[1]) }}"
+    state: absent
+  become: yes
+
