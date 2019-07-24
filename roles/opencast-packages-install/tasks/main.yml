@@ -20,6 +20,13 @@
 - import_tasks: centos.yml
   when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
 
+
+- name: Enable Opencast to start at bootup
+  service:
+    name: opencast
+    enabled: yes
+  become: yes
+
 - name: Remounting NFS mount if appropriate
   mount:
     name: "{{ oc_storage_dir }}"

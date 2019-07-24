@@ -4,32 +4,11 @@
   action: service
     name=activemq
     state=restarted
-    enabled=yes
   become: yes
 
-  #FIXME: It's unclear why this shows up as OK, rather than SKIPPED
 - name: restart opencast
-  action: service_facts
-  notify: actually restart opencast
-
-- name: actually restart opencast
   action: service
     name=opencast
     state=restarted
-    enabled=yes
-  when: not uninstall is defined and hostvars[inventory_hostname]['services']['opencast'] is defined
-  become: yes
-
-- name: restart nginx
-  action: service
-    name=nginx
-    state=restarted
-    enabled=yes
-  become: yes
-
-- name: restart mariadb
-  action: service
-    name=mysql
-    state=restarted
-    enabled=true
+  when: not uninstall is defined
   become: yes
