@@ -65,7 +65,7 @@
     - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
     - { role: opencast-shims, tags: [ "opencast" ] }
     - { role: activemq-packages-install }
-    - { role: activemq-config, tags: [ 'config' ] }
+    - { role: activemq-config, tags: [ "opencast", "config" ] }
   handlers:
     - include: handlers/restarts.yml
 
