@@ -6,9 +6,7 @@
     name: "{{ oc_db_schema }}"
   become: yes
   ignore_errors: yes
-  tags:
-    - never
-    - reset
+  when: reset is defined
 
 - name: Copying schema to database server
   copy:
@@ -17,7 +15,7 @@
     force: yes
   tags:
     - reset
-  when: not uninstall is defined
+  when: opencast_tag is defined or untagged is defined or not uninstall is defined
 
 - name: Importing Opencast database schema
   mysql_db:
@@ -26,5 +24,5 @@
     target: "/tmp/mysql5.sql"
   tags:
     - reset
-  when: not uninstall is defined
+  when: opencast_tag is defined or untagged is defined or not uninstall is defined
   become: yes
