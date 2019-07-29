@@ -11,13 +11,6 @@
   when: hostvars[inventory_hostname]['services']['opencast'] is defined
   become: yes
 
-- name: Loading platform variables
-  include_vars: "{{item}}"
-  with_first_found:
-    - "{{ansible_distribution}}-{{ansible_distribution_release}}.yml"
-    - "{{ansible_distribution}}.yml"
-    - "{{ansible_os_family}}.yml"
-
 - import_tasks: debian.yml
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 

@@ -2,7 +2,7 @@
 
 - name: Removing Opencast packages
   apt:
-    name:  "{{ lookup('vars', group_names[1]) }}"
+    name:  "opencast*"
     state: absent
     purge: yes
   become: yes

@@ -126,9 +126,7 @@ The playbook contains tags, which cause Ansible to only execute part of the full
    this on your production system, figure out the correct settings on your test instance then reinstall for production.
  - `opencast`, which does all of the steps for installing Opencast, and Opencast alone.  Use this if you're testing
    packaging and you are confident that the rest of the system (NFS mounts, activemq, etc) is properly configured.
- - `uninstall`, which removes the Opencast packages, but does not remove the data.  Note that this uninstalls the 
-   current branch's packages.  If you have r/5.x checked out and uninstall it will uninstall the 5.x packages, but not
-   the 4.x or 6.x.
+ - `uninstall`, which removes all Opencast packages, even if they do not match the currently checked out branch.
  - **DANGER** `reset`, which removes _all_ Opencast user data, but leaves the packages installed.  This is only useful
    for testing situations, and *will happily wipe out your production data without further prompting.*
 
