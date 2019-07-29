@@ -24,6 +24,17 @@
         - never
         - reset
 
+    - name: Check if opencast tag is present
+      command: /bin/true
+      register: opencast_tag
+      tags:
+        - opencast
+
+    - name: Check if untagged
+      command: /bin/true
+      register: untagged
+
+
 - hosts: fileserver
   user: "{{ ansible_user }}"
 
@@ -54,7 +65,7 @@
     - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
     - { role: opencast-shims, tags: [ "opencast" ] }
     - { role: activemq-packages-install }
-    - { role: activemq-config, tags: [ 'config' ] }
+    - { role: activemq-config, tags: [ "opencast", "config" ] }
   handlers:
     - include: handlers/restarts.yml
 
@@ -69,10 +80,10 @@
     - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
     - { role: packaged-opencast-runtime-deps }
     - { role: geerlingguy.nginx, become: yes }
+    - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
     - { role: opencast-packages-install, tags: [ "opencast" ] }
     - { role: opencast-clean, tags: [ "never", "reset" ] }
     - { role: opencast-config, tags: [ "opencast", "config" ] }
-    - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
   handlers:
     - include: handlers/restarts.yml
   vars_files:

@@ -1,0 +1,8 @@
+---
+
+- name: Removing Opencast packages
+  yum:
+    name:  "opencast*"
+    state: absent
+  become: yes
+

@@ -1,0 +1,9 @@
+---
+
+- name: Removing Opencast packages
+  apt:
+    name:  "opencast*"
+    state: absent
+    purge: yes
+  become: yes
+

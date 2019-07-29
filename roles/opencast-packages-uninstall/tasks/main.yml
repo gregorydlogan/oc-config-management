@@ -11,18 +11,11 @@
   when: hostvars[inventory_hostname]['services']['opencast'] is defined
   become: yes
 
-- name: Loading platform variables
-  include_vars: "{{item}}"
-  with_first_found:
-    - "{{ansible_distribution}}-{{ansible_distribution_release}}.yml"
-    - "{{ansible_distribution}}.yml"
-    - "{{ansible_os_family}}.yml"
+- import_tasks: debian.yml
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
-- name: Removing Opencast packages
-  package:
-    name:  "{{ lookup('vars', group_names[1]) }}"
-    state: absent
-  become: yes
+- import_tasks: centos.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Removing potential Opencast leftovers
   file:

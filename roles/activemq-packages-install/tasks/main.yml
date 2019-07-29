@@ -24,6 +24,12 @@
   become: yes
   when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux"
 
+- name: Enable ActiveMQ to start at bootup
+  service:
+    name: activemq
+    enabled: yes
+  become: yes
+ 
   #We do this since otherwise the rule isn't in the list of available services below, and the ansible module can't do this yet.
 - name: Loading ActiveMQ firewall rules
   shell: firewall-cmd --reload
