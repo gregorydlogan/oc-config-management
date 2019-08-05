@@ -17,6 +17,8 @@
     state: present
   register: oc_database_created
   become: yes
+  tags:
+    - reset
 
 - name: Copying schema to database server
   copy:
