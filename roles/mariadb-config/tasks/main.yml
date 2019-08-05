@@ -10,6 +10,14 @@
     - never
     - reset
 
+  # Try creating DB ourselves so can register change
+- name: Create the Opencast database
+  mysql_db:
+    name: "{{ oc_db_schema }}"
+    state: present
+  register: oc_database_created
+  become: yes
+
 - name: Copying schema to database server
   copy:
     src: mysql5.sql
@@ -17,7 +25,7 @@
     force: yes
   tags:
     - reset
-  when: not uninstall is defined
+  when: oc_database_created.changed and not uninstall is defined
 
 - name: Importing Opencast database schema
   mysql_db:
@@ -26,5 +34,5 @@
     target: "/tmp/mysql5.sql"
   tags:
     - reset
-  when: not uninstall is defined
+  when: oc_database_created.changed and not uninstall is defined
   become: yes
