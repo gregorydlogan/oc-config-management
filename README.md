@@ -1,7 +1,11 @@
 ## Quickstart
 
-- Requires a recent version of Ansible
-- Expects Debian 8, Ubuntu 16.04, or CentOS 7 or newer (depending on packaging)
+- Ansible 2.6.18 or newer
+- Supported Distributions
+  - Debian 8+
+  - Ubuntu 16.04+
+  - CentOS 7+
+  - Red Hat 7+
 
 These playbooks deploy a full Opencast cluster, from packages.  To use them, first edit the `hosts` inventory file
 to contain the hostnames of the machines on which you want Opencast deployed, and edit `group_vars/all.yml` to set any
@@ -25,7 +29,7 @@ better matches your local needs and infrastructure.
 
 To begin, we first must first change the hosts file to match our environment.  Each play (e.g: `[fileserver]`) can have
 between zero and N hosts associated with it.  A given host can also be associated with multiple playbooks.  In [the 
-default `hosts` file](hosts) we see that the `admin.example.org` host will play the role of the fileserver, mysql server,
+default `hosts` file](hosts) we see that the `admin.example.org` host will play the role of the fileserver, database server,
 and admin node.  We also see that the `ingest` playbook has no hosts associated - that means that it will not be used.
 These scripts do not have a way to define dependencies between playbooks, which means (as an example) that you can
 deploy a cluster without an admin node, which is an invalid configuration.  Keep this in mind when defining your host
@@ -33,7 +37,8 @@ environment!  At this point, please change the hosts to match your environment.
 
 Host list requirements:
 
- - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and only makes sense of you are just building an allinone host.
+ - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and
+   only makes sense of you are just building an allinone host.
  - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
@@ -48,8 +53,8 @@ Host list requirements:
    a useless configuration, unless you are strictly testing configuration files.
 
 Host configuration for these scripts:
- - A shared user (by default named `ansible`) who accepts your SSH key, has the same password on all nodes in `hosts`,
-   and has `sudo` access.
+ - A shared user (by default named `ansible`) who accepts your SSH key, has `sudo` access, and either no password (for
+   passwordless sudo) or the same password on all nodes in `hosts`.
 
 Configuration Hints:
  - The most common production configuration is a single admin, single presentation, and N workers.
