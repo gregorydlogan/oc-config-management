@@ -6,9 +6,6 @@ oc_package_version: 6
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
 oc_protocol: http
 
-#The database schema's name, changing this is unwise at the moment.
-oc_db_schema: opencast
-
 ### The directories below are the defaults for package based installs, do not change them.
 
 #Where the opencast base files live
