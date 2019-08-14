@@ -1,0 +1,21 @@
+---
+# This playbook resets the database and filesystem back to default, but leaves the configuration alone.
+
+- hosts: database
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: mariadb-clean }
+    - { role: mariadb-config }
+  handlers:
+    - include: handlers/restarts.yml
+
+
+- hosts: opencast
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: opencast-clean }
+  handlers:
+    - include: handlers/restarts.yml
+

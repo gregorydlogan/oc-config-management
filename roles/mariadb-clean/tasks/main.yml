@@ -1,0 +1,9 @@
+---
+
+- name: Dropping any existing Opencast database schema
+  mysql_db:
+    state: absent
+    name: "{{ oc_db_schema }}"
+  become: yes
+  ignore_errors: yes
+

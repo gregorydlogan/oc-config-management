@@ -29,10 +29,6 @@ nginx_vhosts:
 #This key makes innodb_large_prefix=1 and innodb_file_format=barracuda in /etc/mysql/my.cnf
 mysql_supports_innodb_large_prefix: False
 
-mysql_databases:
-  - name: "{{ oc_db_schema }}"
-    encoding: utf8
-    collation: utf8_general_ci
 # TODO: Handle setting appropriate host restictions
 mysql_users:
   - name: "{{ oc_db_user }}"
