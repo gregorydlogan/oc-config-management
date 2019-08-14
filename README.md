@@ -25,6 +25,30 @@ better matches your local needs and infrastructure.
 
 ## Detailed Docs
 
+#### Playbooks
+
+There are four playbooks:
+
+ - `opencast.yml`: This playbook installs and configures Opencast on a fresh machine.  This is probably the playbook
+   you are here for.
+ - `config.yml`: This playbook is used to reconfigure an Opencast install.  Run `opencast.yml` first, then `config.yml`
+   when you need to change configurations.
+ - `uninstall.yml`: This playbook uninstalls the Opencast packages, but leaves the third party tools, and your data
+   alone.
+ - `reset.yml`: **DANGER** This playbook resets Opencast back to its initial state.  It removes _all_ Opencast user
+   data, but leaves the packages installed.  This is only useful for testing situations, and *will happily wipe out
+   your production data without further prompting.*
+
+Hints:
+ - Running `reset.yml config.yml` resets the database, filesystem, and ensures all of your config files are in the
+   expected state, then restarts Opencast.
+ - If you are switching between Opencast versions when testing, first run `uninstall.yml` to remove the packages,
+   then checkout the correct branch of these playbooks.  Then run `opencast.yml reset.yml` to install and reset.
+   Without the reset tag you will see an error when the database is imported because the schema will already exist.
+ - If you are testing a CI system you can combine the above as `uninstall.yml opencast.yml reset.yml` to uninstall the current
+   version, reinstall the same branch (but likely new build), and clear the database and storage system before restarting
+   Opencast.
+
 #### Hosts
 
 To begin, we first must first change the hosts file to match our environment.  Each play (e.g: `[fileserver]`) can have
