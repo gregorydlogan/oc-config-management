@@ -8,7 +8,7 @@ oc_protocol: http
 ### Database settings ###
 
 #The database server, including port if not using default ports
-oc_db_host: "{{ groups['database'][0] }}"
+oc_db_host: "{{ (inventory_hostname == groups['database'][0]) | ternary('localhost', groups['database'][0]) }}"
 
 #True to generate the DB tables on startup, false assumes schema is already present
 oc_db_ddl: false
