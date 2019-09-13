@@ -10,5 +10,4 @@
   action: service
     name=opencast
     state={{ build_ami | bool | ternary('stopped', 'restarted') }}
-  when: not uninstall is defined
   become: yes

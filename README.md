@@ -1,7 +1,11 @@
 ## Quickstart
 
-- Requires a recent version of Ansible
-- Expects Debian 8, Ubuntu 16.04, or CentOS 7 or newer (depending on packaging)
+- Ansible 2.6.18 or newer
+- Supported Distributions
+  - Debian 8+
+  - Ubuntu 16.04+
+  - CentOS 7+
+  - Red Hat 7+
 
 These playbooks deploy a full Opencast cluster, from packages.  To use them, first edit the `hosts` inventory file
 to contain the hostnames of the machines on which you want Opencast deployed, and edit `group_vars/all.yml` to set any
@@ -21,11 +25,35 @@ better matches your local needs and infrastructure.
 
 ## Detailed Docs
 
+#### Playbooks
+
+There are four playbooks:
+
+ - `opencast.yml`: This playbook installs and configures Opencast on a fresh machine.  This is probably the playbook
+   you are here for.
+ - `config.yml`: This playbook is used to reconfigure an Opencast install.  Run `opencast.yml` first, then `config.yml`
+   when you need to change configurations.
+ - `uninstall.yml`: This playbook uninstalls the Opencast packages, but leaves the third party tools, and your data
+   alone.
+ - `reset.yml`: **DANGER** This playbook resets Opencast back to its initial state.  It removes _all_ Opencast user
+   data, but leaves the packages installed.  This is only useful for testing situations, and *will happily wipe out
+   your production data without further prompting.*
+
+Hints:
+ - Running `reset.yml config.yml` resets the database, filesystem, and ensures all of your config files are in the
+   expected state, then restarts Opencast.
+ - If you are switching between Opencast versions when testing, first run `uninstall.yml` to remove the packages,
+   then checkout the correct branch of these playbooks.  Then run `opencast.yml reset.yml` to install and reset.
+   Without the reset tag you will see an error when the database is imported because the schema will already exist.
+ - If you are testing a CI system you can combine the above as `uninstall.yml opencast.yml reset.yml` to uninstall the current
+   version, reinstall the same branch (but likely new build), and clear the database and storage system before restarting
+   Opencast.
+
 #### Hosts
 
 To begin, we first must first change the hosts file to match our environment.  Each play (e.g: `[fileserver]`) can have
 between zero and N hosts associated with it.  A given host can also be associated with multiple playbooks.  In [the 
-default `hosts` file](hosts) we see that the `admin.example.org` host will play the role of the fileserver, mysql server,
+default `hosts` file](hosts) we see that the `admin.example.org` host will play the role of the fileserver, database server,
 and admin node.  We also see that the `ingest` playbook has no hosts associated - that means that it will not be used.
 These scripts do not have a way to define dependencies between playbooks, which means (as an example) that you can
 deploy a cluster without an admin node, which is an invalid configuration.  Keep this in mind when defining your host
@@ -33,7 +61,8 @@ environment!  At this point, please change the hosts to match your environment.
 
 Host list requirements:
 
- - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and only makes sense of you are just building an allinone host.
+ - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and
+   only makes sense of you are just building an allinone host.
  - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminworker`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
@@ -48,8 +77,8 @@ Host list requirements:
    a useless configuration, unless you are strictly testing configuration files.
 
 Host configuration for these scripts:
- - A shared user (by default named `ansible`) who accepts your SSH key, has the same password on all nodes in `hosts`,
-   and has `sudo` access.
+ - A shared user (by default named `ansible`) who accepts your SSH key, has `sudo` access, and either no password (for
+   passwordless sudo) or the same password on all nodes in `hosts`.
 
 Configuration Hints:
  - The most common production configuration is a single admin, single presentation, and N workers.
@@ -126,9 +155,7 @@ The playbook contains tags, which cause Ansible to only execute part of the full
    this on your production system, figure out the correct settings on your test instance then reinstall for production.
  - `opencast`, which does all of the steps for installing Opencast, and Opencast alone.  Use this if you're testing
    packaging and you are confident that the rest of the system (NFS mounts, activemq, etc) is properly configured.
- - `uninstall`, which removes the Opencast packages, but does not remove the data.  Note that this uninstalls the 
-   current branch's packages.  If you have r/5.x checked out and uninstall it will uninstall the 5.x packages, but not
-   the 4.x or 6.x.
+ - `uninstall`, which removes all Opencast packages, even if they do not match the currently checked out branch.
  - **DANGER** `reset`, which removes _all_ Opencast user data, but leaves the packages installed.  This is only useful
    for testing situations, and *will happily wipe out your production data without further prompting.*
 
@@ -136,5 +163,8 @@ Hints:
  - Running `--tags config,reset` resets the database, filesystem, and ensures all of your config files are in the
    expected state, then restarts Opencast.
  - If you are switching between Opencast versions when testing, first run `--tags uninstall` to remove the packages,
-   then checkout the correct branch of these playbooks.  Then run `--tags untagged,reset` to install and reset.
+   then checkout the correct branch of these playbooks.  Then run `--tags opencast,reset` to install and reset.
    Without the reset tag you will see an error when the database is imported because the schema will already exist.
+ - If you are testing a CI system you can combine the above as `--tags uninstall,opencast,reset` to uninstall the current
+   version, reinstall the same branch (but likely new build), and clear the database and storage system before restarting
+   Opencast.

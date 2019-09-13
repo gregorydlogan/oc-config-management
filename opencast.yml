@@ -4,35 +4,15 @@
 - hosts: all
   user: "{{ ansible_user }}"
   tasks:
-    - name: Gather facts from cluster
-      setup:
-      delegate_to: "{{item}}"
-      delegate_facts: True
-      loop: "{{groups['opencast']}}"
-
     - name: Autocorrect major version for Amazon, NA -> 7
       set_fact: ansible_distribution_major_version="7"
       when: ansible_distribution == 'Amazon'
-
-    - name: Check if uninstall tag is present
-      command: /bin/true
-      register: uninstall
-      tags:
-        - never
-        - uninstall
-
-    - name: Check if reset tag is present
-      command: /bin/true
-      register: reset
-      tags:
-        - never
-        - reset
 
 - hosts: fileserver
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user, tags: [ "opencast" ] }
+    - { role: opencast-create-user }
     - { role: geerlingguy.nfs, when: handle_network_mounts | bool, become: yes }
   vars_files:
     - group_vars/geerlingguy.yml
@@ -43,7 +23,7 @@
 
   roles:
     - { role: geerlingguy.mysql, when: install_mariadb | bool, become: yes }
-    - { role: mariadb-config, tags: [ "opencast" ] }
+    - { role: mariadb-config }
   handlers:
     - include: handlers/restarts.yml
   vars_files:
@@ -54,11 +34,11 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user, tags: [ "opencast" ] }
-    - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
-    - { role: opencast-shims, tags: [ "opencast" ] }
+    - { role: opencast-create-user }
+    - { role: opencast-packages-repo-setup }
+    - { role: opencast-shims }
     - { role: activemq-packages-install }
-    - { role: activemq-config, tags: [ 'config' ] }
+    - { role: activemq-config }
   handlers:
     - include: handlers/restarts.yml
 
@@ -67,17 +47,15 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user, tags: [ "opencast" ] }
-    - { role: opencast-shims, tags: [ "opencast" ] }
+    - { role: opencast-create-user }
+    - { role: opencast-shims }
     - { role: nfs-client, when: handle_network_mounts | bool }
-    - { role: opencast-packages-repo-setup, tags: [ "opencast" ] }
+    - { role: opencast-packages-repo-setup }
     - { role: packaged-opencast-runtime-deps }
     - { role: geerlingguy.nginx, become: yes }
-    - { role: opencast-packages-install, tags: [ "opencast" ] }
-    - { role: opencast-clean, tags: [ "never", "reset" ] }
-    - { role: opencast-config, tags: [ "opencast", "config" ] }
+    - { role: opencast-packages-install }
+    - { role: opencast-config }
     - { role: aws-ami, tags: "ami", when: build_ami | bool }
-    - { role: opencast-packages-uninstall, tags: [ "never", "uninstall" ] }
   handlers:
     - include: handlers/restarts.yml
   vars_files:

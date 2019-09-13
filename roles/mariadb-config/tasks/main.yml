@@ -1,30 +1,24 @@
 ---
 
-- name: Dropping any existing Opencast database schema
+  # Try creating DB ourselves so can register change
+- name: Create the Opencast database
   mysql_db:
-    state: absent
     name: "{{ oc_db_schema }}"
+    state: present
+  register: oc_database_created
   become: yes
-  ignore_errors: yes
-  tags:
-    - never
-    - reset
 
 - name: Copying schema to database server
   copy:
     src: mysql5.sql
     dest: /tmp/mysql5.sql
     force: yes
-  tags:
-    - reset
-  when: not uninstall is defined
+  when: oc_database_created.changed
 
 - name: Importing Opencast database schema
   mysql_db:
     state: import
     name: "{{ oc_db_schema }}"
     target: "/tmp/mysql5.sql"
-  tags:
-    - reset
-  when: not uninstall is defined
+  when: oc_database_created.changed
   become: yes

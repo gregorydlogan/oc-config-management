@@ -1,0 +1,30 @@
+---
+# This playbook configures a full Opencast cluster.
+# Run opencast.yml first to install everything, then use this to reconfigure things.
+
+- hosts: database
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: mariadb-config }
+  handlers:
+    - include: handlers/restarts.yml
+
+
+- hosts: activemq
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: activemq-config }
+  handlers:
+    - include: handlers/restarts.yml
+
+
+- hosts: opencast
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: opencast-config }
+  handlers:
+    - include: handlers/restarts.yml
+

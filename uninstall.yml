@@ -1,0 +1,11 @@
+---
+# This playbook uninstalls the Opencast packages, but leaves the third party tools and data alone.
+
+- hosts: opencast
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: opencast-packages-uninstall }
+  handlers:
+    - include: handlers/restarts.yml
+
