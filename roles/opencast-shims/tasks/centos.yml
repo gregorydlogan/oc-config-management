@@ -1,7 +1,9 @@
 - name: Installing Firewalld
-  package:
+  yum:
     name: firewalld
     state: present
+    # FIXME: yum threw intermittent errors about EPEL
+    disablerepo: epel
   become: yes
 
 - name: Make sure firewall is running
@@ -30,6 +32,7 @@
   package:
     name: libsemanage-python
     state: present
+  when: ansible_selinux["status"] == "enabled"
   become: yes
 
 - name: Allowing nginx to be a reverse proxy
@@ -37,5 +40,6 @@
     name: httpd_can_network_connect
     state: yes
     persistent: yes
+  when: ansible_selinux["status"] == "enabled"
   become: yes
 
