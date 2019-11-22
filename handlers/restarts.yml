@@ -7,7 +7,7 @@
   become: yes
 
 - name: restart opencast
-  action: service
+  action: systemd
     name=opencast
     state={{ build_ami | bool | ternary('stopped', 'restarted') }}
   become: yes
