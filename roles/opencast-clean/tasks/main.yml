@@ -27,3 +27,12 @@
     - "{{ oc_storage_dir }}"
   notify: "restart opencast"
 
+- name: Remounting NFS mount if it was mounted
+  mount:
+    name: "{{ oc_storage_dir }}"
+    src: "{{ nfs_server }}:{{ oc_storage_dir }}"
+    fstype: nfs
+    state: mounted
+    opts: "rw,sync,vers=3"
+  when: handle_network_mounts | bool and 'fileserver' not in group_names
+  become: yes
