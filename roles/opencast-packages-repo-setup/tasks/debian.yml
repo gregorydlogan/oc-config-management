@@ -6,6 +6,14 @@
     state: absent
   become: yes
 
+- name: Adding Debian signing key associated with optional repo to apt keyring
+  apt_key:
+    url: "{{ oc_deb_key_url }}"
+    id: "{{ oc_deb_key_id }}"
+    state: present
+  when: oc_deb_key_url != default_oc_deb_key_url
+  become: yes
+
 - name: Installing apt-transport-https
   apt:
     pkg: ['apt-transport-https', 'ca-certificates']
@@ -24,14 +32,6 @@
   apt_repository:
     repo: "deb {{ default_oc_deb_repo_url }} stable/"
     state: present
-  become: yes
-
-- name: Adding Debian signing key associated with optional repo to apt keyring
-  apt_key:
-    url: "{{ oc_deb_key_url }}"
-    id: "{{ oc_deb_key_id }}"
-    state: present
-  when: oc_deb_key_url != default_oc_deb_key_url
   become: yes
 
 - name: Adding optional {{ deb_repo_suite }} to repo list

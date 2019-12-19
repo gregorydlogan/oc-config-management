@@ -14,3 +14,9 @@
     src: override.conf
     dest: /etc/systemd/system/opencast.service.d/
   become: yes
+
+- name: Removing Opencast repository login data
+  file:
+    path: /etc/yum.repos.d/opencast.repo
+    state: absent
+  become: yes
