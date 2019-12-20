@@ -2,9 +2,11 @@
   yum:
     name: firewalld
     state: present
-    # FIXME: yum threw intermittent errors about EPEL
-    disablerepo: epel
   become: yes
+  register: firewall
+  until: firewall is not failed
+  retries: 5
+  delay: 3
 
 - name: Make sure firewall is running
   systemd:
@@ -34,6 +36,10 @@
     state: present
   when: ansible_selinux["status"] == "enabled"
   become: yes
+  register: semanage
+  until: semanage is not failed
+  retries: 5
+  delay: 3
 
 - name: Allowing nginx to be a reverse proxy
   seboolean:

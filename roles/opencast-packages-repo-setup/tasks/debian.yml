@@ -13,6 +13,10 @@
     state: present
   when: oc_deb_key_url != default_oc_deb_key_url
   become: yes
+  register: key
+  until: key is not failed
+  retries: 5
+  delay: 3
 
 - name: Installing apt-transport-https
   apt:
@@ -20,6 +24,10 @@
     state: latest
     update_cache: yes
   become: yes
+  register: https
+  until: https is not failed
+  retries: 5
+  delay: 3
 
 - name: Adding Debian signing key to apt keyring
   apt_key:
@@ -27,6 +35,10 @@
     id: "{{ default_oc_deb_key_id }}"
     state: present
   become: yes
+  register: stablekey
+  until: stablekey is not failed
+  retries: 5
+  delay: 3
 
 - name: Adding {{ default_repo_host }} stable to repo list
   apt_repository:

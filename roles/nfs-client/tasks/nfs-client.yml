@@ -13,6 +13,10 @@
     state: present
   become: yes
   when: nfs_server is defined and 'fileserver' not in group_names
+  register: nfs
+  until: nfs is not failure
+  retries: 5
+  delay: 3
 
 - name: Setting up NFS mounts
   mount:

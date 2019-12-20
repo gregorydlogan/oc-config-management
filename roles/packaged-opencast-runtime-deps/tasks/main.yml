@@ -13,3 +13,7 @@
     state: latest
     update_cache: yes
   become: yes
+  register: packages
+  until: packages is not failed
+  retries: 5
+  delay: 3

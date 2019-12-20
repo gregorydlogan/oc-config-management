@@ -12,4 +12,7 @@
     disablerepo: "{{ excludes.stdout_lines | join(',') }}"
     enablerepo: 'opencast-{{ rpm_repo_suite }}-noarch'
   become: yes
-
+  register: install
+  until: install is not failed
+  retries: 5
+  delay: 3

@@ -39,5 +39,8 @@
     name: epel-release
     state: latest
   become: yes
-
+  register: epel
+  until: epel is not failed
+  retries: 5
+  delay: 3
 

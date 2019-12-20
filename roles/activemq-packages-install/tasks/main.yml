@@ -13,6 +13,10 @@
     state: latest
     update_cache: yes
   become: yes
+  register: activemq
+  until: activemq is not failure
+  retries: 5
+  delay: 3
 
 - name: Installing ActiveMQ firewall rules
   copy:
