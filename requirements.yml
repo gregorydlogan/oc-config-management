@@ -4,8 +4,8 @@
 #- src: geerlingguy.git
 #- src: geerlingguy.certbot
 
-# For proxying #TODO
-- src: geerlingguy.nginx
+# For reverse proxying
+- src: nginxinc.nginx
 
 # NFS #TODO
 - src: geerlingguy.nfs

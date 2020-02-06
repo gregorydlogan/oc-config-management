@@ -2,27 +2,6 @@
 
 #Geerlingguy variables, do not change these unless you are very familiar with these playbooks
 
-nginx_remove_default_vhost: true
-nginx_vhosts_filename: "opencast.conf"
-
-nginx_vhosts:
-  - listen: "80"
-    server_name: "{{ inventory_hostname }}"
-    extra_parameters: |
-      client_max_body_size 0;
-      location / {
-        proxy_set_header        Host $host;
-        proxy_set_header        X-Real-IP $remote_addr;
-        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header        X-Forwarded-Proto $scheme;
-        proxy_pass              http://localhost:8080;
-        # Do not buffer responses
-        proxy_buffering         off;
-        # Do not buffer requests
-        #FIXME: This should be uncommented, but breaks Jessie
-        #proxy_request_buffering off;
-      }
-
 ### geerlingguy.mysql
 
 #Without this we get "ERROR 1709 (HY000) at line 358: Index column size too large. The maximum column size is 767 bytes."

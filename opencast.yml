@@ -52,12 +52,13 @@
     - { role: nfs-client, when: handle_network_mounts | bool }
     - { role: opencast-packages-repo-setup }
     - { role: packaged-opencast-runtime-deps }
-    - { role: geerlingguy.nginx, become: yes }
+    - { role: nginxinc.nginx, become: yes }
     - { role: opencast-packages-install }
     - { role: opencast-config }
     - { role: aws-ami, tags: "ami", when: build_ami | bool }
   handlers:
     - include: handlers/restarts.yml
   vars_files:
+    - group_vars/nginx.yml
     - group_vars/geerlingguy.yml
 
