@@ -10,8 +10,8 @@ default_deb_repo_suite: stable
 deb_repo_suite: "{{ default_deb_repo_suite }}"
 
 #The full URL for the Debian repository
-default_oc_deb_repo_url: "https://{{ repo_username }}:{{ repo_password }}@{{ default_repo_host }}/debian"
-oc_deb_repo_url: "https://{{ repo_username }}:{{ repo_password }}@{{ repo_host }}/debian"
+default_oc_deb_repo_url: "https://{{ default_repo_host }}/debian"
+oc_deb_repo_url: "https://{{ repo_host }}/debian"
 
 #The full URL for the gpg verification key for the Debs.
 default_oc_deb_key_url: "https://{{ default_repo_host }}/gpgkeys/opencast-deb.key"

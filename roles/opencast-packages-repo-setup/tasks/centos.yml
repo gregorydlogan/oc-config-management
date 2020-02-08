@@ -6,8 +6,6 @@
     file: opencast
     description: "Opencast el 7 Repository - {{ item }}"
     baseurl: "{{ default_oc_rpm_repo_base_url }}/release/el/7/{{ item }}"
-    username: "{{ repo_username }}"
-    password: "{{ repo_password }}"
     gpgkey: "{{ default_oc_rpm_key_url }}"
     gpgcheck: yes
     enabled: yes
@@ -23,8 +21,6 @@
     file: "opencast-{{ rpm_repo_suite }}"
     description: "Opencast el 7 {{ rpm_repo_suite }} Repository - {{ item }}"
     baseurl: "{{ oc_rpm_repo_base_url }}/{{ rpm_repo_suite }}/el/7/{{ item }}"
-    username: "{{ repo_username }}"
-    password: "{{ repo_password }}"
     gpgkey: "{{ oc_rpm_key_url }}"
     gpgcheck: yes
     enabled: yes

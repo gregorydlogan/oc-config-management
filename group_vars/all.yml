@@ -46,7 +46,3 @@ activemq_oc_user: opencast
 #The password that Opencast should use to log into activemq
 activemq_oc_pass: opencast_amq_passwd
 
-#The username to use when logging into the package repository.  Leave this blank for source installs.
-repo_username:
-#The password to use when logging into the package repository.  Leave this blank for source installs.
-repo_password:
