@@ -52,7 +52,7 @@
     - { role: nfs-client, when: handle_network_mounts | bool }
     - { role: opencast-packages-repo-setup }
     - { role: packaged-opencast-runtime-deps }
-    - { role: nginxinc.nginx, become: yes }
+    - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
     - { role: opencast-packages-install }
     - { role: opencast-config }
     - { role: aws-ami, tags: "ami", when: build_ami | bool }

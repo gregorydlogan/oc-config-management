@@ -13,6 +13,10 @@ handle_network_mounts: "{{ groups['fileserver'] | length > 0 }}"
 #This is mainly intended for testing, production users should probably configure their database manually!
 install_mariadb: true
 
+#True to have this script install nginx using their Ansible role.
+#This should generally be true, unless you're installing nginx yourself
+install_nginx: true
+
 #True to have this script assume you are build an Amazon Web Services Machine Image (AMI)
 build_ami: false
 
