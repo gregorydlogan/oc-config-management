@@ -46,3 +46,5 @@ activemq_oc_user: opencast
 #The password that Opencast should use to log into activemq
 activemq_oc_pass: opencast_amq_passwd
 
+#Some of the playbooks require python3
+ansible_python_interpreter: /usr/bin/python3

@@ -2,10 +2,11 @@
 
 - Ansible 2.6.18 or newer
 - Supported Distributions
-  - Debian 8+
+  - Debian 9+
   - Ubuntu 16.04+
   - CentOS 7+
   - Red Hat 7+
+- Python 3 on the target nodes
 
 These playbooks deploy a full Opencast cluster, from packages.  To use them, first edit the `hosts` inventory file
 to contain the hostnames of the machines on which you want Opencast deployed, and edit `group_vars/all.yml` to set any
