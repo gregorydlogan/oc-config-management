@@ -1,17 +1,27 @@
 ---
 
-- name: Adding jessie-backports to repo list
+- name: Adding debian stretch to repo list for openjdk 8
   apt_repository:
-    repo: "deb http://deb.debian.org/debian jessie-backports main contrib non-free"
+    repo: "deb http://deb.debian.org/debian stretch main contrib non-free"
     state: present
     update_cache: yes
   become: yes
-  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+  when: ansible_distribution == "Debian" and (ansible_distribution_major_version <= "8" or ansible_distribution_major_version >= "10")
 
-- name: Installing Java 8 from jessie-backports
+- name: Pinning Debian version so we don't update the whole system
+  template:
+    src: "99defaultrelease"
+    dest: "/etc/apt/apt.conf.d/"
+    owner: root
+    group: root
+    mode: 0644
+  become: yes
+  when: ansible_distribution == "Debian" and (ansible_distribution_major_version <= "8" or ansible_distribution_major_version >= "10")
+
+- name: Installing Java 8 from debian stretch
   apt:
-    name: openjdk-8-jre
-    default_release: jessie-backports
+    name: openjdk-8-jre-headless
+    default_release: stretch
     state: present
   become: yes
-  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
+  when: ansible_distribution == "Debian" and (ansible_distribution_release <= "8" or ansible_distribution_major_version >= "10")
