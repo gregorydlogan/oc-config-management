@@ -18,6 +18,8 @@
   when: handle_network_mounts | bool and 'fileserver' not in group_names
   become: yes
 
+# We do this with shell rather than the file module because oc_storage_dir is
+# an NFS mount, and thus can't be reliably deleted and recreated
 - name: Cleaning Opencast filesystem
   shell: "rm -rf {{ item }}/*"
   become: yes

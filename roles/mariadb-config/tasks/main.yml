@@ -5,20 +5,6 @@
   mysql_db:
     name: "{{ oc_db_schema }}"
     state: present
-  register: oc_database_created
+  notify: "Copying schema to database server"
   become: yes
 
-- name: Copying schema to database server
-  copy:
-    src: mysql5.sql
-    dest: /tmp/mysql5.sql
-    force: yes
-  when: oc_database_created.changed
-
-- name: Importing Opencast database schema
-  mysql_db:
-    state: import
-    name: "{{ oc_db_schema }}"
-    target: "/tmp/mysql5.sql"
-  when: oc_database_created.changed
-  become: yes

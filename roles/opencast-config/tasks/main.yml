@@ -10,7 +10,8 @@
     force: yes
   with_items:
     - { src: "custom.properties", dest: "{{ oc_config_dir }}/custom.properties" }
-    - { src: "org.opencastproject.organization-mh_default_org.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.organization-mh_default_org.cfg", skip: "{{ 'allinone' in group_names and build_ami | default(false) }}" }
+    - { src: "org.opencastproject.organization-mh_default_org.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.organization-mh_default_org.cfg",
+        skip: "{{ 'allinone' in group_names and build_ami | default(false) }}" }
     - { src: "org.ops4j.pax.logging.cfg", dest: "{{ oc_config_dir }}/org.ops4j.pax.logging.cfg" }
     - { src: "org.ops4j.pax.web.cfg", dest: "{{ oc_config_dir }}/org.ops4j.pax.web.cfg", skip: "{{ install_nginx }}" }
     - { src: "org.opencastproject.kernel.mail.SmtpService.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.kernel.mail.SmtpService.cfg" }

@@ -2,7 +2,7 @@
 
 - name: Determining installed Opencast repositories
   shell:
-    cmd: "yum repolist | grep opencast | grep -v opencast-{{ rpm_repo_suite }}-noarch | grep -v x86_64 | grep -o 'opencast-[a-z]*-[a-z0-9_]*'"
+    cmd: "cat /etc/yum.repos.d/*.repo | grep opencast | grep -v opencast-{{ rpm_repo_suite }}-noarch | grep -v x86_64 | grep -o 'opencast-[a-z]*-[a-z0-9_]*'"
   register: excludes
 
 - name: Installing Opencast

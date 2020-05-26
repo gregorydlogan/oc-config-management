@@ -1,0 +1,15 @@
+---
+
+- name: Copying schema to database server
+  copy:
+    src: mysql5.sql
+    dest: /tmp/mysql5.sql
+    force: yes
+  notify: "Importing Opencast database schema"
+
+- name: Importing Opencast database schema
+  mysql_db:
+    state: import
+    name: "{{ oc_db_schema }}"
+    target: "/tmp/mysql5.sql"
+  become: yes
