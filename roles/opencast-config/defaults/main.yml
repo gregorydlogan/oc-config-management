@@ -13,6 +13,9 @@ oc_db_host: "{{ (inventory_hostname == groups['database'][0]) | ternary('localho
 #True to generate the DB tables on startup, false assumes schema is already present
 oc_db_ddl: false
 
+#True to use Paella for the player instead of Theodul
+use_paella: false
+
 
 ### Directory settings ###
 

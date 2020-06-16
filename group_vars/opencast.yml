@@ -9,6 +9,9 @@ oc_protocol: http
 #The port that Karaf should run on.
 oc_port: 8080
 
+#Set this to True to use Paella as the player, rather than Theodul
+use_paella: false
+
 ### The directories below are the defaults for package based installs, do not change them.
 
 #Where the opencast base files live
