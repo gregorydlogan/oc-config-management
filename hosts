@@ -7,6 +7,9 @@ admin.example.org
 [activemq]
 admin.example.org
 
+[elasticsearch]
+admin.example.org
+
 [admin]
 admin.example.org
 

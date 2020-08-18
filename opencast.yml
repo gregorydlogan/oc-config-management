@@ -42,6 +42,12 @@
   handlers:
     - include: handlers/restarts.yml
 
+- hosts: elasticsearch
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: elastic.elasticsearch }
+
 
 - hosts: opencast
   user: "{{ ansible_user }}"

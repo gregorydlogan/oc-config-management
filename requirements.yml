@@ -12,3 +12,6 @@
 
 # Database
 - src: geerlingguy.mysql
+
+# Elasticsearch
+- src: elastic.elasticsearch
