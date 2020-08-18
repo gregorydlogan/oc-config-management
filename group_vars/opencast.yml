@@ -10,7 +10,7 @@ oc_protocol: http
 oc_port: 8080
 
 #Set this to True to use Paella as the player, rather than Theodul
-use_paella: false
+use_paella: True
 
 ### The directories below are the defaults for package based installs, do not change them.
 
