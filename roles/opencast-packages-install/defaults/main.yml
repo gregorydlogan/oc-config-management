@@ -1,0 +1,7 @@
+---
+
+# By default these playbooks install the latest minor version of the checked out major version
+# Use this to override specify the minor version, and package build
+# This must match the package format exactly.  Something like 8.5-3 should work.
+# The default here is a wildcard, which install the latest availble version
+package_version_override: "*"

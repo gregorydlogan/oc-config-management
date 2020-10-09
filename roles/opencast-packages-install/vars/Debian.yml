@@ -1,27 +1,27 @@
 ---
 
 admin:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-admin"
+  - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
+  - "opencast-{{ oc_package_version }}-admin={{ package_version_override }}"
 
 adminpresentation:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-adminpresentation"
+  - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
+  - "opencast-{{ oc_package_version }}-adminpresentation={{ package_version_override }}"
 
 allinone:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-allinone"
+  - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
+  - "opencast-{{ oc_package_version }}-allinone={{ package_version_override }}"
   - "ffmpeg-dist"
 
 ingest:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-ingest"
+  - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
+  - "opencast-{{ oc_package_version }}-ingest={{ package_version_override }}"
 
 presentation:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-presentation"
+  - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
+  - "opencast-{{ oc_package_version }}-presentation={{ package_version_override }}"
 
 worker:
-  - "opencast-{{ oc_package_version }}-common"
-  - "opencast-{{ oc_package_version }}-worker"
+  - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
+  - "opencast-{{ oc_package_version }}-worker={{ package_version_override }}"
   - "ffmpeg-dist"
