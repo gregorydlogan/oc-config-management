@@ -1,0 +1,20 @@
+---
+
+- name: Loading platform variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Installing Elasticsearch
+  package:
+    name: "{{ es_packages }}"
+    state: latest
+    update_cache: yes
+  become: yes
+  register: es
+  until: es is not failure
+  retries: 5
+  delay: 3
+
