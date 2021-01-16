@@ -30,8 +30,8 @@ default_oc_rpm_repo_base_url: "https://{{ default_repo_host }}/rpms"
 oc_rpm_repo_base_url: "https://{{ repo_host }}/rpms"
 
 #The full URL for the gpg verification key for the RPMs.
-default_oc_rpm_key_url: "https://{{ default_repo_host }}/gpgkeys/opencast-el7-rpm.opencast.org.key"
-oc_rpm_key_url: "https://{{ repo_host }}/gpgkeys/opencast-el7-rpm.opencast.org.key"
+default_oc_rpm_key_url: "https://{{ default_repo_host }}/gpgkeys/opencast-{{ oc_package_version }}-rpm.key"
+oc_rpm_key_url: "https://{{ repo_host }}/gpgkeys/opencast-{{ oc_package_version }}-rpm.key"
 
 #The release rpm signing key id
 default_oc_rpm_key_id: "19631D5427223BF03600B23083203B040CCC9117"

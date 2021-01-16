@@ -42,13 +42,13 @@
 
 - name: Adding {{ default_repo_host }} stable to repo list
   apt_repository:
-    repo: "deb {{ default_oc_deb_repo_url }} stable/"
+    repo: "deb {{ default_oc_deb_repo_url }} {{ oc_package_version}}.x stable"
     state: present
   become: yes
 
 - name: Adding optional {{ deb_repo_suite }} to repo list
   apt_repository:
-    repo: "deb {{ oc_deb_repo_url }} {{ deb_repo_suite }}/"
+    repo: "deb {{ oc_deb_repo_url }} {{ oc_package_version }}.x {{ deb_repo_suite }}"
     state: present
     update_cache: yes
   when: deb_repo_suite != default_deb_repo_suite

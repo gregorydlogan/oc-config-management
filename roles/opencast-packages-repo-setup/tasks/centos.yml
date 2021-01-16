@@ -4,8 +4,8 @@
   yum_repository:
     name: opencast-{{ default_rpm_repo_suite }}-{{ item }}
     file: opencast
-    description: "Opencast el 7 Repository - {{ item }}"
-    baseurl: "{{ default_oc_rpm_repo_base_url }}/release/el/7/{{ item }}"
+    description: "Opencast {{ oc_package_version }} el $releasever Repository - {{ item }}"
+    baseurl: "{{ default_oc_rpm_repo_base_url }}/release/el/$releasever/oc-{{ '%02d' | format(oc_package_version | int) }}/{{ item }}"
     gpgkey: "{{ default_oc_rpm_key_url }}"
     gpgcheck: yes
     enabled: yes
@@ -19,8 +19,8 @@
   yum_repository:
     name: opencast-{{ rpm_repo_suite }}-{{ item }}
     file: "opencast-{{ rpm_repo_suite }}"
-    description: "Opencast el 7 {{ rpm_repo_suite }} Repository - {{ item }}"
-    baseurl: "{{ oc_rpm_repo_base_url }}/{{ rpm_repo_suite }}/el/7/{{ item }}"
+    description: "Opencast {{ oc_package_version }} el $releasever {{ rpm_repo_suite }} Repository - {{ item }}"
+    baseurl: "{{ default_oc_rpm_repo_base_url }}/{{ rpm_repo_suite }}/el/$releasever/oc-{{ '%02d' | format(oc_package_version | int) }}/{{ item }}"
     gpgkey: "{{ oc_rpm_key_url }}"
     gpgcheck: yes
     enabled: yes
