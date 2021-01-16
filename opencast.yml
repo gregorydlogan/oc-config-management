@@ -46,7 +46,8 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: elastic.elasticsearch }
+    - { role: opencast-packages-repo-setup }
+    - { role: elasticsearch-packages-install }
 
 
 - hosts: opencast

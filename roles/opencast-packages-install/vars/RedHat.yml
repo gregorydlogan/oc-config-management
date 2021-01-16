@@ -2,13 +2,16 @@
 
 admin:
   - "opencast{{ oc_package_version }}-admin-{{ package_version_override }}*"
+  - "elasticsearch-oss"
 
 adminpresentation:
   - "opencast{{ oc_package_version }}-adminpresentation-{{ package_version_override }}*"
+  - "elasticsearch-oss"
 
 allinone:
   - "opencast{{ oc_package_version }}-allinone-{{ package_version_override }}*"
   - "ffmpeg"
+  - "elasticsearch-oss"
 
 ingest:
   - "opencast{{ oc_package_version }}-ingest-{{ package_version_override }}*"
