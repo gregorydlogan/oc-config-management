@@ -1,12 +1,12 @@
 ---
 
-- name: Adding debian stretch to repo list for openjdk 8
+- name: Adding Debian stretch-backports to repo list for Openjdk 11
   apt_repository:
-    repo: "deb http://deb.debian.org/debian stretch main contrib non-free"
+    repo: "deb http://deb.debian.org/debian stretch-backports main contrib non-free"
     state: present
     update_cache: yes
   become: yes
-  when: ansible_distribution == "Debian" and (ansible_distribution_major_version <= "8" or ansible_distribution_major_version >= "10")
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version < "10"
 
 - name: Pinning Debian version so we don't update the whole system
   template:
@@ -16,12 +16,12 @@
     group: root
     mode: 0644
   become: yes
-  when: ansible_distribution == "Debian" and (ansible_distribution_major_version <= "8" or ansible_distribution_major_version >= "10")
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version < "10"
 
-- name: Installing Java 8 from debian stretch
+- name: Installing Java 11 from Debian stretch-backports
   apt:
-    name: openjdk-8-jre-headless
-    default_release: stretch
+    name: openjdk-11-jdk
+    default_release: stretch-backports
     state: present
   become: yes
-  when: ansible_distribution == "Debian" and (ansible_distribution_release <= "8" or ansible_distribution_major_version >= "10")
+  when: ansible_distribution == "Debian" and ansible_distribution_major_version < "10"
