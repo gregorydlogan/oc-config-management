@@ -12,7 +12,6 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user }
     - { role: geerlingguy.nfs, when: handle_network_mounts | bool, become: yes }
   vars_files:
     - group_vars/geerlingguy.yml
@@ -34,7 +33,6 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user }
     - { role: opencast-packages-repo-setup }
     - { role: opencast-shims }
     - { role: activemq-packages-install }
