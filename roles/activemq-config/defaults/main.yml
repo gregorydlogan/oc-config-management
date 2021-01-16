@@ -1,10 +1,10 @@
 ---
 
-#The user to run the Opencast service as.
-activemq_user: opencast
+#The user to run the ActiveMQ service as.
+activemq_user: activemq
 
-#The group to run the Opencast service as.
-activemq_group: opencast
+#The group to run the ActiveMQ service as.
+activemq_group: activemq
 
 
 #Where the root ActiveMQ directory lives

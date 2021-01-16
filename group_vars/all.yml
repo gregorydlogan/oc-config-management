@@ -46,7 +46,7 @@ oc_db_pass: opencast_db_passwd
 oc_db_schema: opencast
 
 #The username that Opencast should use to log into activemq
-activemq_oc_user: opencast
+activemq_oc_user: activemq
 #The password that Opencast should use to log into activemq
 activemq_oc_pass: opencast_amq_passwd
 
