@@ -1,3 +1,9 @@
+---
+
+admin: []
+
+adminpresentation: []
+
 allinone:
   - "tesseract"
   - "tesseract-langpack-deu"
