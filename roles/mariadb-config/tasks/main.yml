@@ -1,18 +1,5 @@
 ---
 
-- name: Ensuring pip is present on the system
-  package:
-    name: python3-pip
-    state: present
-  become: yes
-
-#Required to create the DB
-- name: Installing PyMySQL
-  pip:
-    name: PyMySQL
-    state: present
-  become: yes
-
 - name: Create the Opencast database
   mysql_db:
     name: "{{ oc_db_schema }}"
