@@ -51,4 +51,4 @@ activemq_oc_user: activemq
 activemq_oc_pass: opencast_amq_passwd
 
 #Some of the playbooks require python3
-ansible_python_interpreter: /usr/bin/python3
+#ansible_python_interpreter: /usr/bin/python3
