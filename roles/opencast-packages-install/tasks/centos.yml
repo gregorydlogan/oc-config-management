@@ -2,7 +2,7 @@
 
 - name: Determining installed Opencast repositories
   shell:
-    cmd: "cat /etc/yum.repos.d/*.repo | grep opencast | grep -v opencast-{{ rpm_repo_suite }}-noarch | grep -v x86_64 | grep -o 'opencast-[a-z]*-[a-z0-9_]*'"
+    cmd: "grep -oh opencast-.*-noarch /etc/yum.repos.d/*.repo"
   register: excludes
 
 - name: Installing Opencast
@@ -10,7 +10,7 @@
     name: "{{ lookup('vars', opencast_node_type) }}"
     state: present
     update_cache: yes
-    disablerepo: "{{ excludes.stdout_lines | join(',') }}"
+    disablerepo: "{{ excludes.stdout_lines | default([]) | reject('eq', 'opencast-{{ rpm_repo_suite }}-noarch') | join(',') }}"
     enablerepo: 'opencast-{{ rpm_repo_suite }}-noarch'
   become: yes
   register: install
