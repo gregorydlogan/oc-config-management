@@ -30,22 +30,3 @@
     - mysql
   become: yes
 
-- name: Installing semanagement modules
-  package:
-    name: libsemanage-python
-    state: present
-  when: ansible_selinux["status"] == "enabled"
-  become: yes
-  register: semanage
-  until: semanage is not failed
-  retries: 5
-  delay: 3
-
-- name: Allowing nginx to be a reverse proxy
-  seboolean:
-    name: httpd_can_network_connect
-    state: yes
-    persistent: yes
-  when: ansible_selinux["status"] == "enabled"
-  become: yes
-

@@ -6,6 +6,9 @@
 
 # For reverse proxying
 - src: nginxinc.nginx
+  version: 0.19.2
+- src: nginxinc.nginx_config
+  version: 0.3.3
 
 # NFS #TODO
 - src: geerlingguy.nfs
