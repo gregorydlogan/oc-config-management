@@ -9,7 +9,9 @@
 
 # NFS #TODO
 - src: geerlingguy.nfs
+  version: 2.0.0
 
 # Database
 - src: geerlingguy.mysql
+  version: 3.3.1
 
