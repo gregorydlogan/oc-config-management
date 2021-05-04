@@ -25,6 +25,9 @@
 
   roles:
     - { role: opencast-config }
+    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
   handlers:
     - include: handlers/restarts.yml
-
+  vars_files:
+    - group_vars/nginx.yml
+    - group_vars/geerlingguy.yml

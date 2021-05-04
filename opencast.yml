@@ -58,7 +58,7 @@
     - { role: opencast-packages-repo-setup }
     - { role: packaged-opencast-runtime-deps }
     - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
-    - { role: nginx_config, when: install_nginx | bool, become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
     - { role: opencast-packages-install }
     - { role: opencast-config }
     - { role: aws-ami, tags: "ami", when: build_ami | bool }

@@ -7,12 +7,15 @@
 
     nginx_config_http_template_enable: true
     nginx_config_http_template:
-      - template_file: http/default.conf.j2
+      default:
+        template_file: http/default.conf.j2
         conf_file_name: default.conf
         conf_file_location: /etc/nginx/conf.d/
         servers:
-          - listen:
-              - ip: 0.0.0.0
+          server1:
+            listen:
+              listen_localhost:
+                ip: 0.0.0.0
                 port: 80
                 opts:
                   - default_server
@@ -20,15 +23,19 @@
             server_name: "{{ inventory_hostname }}"
             error_page: /usr/share/nginx/html
             autoindex: false
-            locations:
-              - location: /
-                proxy_pass: http://localhost:8080
-                proxy:
-                  - buffering: false
-                    set_header:
-                      - field: X-Real-IP
-                        value: $remote_addr
-                      - field: X-Forwarded-For
-                        value: $proxy_add_x_forwarded_for
-                      - field: X-Forwarded-Proto
-                        value: $scheme
+            reverse_proxy:
+              locations:
+                opencast:
+                  location: /
+                  proxy_pass: http://localhost:8080
+                  proxy_buffering: false
+                  proxy_set_header:
+                    header_real_ip:
+                      name: X-Real-IP
+                      value: $remote_addr
+                    header_forwarded_for:
+                      name: X-Forwarded-For
+                      value: $proxy_add_x_forwarded_for
+                    header_forwarded_proto:
+                      name: X-Forwarded-Proto
+                      value: $scheme
