@@ -17,4 +17,5 @@
   until: es is not failure
   retries: 5
   delay: 3
+  notify: "restart elasticsearch"
 
