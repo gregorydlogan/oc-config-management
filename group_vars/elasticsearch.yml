@@ -1,5 +1,13 @@
 ---
 
-es_version: 7.4.2
-
+es_version: 7.9.3
 es_api_host: "{{ admin_node }}"
+es_use_repository: true
+es_add_repository: false
+oss_version: true
+
+es_config:
+  node.name: "{{ admin_node }}"
+  network.host: "{{ admin_node }}"
+  discovery.seed_hosts: ["{{ admin_node }}"]
+  cluster.initial_master_nodes: ["{{ admin_node }}"]

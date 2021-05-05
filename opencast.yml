@@ -45,7 +45,7 @@
 
   roles:
     - { role: opencast-packages-repo-setup }
-    - { role: elasticsearch-packages-install }
+    - { role: elastic.elasticsearch }
 
 
 - hosts: opencast
