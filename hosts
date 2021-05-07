@@ -46,3 +46,11 @@ adminpresentation
 allinone
 presentation
 adminpresentation
+
+[nginx:children]
+admin
+adminpresentation
+allinone
+worker
+presentation
+ingest

@@ -21,8 +21,3 @@ mysql_root_password_update: false
 #The root mysql/mariadb password
 mysql_root_password: "{{ ansible_date_time.epoch | to_uuid }}"
 
-### geerlingguy.nfs
-
-nfs_exports:
-  - "{{ vars['oc_storage_dir'] }} {{ groups['opencast'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join('(rw,no_subtree_check) ') }}(rw,no_subtree_check)"
-

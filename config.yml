@@ -19,15 +19,17 @@
   handlers:
     - include: handlers/restarts.yml
 
+- hosts: nginx
+  user: "{{ ansible_user }}"
+  roles:
+    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
+
 
 - hosts: opencast
   user: "{{ ansible_user }}"
 
   roles:
     - { role: opencast-config }
-    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
   handlers:
     - include: handlers/restarts.yml
-  vars_files:
-    - group_vars/nginx.yml
-    - group_vars/geerlingguy.yml
+

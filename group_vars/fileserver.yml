@@ -1,0 +1,9 @@
+---
+
+#Geerlingguy variables, do not change these unless you are very familiar with these playbooks
+
+### geerlingguy.nfs
+
+nfs_exports:
+  - "{{ vars['oc_storage_dir'] }} {{ groups['opencast'] | map('extract', hostvars, ['ansible_default_ipv4', 'address']) | join('(rw,no_subtree_check) ') }}(rw,no_subtree_check)"
+
