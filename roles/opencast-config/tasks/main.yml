@@ -15,7 +15,6 @@
     - { src: "org.ops4j.pax.logging.cfg", dest: "{{ oc_config_dir }}/org.ops4j.pax.logging.cfg" }
     - { src: "org.ops4j.pax.web.cfg", dest: "{{ oc_config_dir }}/org.ops4j.pax.web.cfg", skip: "{{ install_nginx }}" }
     - { src: "org.opencastproject.kernel.mail.SmtpService.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.kernel.mail.SmtpService.cfg" }
-    - { src: "org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.serviceregistry.impl.ServiceRegistryJpaImpl.cfg" }
   become: yes
   when: not (item.skip|default(False))
   notify: "restart opencast"
