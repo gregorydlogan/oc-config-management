@@ -47,6 +47,12 @@ oc_group_gid: 7967
 #The IP of the fileserver
 nfs_server: "{{ hostvars[groups['fileserver'][0]]['ansible_default_ipv4']['address'] }}"
 
+#The elasticsearch server to connect to
+elasticsearch_server: "{{ groups['elasticsearch'][0] }}"
+
+#Whether to connect to Elasticsearch via HTTPS
+elasticsearch_https: false
+
 #The admin node, taken from the three admin class groups.  Note the order of precedence.
 admin_node: "{{ groups['admin_node'][0] }}"
 

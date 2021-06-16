@@ -1,13 +1,14 @@
 ---
 
 es_version: 7.10.2
-es_api_host: "{{ admin_node }}"
+es_api_host: "{{ inventory_hostname }}"
 es_use_repository: true
 es_add_repository: false
 oss_version: true
 
 es_config:
-  node.name: "{{ admin_node }}"
-  network.host: "{{ admin_node }}"
-  discovery.seed_hosts: ["{{ admin_node }}"]
-  cluster.initial_master_nodes: ["{{ admin_node }}"]
+  node.name: "{{ inventory_hostname }}"
+  network.host: "{{ inventory_hostname }}"
+  discovery.seed_hosts: ["{{ inventory_hostname }}"]
+  cluster.initial_master_nodes: ["{{ inventory_hostname }}"]
+
