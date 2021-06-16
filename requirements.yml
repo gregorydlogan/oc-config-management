@@ -16,7 +16,7 @@
 
 # Elasticsearch
 - src: elastic.elasticsearch
-  version: v7.12.1
+  version: v7.9.3
 
 # Database
 - src: geerlingguy.mysql
