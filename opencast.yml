@@ -8,6 +8,23 @@
       set_fact: ansible_distribution_major_version="7"
       when: ansible_distribution == 'Amazon'
 
+# Create the Opencast user on the appropriate nodes
+
+- hosts: fileserver,opencast
+  user: "{{ ansible_user }}"
+  
+  roles:
+    - { role: opencast-create-user, become: yes }
+
+# Add the Opencast repo to the appropriate nodes
+
+- hosts: activemq, elasticsearch, opencast
+  user: "{{ ansible_user }}"
+  
+  roles:
+    - { role: opencast-packages-repo-setup }
+
+# Install the fileserver, if appropriate
 
 - hosts: fileserver
   user: "{{ ansible_user }}"
@@ -15,6 +32,7 @@
   roles:
     - { role: geerlingguy.nfs, when: handle_network_mounts | bool, become: yes }
 
+# Install the database, if appropriate, and configure it
 
 - hosts: database
   user: "{{ ansible_user }}"
@@ -25,26 +43,27 @@
   handlers:
     - include: handlers/restarts.yml
 
+# Install ActiveMQ
 
 - hosts: activemq
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-packages-repo-setup }
     - { role: opencast-shims }
     - { role: activemq-packages-install }
     - { role: activemq-config }
   handlers:
     - include: handlers/restarts.yml
 
+# Install elasticsearch, if appropriate
 
 - hosts: elasticsearch
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-packages-repo-setup }
-    - { role: elastic.elasticsearch }
+    - { role: elastic.elasticsearch, when: install_elasticsearch | bool }
 
+# Install nginx, if appropriate
 
 - hosts: nginx
   user: "{{ ansible_user }}"
@@ -52,15 +71,14 @@
     - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
     - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
 
+# Install and configure Opencast
 
 - hosts: opencast
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opencast-create-user }
     - { role: opencast-shims }
     - { role: nfs-client, when: handle_network_mounts | bool }
-    - { role: opencast-packages-repo-setup }
     - { role: packaged-opencast-runtime-deps }
     - { role: opencast-packages-install }
     - { role: opencast-config }

@@ -1,23 +1,49 @@
 ---
 
+#The user to run the Opencast service as.
+oc_user: opencast
+
+#The group to run the Opencast service as.
+oc_group: opencast
+
+#The admin node, taken from the three admin class groups.  Note the order of precedence.
+admin_node: "{{ groups['admin_node'][0] }}"
+
+#The presentations nodes, taken from the three presentations class groups.  Note the order of precedence.
+presentation_node: "{{ groups['presentation_node'][0] }}"
+
+#The elasticsearch node, taken from the elasticsearch group.
+elasticsearch_node: "{{ groups['elasticsearch'][0] }}"
+
+#True to use Paella for the player instead of Theodul
+use_paella: True
+
+
 ### Network settings ###
 
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
 oc_protocol: http
+
+#Whether to connect to Elasticsearch via HTTPS
+elasticsearch_https: false
+
 
 ### Database settings ###
 
 #The database server, including port if not using default ports
 oc_db_host: "{{ (inventory_hostname == groups['database'][0]) | ternary('localhost', groups['database'][0]) }}"
 
-#True to generate the DB tables on startup, false assumes schema is already present
-oc_db_ddl: false
-
-#True to use Paella for the player instead of Theodul
-use_paella: false
-
 
 ### Directory settings ###
+
+#Where to store opencast's configuration data.
+oc_config_dir: "/etc/opencast"
+
+#Where to store Opencast's logs.
+oc_log_dir: "/var/log/opencast"
+
+#The local storage directory for Openast.  This will contain things like Solr indexes.
+oc_local_dir: "/var/lib/opencast"
 
 #The local directory to use for a workspace.  This should be fast, but transient storage.
 oc_workspace_root: "{{ oc_local_dir }}/workspace"

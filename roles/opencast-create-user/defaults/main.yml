@@ -1,0 +1,13 @@
+---
+
+#The user to run the Opencast service as.
+oc_user: opencast
+
+#The group to run the Opencast service as.
+oc_group: opencast
+
+#The user id for Opencast
+oc_user_uid: 7967
+
+#The group id for Opencast
+oc_group_gid: 7967

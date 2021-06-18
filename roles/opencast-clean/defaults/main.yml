@@ -1,0 +1,7 @@
+---
+
+#Where to store Opencast's logs.
+oc_log_dir: "/var/log/opencast"
+
+#The local storage directory for Openast.  This will contain things like Solr indexes.
+oc_local_dir: "/var/lib/opencast"

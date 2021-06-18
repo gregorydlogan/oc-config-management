@@ -6,6 +6,8 @@
     gid: "{{ oc_group_gid }}"
     state: present
   become: yes
+  #Skip this if we're working on the fileserver *and* we aren't managing the network mounts
+  when: not ('fileserver' in groups and not handle_network_mounts | bool)
 
 - name: Creating the Opencast user
   user:
@@ -15,3 +17,6 @@
     state: present
     shell: /sbin/nologin
   become: yes
+  #Skip this if we're working on the fileserver *and* we aren't managing the network mounts
+  when: not ('fileserver' in groups and not handle_network_mounts | bool)
+

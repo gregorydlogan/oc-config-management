@@ -1,0 +1,10 @@
+---
+
+#Where the opencast base files live
+oc_base_dir: /usr/share/opencast
+
+#Where to store opencast's configuration data.
+oc_config_dir: "/etc/opencast"
+
+#The local storage directory for Openast.  This will contain things like Solr indexes.
+oc_local_dir: "/var/lib/opencast"
