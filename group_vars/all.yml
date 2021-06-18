@@ -2,6 +2,9 @@
 
 ### Broad configuration options ###
 
+#The Opencast major version to install.  This is the X in x.y versioning.
+oc_package_version: 10
+
 #The user to run the Ansible playbook(s) as.  This user needs sudo access.
 ansible_user: ansible
 
@@ -55,5 +58,8 @@ elasticsearch_oc_user: opencast
 #The password that Opencast should use to log into Elasticsearch
 elasticsearch_oc_pass: opencast_es_passwd
 
-#Some of the playbooks require python3
-#ansible_python_interpreter: /usr/bin/python3
+#Cluster wide settings.  You probably don't want to change these, set the groups in your hosts file instead!
+
+#The Opencast storage directory.  This is also the NFS mount, if applicable.
+oc_storage_dir: /srv/opencast
+
