@@ -1,5 +1,11 @@
 ---
 
+#The admin node, taken from the three admin class groups.  Note the order of precedence.
+admin_node: "{{ groups['admin_node'][0] }}"
+
+#The user to run the Opencast service as.
+oc_user: opencast
+
 #Where to store Opencast's logs.
 oc_log_dir: "/var/log/opencast"
 

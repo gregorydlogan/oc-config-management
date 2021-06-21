@@ -11,30 +11,23 @@
   when: hostvars[inventory_hostname]['services']['opencast'] is defined
   become: yes
 
-- name: Umount NFS mount if mounted
-  mount:
-    name: "{{ oc_storage_dir }}"
-    state: unmounted
-  when: handle_network_mounts | bool and 'fileserver' not in group_names
+# We do this with shell rather than the file module because oc_storage_dir is
+# an NFS mount, and thus can't be reliably deleted and recreated
+- name: Cleaning Opencast NFS filesystem
+  shell: "rm -rf {{ item }}/*"
+  become_user: "{{ oc_user }}"
   become: yes
+  with_items:
+    - "{{ oc_storage_dir }}"
+  when: inventory_hostname == admin_node
+  notify: "restart opencast"
 
 # We do this with shell rather than the file module because oc_storage_dir is
 # an NFS mount, and thus can't be reliably deleted and recreated
-- name: Cleaning Opencast filesystem
+- name: Cleaning Opencast local filesystem
   shell: "rm -rf {{ item }}/*"
   become: yes
   with_items:
     - "{{ oc_log_dir }}"
     - "{{ oc_local_dir }}"
-    - "{{ oc_storage_dir }}"
   notify: "restart opencast"
-
-- name: Remounting NFS mount if it was mounted
-  mount:
-    name: "{{ oc_storage_dir }}"
-    src: "{{ nfs_server }}:{{ oc_storage_dir }}"
-    fstype: nfs
-    state: mounted
-    opts: "rw,sync,vers=3"
-  when: handle_network_mounts | bool and 'fileserver' not in group_names
-  become: yes
