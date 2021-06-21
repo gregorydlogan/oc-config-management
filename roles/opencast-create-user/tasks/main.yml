@@ -20,3 +20,12 @@
   #Skip this if we're working on the fileserver *and* we aren't managing the network mounts
   when: not ('fileserver' in groups and not handle_network_mounts | bool)
 
+- name: Ensure {{ oc_storage_dir }} exists and has the right permissions
+  file:
+    path: "{{ oc_storage_dir }}"
+    state: directory
+    owner: "{{ oc_user }}"
+    group: "{{ oc_group }}"
+  become: yes
+  #Skip this if we're working on the fileserver *and* we aren't managing the network mounts
+  when: not ('fileserver' in groups and not handle_network_mounts | bool)
