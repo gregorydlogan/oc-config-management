@@ -1,11 +1,5 @@
 ---
 
-- name: restart activemq
-  action: service
-    name=activemq
-    state=restarted
-  become: yes
-
 - name: restart elasticsearch
   action: service
     name=elasticsearch

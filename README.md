@@ -65,7 +65,6 @@ Host list requirements:
  - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and
    only makes sense of you are just building an allinone host.
  - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
- - `activemq`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `elasticsearch`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
    node used by the cluster is defined by the _first_ entry of the `admin_node` group.  This means that if you define an
@@ -159,7 +158,7 @@ The playbook contains tags, which cause Ansible to only execute part of the full
  - `config`, which updates all of the configuration files created by this playbook, then restarts Opencast.  Don't do
    this on your production system, figure out the correct settings on your test instance then reinstall for production.
  - `opencast`, which does all of the steps for installing Opencast, and Opencast alone.  Use this if you're testing
-   packaging and you are confident that the rest of the system (NFS mounts, activemq, etc) is properly configured.
+   packaging and you are confident that the rest of the system (NFS mounts, etc) is properly configured.
  - `uninstall`, which removes all Opencast packages, even if they do not match the currently checked out branch.
  - **DANGER** `reset`, which removes _all_ Opencast user data, but leaves the packages installed.  This is only useful
    for testing situations, and *will happily wipe out your production data without further prompting.*

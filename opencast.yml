@@ -18,7 +18,7 @@
 
 # Add the Opencast repo to the appropriate nodes
 
-- hosts: activemq, elasticsearch, opencast
+- hosts: elasticsearch, opencast
   user: "{{ ansible_user }}"
   
   roles:
@@ -40,18 +40,6 @@
   roles:
     - { role: geerlingguy.mysql, when: install_mariadb | bool, become: yes }
     - { role: mariadb-config }
-  handlers:
-    - include: handlers/restarts.yml
-
-# Install ActiveMQ
-
-- hosts: activemq
-  user: "{{ ansible_user }}"
-
-  roles:
-    - { role: opencast-shims }
-    - { role: activemq-packages-install }
-    - { role: activemq-config }
   handlers:
     - include: handlers/restarts.yml
 

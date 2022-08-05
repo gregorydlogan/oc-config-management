@@ -4,9 +4,6 @@ admin.example.org
 [database]
 admin.example.org
 
-[activemq]
-admin.example.org
-
 [elasticsearch]
 admin.example.org
 

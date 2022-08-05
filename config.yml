@@ -11,14 +11,6 @@
     - include: handlers/restarts.yml
 
 
-- hosts: activemq
-  user: "{{ ansible_user }}"
-
-  roles:
-    - { role: activemq-config }
-  handlers:
-    - include: handlers/restarts.yml
-
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
