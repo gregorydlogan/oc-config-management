@@ -6,6 +6,15 @@
     state: absent
   become: yes
 
+- name: Ensuring gpg is present
+  apt:
+    pkg: ['gpg']
+    state: latest
+    update_cache: yes
+  become: yes
+  retries: 5
+  delay: 3
+
 - name: Adding Debian signing key associated with optional repo to apt keyring
   apt_key:
     url: "{{ oc_deb_key_url }}"
