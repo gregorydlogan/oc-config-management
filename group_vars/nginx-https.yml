@@ -1,0 +1,69 @@
+---
+
+nginx_manage_repo: false
+nginx_install_from: os_repository
+nginx_setup_license: false
+nginx_selinux: true
+nginx_config_selinux: true
+nginx_config_selinux_tcp_ports:
+  - 80
+  - 443
+nginx_config_http_template_enable: true
+nginx_config_http_template:
+  - deployment_location: /etc/nginx/conf.d/{{ inventory_hostname }}.conf
+    config:
+      servers:
+        - core:
+            listen:
+              - address: 0.0.0.0
+                port: 80
+            server_name: "{{ inventory_hostname }}"
+          locations:
+            - location: /
+              rewrite:
+                return:
+                  code: 301
+                  url: "https://{{ inventory_hostname }}$request_uri"
+        - core:
+            listen:
+              - address: 0.0.0.0
+                port: 443
+                http2: true
+                ssl: true
+            client_max_body_size: 0
+            server_name: "{{ inventory_hostname }}"
+          ssl:
+            certificate_key: /etc/nginx/ssl/{{ inventory_hostname }}.key
+            certificate: /etc/nginx/ssl/{{ inventory_hostname }}.crt
+            dhparam: /etc/nginx/ssl/dhparam.pem
+            prefer_server_ciphers: true
+            ciphers: "HIGH:!aNULL:!MD5:!3DES"
+          locations:
+            - location: /
+              proxy:
+                pass: http://127.0.0.1:8080
+                cookie_path:
+                  - path: /
+                    replacement: '"/; HTTPOnly; Secure"'
+                buffering: false
+                request_buffering: false
+                set_header:
+                  - field: Host
+                    value: $host
+                  - field: X-Real-IP
+                    value: $remote_addr
+                  - field: X-Forwarded-For
+                    value: $proxy_add_x_forwarded_for
+                  - field: X-Forwarded-Proto
+                    value: $scheme
+                  - field: Strict-Transport-Security
+                    value: '"max-age=31536000; includeSubdomains;"'
+                  - field: X-Frame-Options
+                    value: SAMEORIGIN
+                  - field: X-Content-Type-Options
+                    value: nosniff
+                  - field: X-XSS-Protection
+                    value: '"1; mode=block"'
+                  - field: Referrer-Policy
+                    value: strict-origin-when-cross-origin
+
