@@ -15,9 +15,6 @@ presentation_node: "{{ groups['presentation_node'][0] }}"
 #The elasticsearch node, taken from the elasticsearch group.
 elasticsearch_node: "{{ groups['elasticsearch'][0] }}"
 
-#True to use Paella for the player instead of Theodul
-use_paella: True
-
 
 ### Network settings ###
 
