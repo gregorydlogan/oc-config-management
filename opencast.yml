@@ -57,7 +57,20 @@
   user: "{{ ansible_user }}"
   roles:
     - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
-    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
+
+- hosts: nginx
+  user: "{{ ansible_user }}"
+  roles:
+    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") !=  "https", become: yes }
+  vars_files:
+    - group_vars/nginx.yml
+
+- hosts: nginx
+  user: "{{ ansible_user }}"
+  roles:
+    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") == "https", become: yes }
+  vars_files:
+    - group_vars/nginx-https.yml
 
 # Install and configure Opencast
 
