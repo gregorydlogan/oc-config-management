@@ -1,9 +1,15 @@
 ---
 
+- name: Checking if Opencast is installed
+  shell: dpkg -l opencast-{{ oc_package_version }}-common
+  register: opencast_presence
+  failed_when: opencast_presence.rc != 0 and opencast_presence.rc != 1
+
 - name: Removing Opencast packages
   apt:
     name:  "opencast*"
     state: absent
     purge: yes
   become: yes
+  when: opencast_presence.rc == 0
 
