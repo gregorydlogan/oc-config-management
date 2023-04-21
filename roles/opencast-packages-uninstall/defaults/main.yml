@@ -8,3 +8,6 @@ oc_config_dir: "/etc/opencast"
 
 #The local storage directory for Openast.  This will contain things like Solr indexes.
 oc_local_dir: "/var/lib/opencast"
+
+#The log directory.
+oc_log_dir: "/var/log/opencast"

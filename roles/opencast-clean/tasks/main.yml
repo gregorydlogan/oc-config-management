@@ -8,7 +8,7 @@
     name: opencast
     state: stopped
   ignore_errors: "{{ true if uninstall is defined else false }}"
-  when: hostvars[inventory_hostname]['services']['opencast'] is defined
+  when: hostvars[inventory_hostname]['services']['opencast.service'] is defined
   become: yes
 
 # We do this with shell rather than the file module because oc_storage_dir is
