@@ -1,8 +1,14 @@
 ---
 
+- name: Checking if Opencast is installed
+  shell: yum list installed opencast-*
+  register: opencast_presence
+  failed_when: opencast_presence.rc != 0 and opencast_presence.rc != 1
+
 - name: Removing Opencast packages
   yum:
     name:  "opencast*"
     state: absent
   become: yes
+  when: opencast_presence.rc == 0
 
