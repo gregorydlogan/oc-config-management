@@ -1,0 +1,64 @@
+---
+
+- name: Loading platform variables
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+
+- name: Umount NFS mount if mounted
+  mount:
+    name: "{{ oc_storage_dir }}"
+    state: unmounted
+  when: handle_network_mounts | bool and 'fileserver' not in group_names
+  become: yes
+
+- import_tasks: debian.yml
+  when: ansible_distribution == "Debian" or ansible_distribution == "Ubuntu"
+
+- import_tasks: centos.yml
+  when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "Amazon"
+
+- name: Decompressing tarballs
+  unarchive:
+    src: /tmp/{{ opencast_tarball }}
+    dest: "{{ opencast_home }}"
+    remote_src: true
+    owner: opencast
+    group: opencast
+  become: yes
+
+- name: Linking directories
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  become: yes
+  with_items:
+    - { src: "{{ opencast_home }}/etc", dest: /etc/opencast }
+    - { src: "{{ opencast_home }}/data/log", dest: /var/log/opencast }
+    - { src: "{{ opencast_home }}/docs/scripts/service/opencast.service", dest: /etc/systemd/system/opencast.service }
+
+- name: Modifying service config
+  lineinfile:
+    path: "{{ opencast_home }}/docs/scripts/service/opencast.service"
+    regexp: "\/usr\/share\/(.*)"
+    line: "{{ opencast_home }}\1"
+    backrefs: yes
+  become: yes
+
+- name: Enable Opencast to start at bootup
+  service:
+    name: opencast
+    enabled: yes
+  become: yes
+
+- name: Remounting NFS mount if appropriate
+  mount:
+    name: "{{ oc_storage_dir }}"
+    src: "{{ nfs_server }}:{{ oc_storage_dir }}"
+    fstype: nfs
+    state: mounted
+    opts: "rw,sync,vers=3"
+  become: yes
+  when: handle_network_mounts | bool and 'fileserver' not in group_names

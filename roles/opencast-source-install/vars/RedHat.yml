@@ -1,0 +1,21 @@
+---
+
+admin:
+  - "opencast-admin-{{ package_version_override }}*"
+
+adminpresentation:
+  - "opencast-adminpresentation-{{ package_version_override }}*"
+
+allinone:
+  - "opencast-allinone-{{ package_version_override }}*"
+  - "ffmpeg"
+
+ingest:
+  - "opencast-ingest-{{ package_version_override }}*"
+
+presentation:
+  - "opencast-presentation-{{ package_version_override }}*"
+
+worker:
+  - "opencast-worker-{{ package_version_override }}*"
+  - "ffmpeg"
