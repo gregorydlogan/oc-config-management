@@ -2,8 +2,11 @@
 
 - name: Removing existing Opencast repository
   file:
-    path: /etc/apt/sources.list.d/opencast.list
+    path: /etc/apt/sources.list.d/{{ item }}
     state: absent
+  loop:
+    - opencast-stable.list
+    - opencast.list
   become: yes
 
 - name: Installing apt-transport-https and gpg
@@ -20,56 +23,36 @@
 - name: Downloading default repo signing key
   get_url:
     url: "{{ default_oc_deb_key_url }}"
-    dest: /tmp/opencast-stable.gpg
+    dest: /etc/apt/trusted.gpg.d/opencast-stable.asc
+    owner: root
+    group: root
+    mode: 0644
   become: yes
-
-- name: Packaging key for apt
-  shell: gpg --no-tty --no-default-keyring --keyring=./temp.gpg --import /tmp/opencast-stable.gpg && gpg --no-tty --no-default-keyring --keyring=./temp.gpg --export --output ./opencast-stable.gpg && mv opencast-stable.gpg /etc/apt/trusted.gpg.d/opencast-stable.gpg
-  become: yes
-
-- name: Cleaning up temp keyring files
-  file:
-    path: "{{ item }}"
-    state: absent
-  become: yes
-  loop:
-    - temp.gpg
-    - temp.gpg~
-    - /tmp/opencast-stable.gpg
 
 - name: Downloading {{ deb_repo_suite }} signing key
   get_url:
     url: "{{ oc_deb_key_url }}"
-    dest: "/tmp/opencast-{{ deb_repo_suite }}.gpg"
+    dest: /etc/apt/trusted.gpg.d/opencast-other.asc
+    owner: root
+    group: root
+    mode: 0644
+  when: default_oc_deb_key_url != oc_deb_key_url
   become: yes
-
-- name: Packaging key for apt
-  shell: gpg --no-tty --no-default-keyring --keyring=./temp.gpg --import /tmp/opencast-{{ deb_repo_suite }}.gpg && gpg --no-tty --no-default-keyring --keyring=./temp.gpg --export --output ./opencast-{{ deb_repo_suite }}.gpg && mv opencast-{{ deb_repo_suite }}.gpg /etc/apt/trusted.gpg.d/opencast-{{ deb_repo_suite }}.gpg
-  become: yes
-
-- name: Cleaning up temp keyring files
-  file:
-    path: "{{ item }}"
-    state: absent
-  become: yes
-  loop:
-    - temp.gpg
-    - temp.gpg~
-    - /tmp/opencast-{{ deb_repo_suite }}.gpg
 
 - name: Adding {{ default_repo_host }} stable to repo list
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/opencast-stable.gpg] {{ default_oc_deb_repo_url }} {{ oc_package_version}}.x stable"
-    filename: opencast
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/opencast-stable.asc] {{ default_oc_deb_repo_url }} {{ oc_package_version }}.x stable"
+    filename: opencast-stable
     state: present
+    update_cache: yes
   become: yes
 
-- name: Adding optional {{ deb_repo_suite }} to repo list
+- name: Adding optional {{ oc_deb_repo_url }} {{ deb_repo_suite }} to repo list
   apt_repository:
-    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/opencast-{{ deb_repo_suite }}.gpg] {{ oc_deb_repo_url }} {{ oc_package_version }}.x {{ deb_repo_suite }}"
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/opencast-{{ (default_oc_deb_key_url == oc_deb_key_url) | ternary('stable', 'other') }}.asc] {{ oc_deb_repo_url }} {{ oc_package_version }}.x {{ deb_repo_suite }}"
     filename: opencast
     state: present
     update_cache: yes
-  when: deb_repo_suite != default_deb_repo_suite
+  when: default_oc_deb_repo_url != oc_deb_repo_url or default_deb_repo_suite != deb_repo_suite
   become: yes
 
