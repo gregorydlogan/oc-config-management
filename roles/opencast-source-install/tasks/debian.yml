@@ -1,0 +1,21 @@
+---
+
+- name: Installing Opencast to get dep packages
+  apt:
+    name: "{{ lookup('vars', opencast_node_type) }}"
+    state: present
+    update_cache: yes
+  become: yes
+  register: install
+  until: install is not failed
+  retries: 5
+  delay: 3
+
+- name: Removing Opencast
+  apt:
+    name: "{{ lookup('vars', opencast_node_type) }}"
+    state: absent
+    purge: true
+  become: yes
+  retries: 5
+  delay: 3
