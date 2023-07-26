@@ -20,37 +20,73 @@
 - import_tasks: centos.yml
   when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "Amazon"
 
+- name: Fetching tarball
+  get_url:
+    url: "{{ source_tarball }}"
+    dest: /tmp/opencast_tarball.tar.gz
+
+- name: Ensuring OC home directory exists
+  file:
+    path: "{{ opencast_home }}"
+    owner: opencast
+    group: opencast
+    mode: 0750
+    state: directory
+  become: yes
+
 - name: Decompressing tarballs
   unarchive:
-    src: /tmp/{{ opencast_tarball }}
+    src: /tmp/opencast_tarball.tar.gz
+    dest: "/tmp"
+    creates: "/tmp/opencast-dist-{{ opencast_node_type }}"
+    remote_src: true
+    owner: opencast
+    group: opencast
+  become: yes
+
+- name: Moving extracted files into place
+  copy:
+    src: /tmp/opencast-dist-{{ opencast_node_type }}/
     dest: "{{ opencast_home }}"
     remote_src: true
     owner: opencast
     group: opencast
   become: yes
 
+- name: Removing tarball and extraction location
+  file:
+    path: /tmp/{{ item }}
+    state: absent
+  become: yes
+  loop:
+    - opencast_tarball.tar.gz
+    - opencast-dist-{{ opencast_node_type }}
+
 - name: Linking directories
   file:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-  become: yes
+    state: link
+    force: true
+    follow: false
+  become: true
   with_items:
     - { src: "{{ opencast_home }}/etc", dest: /etc/opencast }
     - { src: "{{ opencast_home }}/data/log", dest: /var/log/opencast }
     - { src: "{{ opencast_home }}/docs/scripts/service/opencast.service", dest: /etc/systemd/system/opencast.service }
 
 - name: Modifying service config
-  lineinfile:
+  replace:
     path: "{{ opencast_home }}/docs/scripts/service/opencast.service"
-    regexp: "\/usr\/share\/(.*)"
-    line: "{{ opencast_home }}\1"
-    backrefs: yes
+    regexp: '\/opt\/opencast\/(.*)'
+    replace: '{{ opencast_home }}/\1'
   become: yes
 
 - name: Enable Opencast to start at bootup
   service:
     name: opencast
     enabled: yes
+    daemon_reload: yes
   become: yes
 
 - name: Remounting NFS mount if appropriate

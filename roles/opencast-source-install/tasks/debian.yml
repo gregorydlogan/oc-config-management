@@ -15,6 +15,7 @@
   apt:
     name: "{{ lookup('vars', opencast_node_type) }}"
     state: absent
+    purge: true
   become: yes
   retries: 5
   delay: 3

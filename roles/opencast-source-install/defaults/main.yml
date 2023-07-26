@@ -5,3 +5,9 @@
 # This must match the package format exactly.  Something like 8.5-3 should work.
 # The default here is a wildcard, which install the latest availble version
 package_version_override: "*"
+
+opencast_home: /usr/share/opencast
+
+source_tarball_filename: opencast-dist-{{ opencast_node_type }}-{{ oc_package_version }}-SNAPSHOT.tar.gz
+
+source_tarball: https://radosgw.public.os.wwu.de/opencast-ci/builds/{{ oc_package_version }}.x/{{ source_tarball_hash }}/build/{{ source_tarball_filename }}

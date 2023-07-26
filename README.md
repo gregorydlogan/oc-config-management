@@ -32,6 +32,10 @@ There are four playbooks:
 
  - `opencast.yml`: This playbook installs and configures Opencast on a fresh machine.  This is probably the playbook
    you are here for.
+ - `opencast-source.yml`: This playbook installs and configures Opencast on a fresh machine, then replaces the install
+   with a tarball's contents.  Assumes the tarballs is downloaded from the Opencast CI system, set the build hash with
+   `source_tarball_hash`.  Generally not what you want for production use, but can be useful for testing pull requests
+   against your environment.
  - `config.yml`: This playbook is used to reconfigure an Opencast install.  Run `opencast.yml` first, then `config.yml`
    when you need to change configurations.
  - `uninstall.yml`: This playbook uninstalls the Opencast packages, but leaves the third party tools, and your data
