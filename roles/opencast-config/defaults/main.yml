@@ -19,7 +19,7 @@ elasticsearch_node: "{{ groups['elasticsearch'][0] }}"
 ### Network settings ###
 
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
-oc_protocol: http
+oc_protocol: https
 
 #Whether to connect to Elasticsearch via HTTPS
 elasticsearch_https: false

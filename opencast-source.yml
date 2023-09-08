@@ -56,21 +56,12 @@
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
+    - { role: geerlingguy.certbot, when: handle_https | bool, become: yes }
     - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
-
-- hosts: nginx
-  user: "{{ ansible_user }}"
-  roles:
-    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") !=  "https", become: yes }
+    - { role: nginx-dhparam, when: install_nginx | bool, become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
   vars_files:
     - group_vars/nginx.yml
-
-- hosts: nginx
-  user: "{{ ansible_user }}"
-  roles:
-    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") == "https", become: yes }
-  vars_files:
-    - group_vars/nginx-https.yml
 
 # Install and configure Opencast
 
