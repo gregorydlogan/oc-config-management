@@ -21,8 +21,8 @@ install_mariadb: true
 install_nginx: true
 
 #True to have this script install and configure Opensearch
-#This should generally be true, unless you're installing Opensearch/Elasticsearch yourself.
-install_elasticsearch: true
+#This should generally be true, unless you're installing Opensearch yourself.
+install_opensearch: true
 
 #True to have this script assume you are build an Amazon Web Services Machine Image (AMI)
 build_ami: false
@@ -52,9 +52,9 @@ oc_db_pass: opencast_db_passwd
 #The database schema's name, changing this is unwise at the moment.
 oc_db_schema: opencast
 
-#The username that Opencast should use to log into Elasticsearch
+#The username that Opencast should use to log into Opensearch/Elasticsearch
 #elasticsearch_oc_user:
-#The password that Opencast should use to log into Elasticsearch
+#The password that Opencast should use to log into Opensearch/Elasticsearch
 #elasticsearch_oc_pass:
 
 #Cluster wide settings.  You probably don't want to change these, set the groups in your hosts file instead!
