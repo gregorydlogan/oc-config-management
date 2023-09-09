@@ -14,7 +14,7 @@
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
-    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx | default(true) and oc_protocol | default("http") !=  "https", become: yes }
 
 
 - hosts: opencast

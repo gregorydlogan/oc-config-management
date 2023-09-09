@@ -30,7 +30,7 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: geerlingguy.nfs, when: handle_network_mounts | bool, become: yes }
+    - { role: geerlingguy.nfs, when: handle_network_mounts | default(true), become: yes }
 
 # Install the database, if appropriate, and configure it
 
@@ -38,7 +38,7 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: geerlingguy.mysql, when: install_mariadb | bool, become: yes }
+    - { role: geerlingguy.mysql, when: install_mariadb | default(true), become: yes }
     - { role: mariadb-config }
   handlers:
     - include: handlers/restarts.yml
@@ -48,12 +48,12 @@
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
-    - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
+    - { role: nginxinc.nginx, when: install_nginx | default(true), become: yes }
 
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
-    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") !=  "https", become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx | default(true) and oc_protocol | default("http") !=  "https", become: yes }
   vars_files:
     - group_vars/nginx.yml
 
@@ -63,7 +63,7 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opensearch, when: install_opensearch | bool }
+    - { role: opensearch, when: install_opensearch | default(true) }
 
 
 # Install and configure Opencast
@@ -73,11 +73,11 @@
 
   roles:
     - { role: opencast-shims }
-    - { role: nfs-client, when: handle_network_mounts | bool }
+    - { role: nfs-client, when: handle_network_mounts | default(true) }
     - { role: packaged-opencast-runtime-deps }
     - { role: opencast-packages-install }
     - { role: opencast-config }
-    - { role: aws-ami, tags: "ami", when: build_ami | bool }
+    - { role: aws-ami, tags: "ami", when: build_ami | default(false) }
   handlers:
     - include: handlers/restarts.yml
 
