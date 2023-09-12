@@ -72,6 +72,7 @@
   become: true
   with_items:
     - { src: "{{ opencast_home }}/etc", dest: /etc/opencast }
+    - { src: "{{ opencast_home }}/data", dest: /var/lib/opencast }
     - { src: "{{ opencast_home }}/data/log", dest: /var/log/opencast }
     - { src: "{{ opencast_home }}/docs/scripts/service/opencast.service", dest: /etc/systemd/system/opencast.service }
 
