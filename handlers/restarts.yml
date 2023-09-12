@@ -1,8 +1,8 @@
 ---
 
-- name: restart elasticsearch
+- name: restart opensearch
   action: service
-    name=elasticsearch
+    name=opensearch
     state=restarted
   become: yes
 

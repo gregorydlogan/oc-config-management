@@ -4,7 +4,7 @@ admin.example.org
 [database]
 admin.example.org
 
-[elasticsearch]
+[opensearch]
 admin.example.org
 
 [admin]

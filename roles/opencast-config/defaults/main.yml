@@ -12,17 +12,17 @@ admin_node: "{{ groups['admin_node'][0] }}"
 #The presentations nodes, taken from the three presentations class groups.  Note the order of precedence.
 presentation_node: "{{ groups['presentation_node'][0] }}"
 
-#The elasticsearch node, taken from the elasticsearch group.
-elasticsearch_node: "{{ groups['elasticsearch'][0] }}"
+#The opensearch node, taken from the opensearch group.
+opensearch_node: "{{ groups['opensearch'][0] }}"
 
 
 ### Network settings ###
 
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
-oc_protocol: http
+oc_protocol: https
 
-#Whether to connect to Elasticsearch via HTTPS
-elasticsearch_https: false
+#Whether to connect to Opensearch via HTTPS
+opensearch_https: false
 
 
 ### Database settings ###

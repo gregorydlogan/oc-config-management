@@ -1,0 +1,25 @@
+---
+
+- name: Install Opensearch
+  package:
+    name: opensearch
+    state: present
+  become: yes
+
+- name: Configuring Opensearch
+  lineinfile:
+    path: /etc/opensearch/opensearch.yml
+    search_string: "{{ item.src }}"
+    line: "{{ item.rep }}"
+  become: yes
+  loop:
+    - { src: "#network.host", rep: "network.host: {{ inventory_hostname }}" }
+    - { src: "#discovery.seed_hosts", rep: "discovery.type: single-node" }
+  notify: "Restart Opensearch"
+
+- name: Disabling Opensearch SSL requirement
+  lineinfile:
+    path: /etc/opensearch/opensearch.yml
+    line: "plugins.security.disabled: true"
+  become: yes
+  notify: "Restart Opensearch"
