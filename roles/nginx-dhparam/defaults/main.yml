@@ -1,0 +1,6 @@
+---
+
+nginx_dhparam_size: 2048
+
+nginx_dhparam_base: /etc/nginx/ssl
+nginx_dhparam_file: "{{ nginx_dhparam_base }}/dhparam.pem"

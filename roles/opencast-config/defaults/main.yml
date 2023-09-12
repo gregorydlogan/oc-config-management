@@ -19,7 +19,7 @@ opensearch_node: "{{ groups['opensearch'][0] }}"
 ### Network settings ###
 
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
-oc_protocol: http
+oc_protocol: https
 
 #Whether to connect to Opensearch via HTTPS
 opensearch_https: false

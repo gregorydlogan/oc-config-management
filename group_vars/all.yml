@@ -21,8 +21,14 @@ install_mariadb: true
 install_nginx: true
 
 #True to have this script install and configure Opensearch
-#This should generally be true, unless you're installing Opensearch yourself.
+#This should generally be true, unless you're installing Opensearch/Elasticsearch yourself.
 install_opensearch: true
+
+#True to use certbot to provision HTTPS certificates where needed.
+#Set this to false if you are managing your certificates some other way.
+handle_https: true
+#The email to use for the certificate request, and any Opencast mail.
+admin_email: "gregorydlogan@gmail.com"
 
 #True to have this script assume you are build an Amazon Web Services Machine Image (AMI)
 build_ami: false

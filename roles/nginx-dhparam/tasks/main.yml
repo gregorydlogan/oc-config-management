@@ -1,0 +1,15 @@
+---
+- name: Ensuring ssl dir exists
+  file:
+    path: "{{ nginx_dhparam_base }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+
+- name: Generating dhparam if necessary
+  openssl_dhparam:
+    path: "{{ nginx_dhparam_file }}"
+    size: "{{ nginx_dhparam_size }}"
+  become: yes

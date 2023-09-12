@@ -48,12 +48,10 @@
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
-    - { role: nginxinc.nginx, when: install_nginx | default(true), become: yes }
-
-- hosts: nginx
-  user: "{{ ansible_user }}"
-  roles:
-    - { role: nginxinc.nginx_config, when: install_nginx | default(true) and oc_protocol | default("http") !=  "https", become: yes }
+    - { role: geerlingguy.certbot, when: handle_https | bool, become: yes }
+    - { role: nginxinc.nginx, when: install_nginx | bool, become: yes }
+    - { role: nginx-dhparam, when: install_nginx | bool, become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx | bool, become: yes }
   vars_files:
     - group_vars/nginx.yml
 
