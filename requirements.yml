@@ -14,10 +14,6 @@
 - src: geerlingguy.nfs
   version: 2.0.0
 
-# Elasticsearch
-- src: elastic.elasticsearch
-  version: v7.10.2
-
 # Database
 - src: geerlingguy.mysql
   version: 4.1.0

@@ -69,7 +69,7 @@ Host list requirements:
  - `fileserver`: At most 1 host.  With 2 or more hosts only the first will be used. 0 hosts disables the fileserver and
    only makes sense of you are just building an allinone host.
  - `database`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
- - `elasticsearch`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
+ - `opensearch`: Exactly 1 host.  With 2 or more hosts only the first will be used, with 0 hosts you will encounter errors.
  - `allinone`, `admin`, `adminpresentation`: At most 1 host in all of these groups combined.  The admin 
    node used by the cluster is defined by the _first_ entry of the `admin_node` group.  This means that if you define an
    a host under `admin`, and a host under `adminpresentation` then the cluster will use the host under `admin`.
@@ -119,9 +119,9 @@ on list!
    in version 3.
  - HTTPS configuration is possible (`oc_protocol` in `group_vars/opencast.yml`), however these playbooks do not cover
    setting up and issuing certificates.
- - Elasticsearch authentication data is populated on the Opencast side, but does not automatically configure the users
-   on the Elasticsearch server.  This is because basic auth requires the Elasticsearch X-Pack, which is a licensed
-   feature outside of the scope of these playbooks.
+ - Opensearch authentication data is populated on the Opencast side, but does not automatically configure the users
+   on the Opensearch server.  This is configuration requires SSL connections, which are currently beyond the scope of
+   these playbooks.
 
 ### Ideas for Improvement
 

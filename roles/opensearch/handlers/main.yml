@@ -1,0 +1,8 @@
+---
+
+- name: Restart Opensearch
+  systemd:
+    name: opensearch
+    state: started
+    enabled: true
+  become: yes
