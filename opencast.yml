@@ -61,7 +61,7 @@
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
-    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") !=  "https", become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx | bool and oc_protocol | default("http") ==  "http", become: yes }
   vars_files:
     - group_vars/nginx.yml
 
