@@ -1,4 +1,4 @@
 ---
 
-- include: nfs-client.yml
+- include_tasks: nfs-client.yml
   when: handle_network_mounts | bool
