@@ -17,5 +17,5 @@
     - { src: "org.opencastproject.kernel.mail.SmtpService.cfg", dest: "{{ oc_config_dir }}/org.opencastproject.kernel.mail.SmtpService.cfg" }
   become: yes
   when: not (item.skip|default(False))
-  notify: "restart opencast"
+  notify: "Restart Opencast"
 
