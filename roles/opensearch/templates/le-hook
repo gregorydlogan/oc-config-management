@@ -1,0 +1,12 @@
+#!/bin/bash
+
+LE_DIR=/etc/letsencrypt/live/{{ inventory_hostname }}/
+OS_DIR=/etc/opensearch
+
+cp -f $LE_DIR/chain.pem $OS_DIR/root-ca.pem
+cp -f $LE_DIR/privkey.pem $OS_DIR/esnode-key.pem
+cp -f $LE_DIR/fullchain.pem $OS_DIR/esnode.pem
+
+chmod 600 /etc/opensearch/*.pem
+chown opensearch:opensearch /etc/opensearch/*.pem
+systemctl restart opensearch

@@ -3,6 +3,6 @@
 - name: Restart Opensearch
   systemd:
     name: opensearch
-    state: started
+    state: restarted
     enabled: true
   become: yes

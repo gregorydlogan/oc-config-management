@@ -17,9 +17,41 @@
     - { src: "#discovery.seed_hosts", rep: "discovery.type: single-node" }
   notify: "Restart Opensearch"
 
-- name: Disabling Opensearch SSL requirement
+- name: Disabling Opensearch seecurity
   lineinfile:
     path: /etc/opensearch/opensearch.yml
     line: "plugins.security.disabled: true"
   become: yes
+  when: not opensearch_enable_security
   notify: "Restart Opensearch"
+
+- name: Enabling Opensearch seecurity
+  lineinfile:
+    path: /etc/opensearch/opensearch.yml
+    line: "plugins.security.disabled: true"
+    state: absent
+  become: yes
+  when: opensearch_enable_security
+  notify: "Restart Opensearch"
+
+- name: Templating LE hook script
+  template:
+    src: le-hook
+    dest: /etc/letsencrypt/renewal-hooks/post/opensearch
+    owner: root
+    group: root
+    mode: 0750
+  become: yes
+  when: handle_https and opensearch_enable_security
+
+- name: Executing hook script to pull in LE cert data for OS (restarts OS)
+  shell: /etc/letsencrypt/renewal-hooks/post/opensearch
+  become: yes
+  when: handle_https and opensearch_enable_security
+
+# FIXME: default upstream pass for OS is admin:admin
+# Ideally we would use the following to generate a hash, then update the internal-users.yml file, then run the securityadmin.sh file
+# buuuut, to do that we need to create an admin ssl cert *signed by the ssl/chain.pem* above.
+# we could generate everything we need starting from the root CA, make the change, then replace it all with LE certs
+#OPENSEARCH_JAVA_HOME=/usr/share/opensearch/jdk/ PASSWORD=whatever /usr/share/opensearch/opensearch-security/tools/hash.sh -env PASSWORD
+#/usr/share/opensearch/opensearch-security/tools/securityadmin.sh -cd /etc/opensearch/opensearch-security -cacert /etc/opensearch/ssl/chain.pem -cert /etc/opensearch/ssl/cert.pem -key /etc/opensearch/ssl/privkey.pem -icl -nhnv -h ct00.loganite.ca
