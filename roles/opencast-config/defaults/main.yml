@@ -21,9 +21,15 @@ opensearch_node: "{{ groups['opensearch'][0] }}"
 #The protocol for Opencast to use.  Defaults to http, should be changed to https for production use.
 oc_protocol: https
 
-#Whether to connect to Opensearch via HTTPS
-opensearch_https: false
+#Whether to connect to Elastic/Opensearch via HTTPS
+# The logic here is that if we're handling SSL, then yes we should.  If not, then probably not, but this can be easily overridden
+elasticsearch_https: handle_https | default(false)
 
+#The default Opensearch opencast user
+elasticsearch_oc_user: admin
+
+#The default Opensearch opencast pass
+elasticsearch_oc_pass: admin
 
 ### Database settings ###
 

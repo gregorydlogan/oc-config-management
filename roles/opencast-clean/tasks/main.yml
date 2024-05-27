@@ -20,7 +20,7 @@
   with_items:
     - "{{ oc_storage_dir }}"
   when: inventory_hostname == admin_node
-  notify: "restart opencast"
+  notify: "Restart Opencast"
 
 # We do this with shell rather than the file module because oc_storage_dir is
 # an NFS mount, and thus can't be reliably deleted and recreated
@@ -30,4 +30,4 @@
   with_items:
     - "{{ oc_log_dir }}"
     - "{{ oc_local_dir }}"
-  notify: "restart opencast"
+  notify: "Restart Opencast"

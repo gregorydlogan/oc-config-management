@@ -20,10 +20,17 @@
 - import_tasks: centos.yml
   when: ansible_distribution == "CentOS" or ansible_distribution == "Red Hat Enterprise Linux" or ansible_distribution == "Amazon"
 
+- name: Copying tarballs
+  copy:
+    src: /home/greg/opencast/mine/build/{{ source_tarball_filename }}
+    dest: /tmp/opencast_tarball.tar.gz
+  when: deploy_from_local | default(false)
+
 - name: Fetching tarball
   get_url:
     url: "{{ source_tarball }}"
     dest: /tmp/opencast_tarball.tar.gz
+  when: not deploy_from_local | default(true)
 
 - name: Ensuring OC home directory exists
   file:
@@ -76,7 +83,7 @@
     - { src: "{{ opencast_home }}/data/log", dest: /var/log/opencast }
     - { src: "{{ opencast_home }}/docs/scripts/service/opencast.service", dest: /etc/systemd/system/opencast.service }
 
-- name: Modifying service config
+- name: Modifying service config to set OC path
   replace:
     path: "{{ opencast_home }}/docs/scripts/service/opencast.service"
     regexp: '\/opt\/opencast\/(.*)'

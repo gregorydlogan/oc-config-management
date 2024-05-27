@@ -73,8 +73,8 @@
     - { role: opencast-shims }
     - { role: nfs-client, when: handle_network_mounts | default(true) }
     - { role: packaged-opencast-runtime-deps }
-    - { role: opencast-source-install }
-    - { role: opencast-config }
+    - { role: opencast-source-install, tags: [ quick ] }
+    - { role: opencast-config, tags: [ quick ] }
     - { role: aws-ami, tags: "ami", when: build_ami | default(false) }
   handlers:
     - include: handlers/restarts.yml
