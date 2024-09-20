@@ -11,3 +11,5 @@ opencast_home: /usr/share/opencast
 source_tarball_filename: opencast-dist-{{ opencast_node_type }}-{{ oc_package_version }}-SNAPSHOT.tar.gz
 
 source_tarball: https://radosgw.public.os.wwu.de/opencast-ci/builds/{{ oc_package_version }}.x/{{ source_tarball_hash }}/build/{{ source_tarball_filename }}
+
+deploy_from_local: false

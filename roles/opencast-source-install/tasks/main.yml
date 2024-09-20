@@ -24,13 +24,13 @@
   copy:
     src: /home/greg/opencast/mine/build/{{ source_tarball_filename }}
     dest: /tmp/opencast_tarball.tar.gz
-  when: deploy_from_local | default(false)
+  when: deploy_from_local
 
 - name: Fetching tarball
   get_url:
-    url: "{{ source_tarball }}"
+    url: "{{ source_tarball_base }}/opencast-dist-{{ opencast_node_type }}-{{ oc_package_version }}-SNAPSHOT.tar.gz"
     dest: /tmp/opencast_tarball.tar.gz
-  when: not deploy_from_local | default(true)
+  when: not deploy_from_local
 
 - name: Ensuring OC home directory exists
   file:
