@@ -76,6 +76,4 @@
     - { role: opencast-packages-install, tags: [ quick ] }
     - { role: opencast-config, tags: [ quick ] }
     - { role: aws-ami, tags: "ami", when: build_ami | default(false) }
-  handlers:
-    - include: handlers/restarts.yml
 

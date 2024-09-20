@@ -7,8 +7,6 @@
   roles:
     - { role: mariadb-clean }
     - { role: mariadb-config }
-  handlers:
-    - include: handlers/restarts.yml
 
 
 - hosts: opencast
@@ -16,6 +14,3 @@
 
   roles:
     - { role: opencast-clean }
-  handlers:
-    - include: handlers/restarts.yml
-

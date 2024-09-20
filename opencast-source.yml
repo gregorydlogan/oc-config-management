@@ -40,8 +40,6 @@
   roles:
     - { role: geerlingguy.mysql, when: install_mariadb | default(true), become: yes }
     - { role: mariadb-config }
-  handlers:
-    - include: handlers/restarts.yml
 
 # Install nginx, if appropriate
 
@@ -76,6 +74,4 @@
     - { role: opencast-source-install, tags: [ quick ] }
     - { role: opencast-config, tags: [ quick ] }
     - { role: aws-ami, tags: "ami", when: build_ami | default(false) }
-  handlers:
-    - include: handlers/restarts.yml
 
