@@ -8,6 +8,11 @@
     - { role: mariadb-clean }
     - { role: mariadb-config }
 
+- hosts: opensearch
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: opensearch-clean }
 
 - hosts: opencast
   user: "{{ ansible_user }}"
