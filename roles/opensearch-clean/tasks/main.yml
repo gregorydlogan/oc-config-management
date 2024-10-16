@@ -1,0 +1,24 @@
+---
+
+- name: Templating index reset script
+  template:
+    src: reset.sh
+    dest: reset.sh
+    owner: opensearch
+    group: opensearch
+    mode: 0755
+  become: true
+
+- name: Executing index reset
+  shell: ./reset.sh
+  args:
+    chdir: "{{ ansible_env.HOME }}"
+  become: true
+  become_user: opensearch
+
+- name: Removing index reset script
+  file:
+    path: reset.sh
+    state: absent
+  become: true
+

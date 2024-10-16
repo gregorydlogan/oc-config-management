@@ -7,15 +7,15 @@
   roles:
     - { role: mariadb-clean }
     - { role: mariadb-config }
-  handlers:
-    - include: handlers/restarts.yml
 
+- hosts: opensearch
+  user: "{{ ansible_user }}"
+
+  roles:
+    - { role: opensearch-clean }
 
 - hosts: opencast
   user: "{{ ansible_user }}"
 
   roles:
     - { role: opencast-clean }
-  handlers:
-    - include: handlers/restarts.yml
-
