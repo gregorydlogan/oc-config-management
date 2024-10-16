@@ -22,7 +22,7 @@
 
 - name: Copying tarballs
   copy:
-    src: /home/greg/opencast/mine/build/{{ source_tarball_filename }}
+    src: "{{ source_tarball_basedir }}/{{ source_tarball_filename }}"
     dest: /tmp/opencast_tarball.tar.gz
   when: deploy_from_local
 
