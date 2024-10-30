@@ -6,6 +6,16 @@
     state: present
   become: yes
 
+- name: Checking if analysis-icu plugin is installed
+  stat:
+    path: /usr/share/opensearch/plugins/analysis-icu
+  register: plugin_installed
+
+- name: Installing analysis-icu
+  shell: /usr/share/opensearch/bin/opensearch-plugin install analysis-icu
+  when: not plugin_installed.stat.exists
+  become: yes
+
 - name: Configuring Opensearch
   lineinfile:
     path: /etc/opensearch/opensearch.yml
