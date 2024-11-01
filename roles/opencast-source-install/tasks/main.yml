@@ -28,7 +28,7 @@
 
 - name: Fetching tarball
   get_url:
-    url: "{{ source_tarball_base }}/opencast-dist-{{ opencast_node_type }}-{{ oc_package_version }}-SNAPSHOT.tar.gz"
+    url: "{{ source_tarball_base }}/{{ source_tarball_filename }}"
     dest: /tmp/opencast_tarball.tar.gz
   when: not deploy_from_local
 
