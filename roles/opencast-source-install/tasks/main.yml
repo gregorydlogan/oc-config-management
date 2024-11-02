@@ -58,6 +58,7 @@
     remote_src: true
     owner: opencast
     group: opencast
+    mode: 0755
   become: yes
 
 - name: Removing tarball and extraction location
