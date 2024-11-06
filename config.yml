@@ -7,8 +7,6 @@
 
   roles:
     - { role: mariadb-config }
-  handlers:
-    - include: handlers/restarts.yml
 
 
 - hosts: nginx
@@ -22,6 +20,4 @@
 
   roles:
     - { role: opencast-config }
-  handlers:
-    - include: handlers/restarts.yml
 

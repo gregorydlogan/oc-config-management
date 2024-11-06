@@ -8,7 +8,6 @@ adminpresentation:
 
 allinone:
   - "opencast-allinone-{{ package_version_override }}*"
-  - "ffmpeg"
 
 ingest:
   - "opencast-ingest-{{ package_version_override }}*"
@@ -18,4 +17,3 @@ presentation:
 
 worker:
   - "opencast-worker-{{ package_version_override }}*"
-  - "ffmpeg"

@@ -6,6 +6,4 @@
 
   roles:
     - { role: opencast-packages-uninstall }
-  handlers:
-    - include: handlers/restarts.yml
 

@@ -11,7 +11,6 @@ adminpresentation:
 allinone:
   - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
   - "opencast-{{ oc_package_version }}-allinone={{ package_version_override }}"
-  - "ffmpeg-dist"
 
 ingest:
   - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
@@ -24,4 +23,3 @@ presentation:
 worker:
   - "opencast-{{ oc_package_version }}-common={{ package_version_override }}"
   - "opencast-{{ oc_package_version }}-worker={{ package_version_override }}"
-  - "ffmpeg-dist"

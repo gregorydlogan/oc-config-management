@@ -30,7 +30,7 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: geerlingguy.nfs, when: handle_network_mounts | default(true), become: yes }
+    - { role: geerlingguy.nfs, when: handle_network_mounts, become: yes }
 
 # Install the database, if appropriate, and configure it
 
@@ -38,22 +38,18 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: geerlingguy.mysql, when: install_mariadb | default(true), become: yes }
+    - { role: geerlingguy.mysql, when: install_mariadb, become: yes }
     - { role: mariadb-config }
-  handlers:
-    - include: handlers/restarts.yml
 
 # Install nginx, if appropriate
 
 - hosts: nginx
   user: "{{ ansible_user }}"
   roles:
-    - { role: geerlingguy.certbot, when: handle_https | default(true), become: yes }
-    - { role: nginxinc.nginx, when: install_nginx | default(true), become: yes }
-    - { role: nginx-dhparam, when: install_nginx | default(true), become: yes }
-    - { role: nginxinc.nginx_config, when: install_nginx | default(true), become: yes }
-  vars_files:
-    - group_vars/nginx.yml
+    - { role: geerlingguy.certbot, when: handle_https, tags: [ nginx ], become: yes }
+    - { role: nginxinc.nginx, when: install_nginx, tags: [ nginx], become: yes }
+    - { role: nginx-dhparam, when: install_nginx, tags: [ nginx ], become: yes }
+    - { role: nginxinc.nginx_config, when: install_nginx, tags: [ nginx, config ], become: yes }
 
 # Install opensearch, if appropriate
 
@@ -61,7 +57,7 @@
   user: "{{ ansible_user }}"
 
   roles:
-    - { role: opensearch, when: install_opensearch | default(true) }
+    - { role: opensearch, when: install_opensearch }
 
 
 # Install and configure Opencast
@@ -71,11 +67,8 @@
 
   roles:
     - { role: opencast-shims }
-    - { role: nfs-client, when: handle_network_mounts | default(true) }
+    - { role: nfs-client, when: handle_network_mounts }
     - { role: packaged-opencast-runtime-deps }
     - { role: opencast-packages-install, tags: [ quick ] }
-    - { role: opencast-config, tags: [ quick ] }
+    - { role: opencast-config, tags: [ quick, config ] }
     - { role: aws-ami, tags: "ami", when: build_ami | default(false) }
-  handlers:
-    - include: handlers/restarts.yml
-

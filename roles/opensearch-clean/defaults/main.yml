@@ -1,0 +1,8 @@
+---
+
+#NB: These two keys don't work yet.  See the tasks/main.yml file for why :(
+#The user to provide to Opencast.
+opensearch_oc_user: admin
+
+#The password to provide to Opencast
+opensearch_oc_pass: admin
